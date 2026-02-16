@@ -84,10 +84,18 @@ a:hover {
   display: flex;
   align-items: center;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .site-nav a {
   text-decoration: none;
+  padding: 0.45rem 0.8rem;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.site-nav a:hover {
+  background: var(--surface);
 }
 
 #theme-toggle {

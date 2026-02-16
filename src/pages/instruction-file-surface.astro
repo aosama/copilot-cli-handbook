@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="Instruction File Surface — GitHub Copilot CLI Handbook"
+  description="Custom instructions, agents, skills, and configuration files for GitHub Copilot CLI"
+>
+  <article class="handbook-content">
+    <header class="page-intro">
+      <h1>Instruction File Surface</h1>
+      <p>Custom instructions, agents, skills, and configuration files that control Copilot CLI behavior</p>
+    </header>
+
+    <h2>Custom Agents</h2>
+    <ul>
+      <li>Define custom agents in <code>~/.copilot/agents</code>, <code>.github/agents</code> in your repo, or your org's <code>.github</code> repo</li>
+      <li>Invoke with <code>/agent</code> slash command or <code>--agent &lt;agent&gt;</code> flag (v0.0.353, Oct 2025)</li>
+      <li>Create custom agents through interactive CLI wizard (v0.0.396, Jan 2026)</li>
+      <li>Plugins can provide custom agents (v0.0.396, Jan 2026)</li>
+      <li>Comma-separated tools supported in custom agent frontmatter (v0.0.403, Feb 2026)</li>
+      <li><code>infer</code> property to control custom agent tool visibility (v0.0.366, Dec 2025)</li>
+      <li>Remote custom agents from GHE Cloud (*.ghe.com) (v0.0.393, Jan 2026)</li>
+      <li>agentStop and subagentStop hooks to control agent completion (v0.0.401, Feb 2026)</li>
+    </ul>
+
+    <h2>Custom Instructions</h2>
+    <ul>
+      <li><code>/instructions</code> command to view and toggle custom instruction files (v0.0.407, Feb 2026)</li>
+      <li><code>/init</code> command to generate Copilot instructions (v0.0.396, Jan 2026)</li>
+      <li><code>/init suppress</code> to control init suggestions per repository (v0.0.410, Feb 2026)</li>
+      <li>All custom instruction files combined instead of priority-based fallbacks (v0.0.385, Jan 2026)</li>
+    </ul>
+
+    <h2>Skills</h2>
+    <ul>
+      <li><code>.agents/skills</code> directory for auto-loading skills (v0.0.401, Feb 2026)</li>
+      <li>Invoke skills using slash commands like <code>/skill-name</code> (v0.0.389, Jan 2026)</li>
+      <li>Plugin skills usable by the agent (v0.0.395, Jan 2026)</li>
+      <li>Skills from parent directories are invocable and work in non-git directories (v0.0.398, Jan 2026)</li>
+      <li><code>.claude/commands/</code> single-file commands as simpler alternative to skills (v0.0.399, Jan 2026)</li>
+      <li>Commands from plugins are now translated into skills (v0.0.406, Feb 2026)</li>
+    </ul>
+
+    <h2>MCP (Model Context Protocol) Configuration</h2>
+    <ul>
+      <li><code>.claude/mcp.json</code> format supported without mcpServers wrapper (v0.0.401, Feb 2026)</li>
+      <li>Workspace-local MCP configuration via <code>.vscode/mcp.json</code> (v0.0.407, Feb 2026)</li>
+      <li>MCP servers using Microsoft OAuth configure automatically without manual client ID setup (v0.0.407, Feb 2026)</li>
+      <li>MCP server instructions support (v0.0.400, Jan 2026)</li>
+      <li>Tilde (~) expansion in MCP server cwd configuration (v0.0.410, Feb 2026)</li>
+      <li>MCP servers can authenticate using OAuth 2.0 with automatic token management and refresh (v0.0.389, Jan 2026)</li>
+      <li>Plugins can bundle MCP servers that load automatically when installed (v0.0.389, Jan 2026)</li>
+      <li>MCP server env config now treats values as literals; use <code>$&#123;VAR&#125;</code> syntax for environment variable references (v0.0.340, Oct 2025)</li>
+      <li>MCP servers in GitHub Actions automatically use <code>GITHUB_WORKSPACE</code> as working directory (v0.0.354, Nov 2025)</li>
+    </ul>
+
+    <h2>Plugin Configuration</h2>
+    <ul>
+      <li>Plugins can provide hooks for session lifecycle events (v0.0.402, Feb 2026)</li>
+      <li>Plugins can bundle LSP server configurations (v0.0.405, Feb 2026)</li>
+      <li>preToolUse hooks can deny tool execution and modify arguments (v0.0.396, Jan 2026)</li>
+      <li>Default plugin marketplaces (copilot-plugins, awesome-copilot) included for easier plugin discovery (v0.0.409, Feb 2026)</li>
+    </ul>
+
+    <h2>Repository Settings</h2>
+    <ul>
+      <li>Repo-level settings to disable individual validation tools (v0.0.410, Feb 2026)</li>
+      <li>Repo memories injected in prompt; memory storage tool to remember facts across sessions (v0.0.384, Jan 2026)</li>
+    </ul>
+
+    <h2>Launch Configuration</h2>
+    <ul>
+      <li><code>launch_messages</code> config for startup announcements (v0.0.400, Jan 2026)</li>
+      <li>Persistent <code>log_level</code> option in <code>~/.copilot/config</code> (v0.0.342, Oct 2025)</li>
+      <li>Persistent <code>--screen-reader</code> preference prompt (v0.0.336, Oct 2025)</li>
+      <li>Configure reasoning effort for GPT models (v0.0.384, Jan 2026)</li>
+      <li>Reasoning view setting persists across sessions (v0.0.384, Jan 2026)</li>
+    </ul>
+
+    <hr>
+    <p><small>Source: <a href="https://github.com/github/copilot-cli/releases" target="_blank" rel="noreferrer">github/copilot-cli/releases</a> · Last updated: February 2026</small></p>
+  </article>
+</BaseLayout>
