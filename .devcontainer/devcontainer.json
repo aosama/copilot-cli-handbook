@@ -1,6 +1,9 @@
 {
   "name": "Copilot CLI Handbook",
   "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
   "postCreateCommand": "npm install",
   "forwardPorts": [4321],
   "customizations": {

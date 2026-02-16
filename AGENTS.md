@@ -9,6 +9,7 @@
 - Know your MCP servers and tool categories.
 - Read readme.md.
 - Map the user task to required capabilities, then activate any missing tool categories before implementation.
+- Ensure GitHub CLI (`gh`) is installed and available for the coding agent to use.
 
 ## Agent Identity
 
