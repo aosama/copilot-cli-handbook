@@ -1,109 +1,56 @@
 # GitHub Copilot CLI Handbook
 
-A comprehensive single-page handbook containing everything there is to know about GitHub Copilot CLI. This resource is designed for developers who love using Copilot and want a complete reference for shortcuts, commands, configurations, and best practices.
+A single-page, no-fluff reference of every feature available in GitHub Copilot CLI, grouped by release date. If you already use Copilot CLI, this page answers one question: **"What can I use, and when did it land?"**
 
-## 🚀 Quick Start
+This is not a tutorial, installation guide, or marketing page. It is a concise feature inventory sourced from the official release history.
 
-### Prerequisites
-- Node.js 18+ or compatible runtime
-- npm or yarn package manager
+## Source of Truth
 
-### Installation
+All content is derived from the [GitHub Copilot CLI releases page](https://github.com/github/copilot-cli/releases). Each release's features are listed under its version and date, newest first.
+
+## Quick Start
 
 ```bash
-# Install dependencies
-npm install
-
-# Run development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
+npm install     # install dependencies
+npm run dev     # development server at http://localhost:4321
+npm run build   # production build
+npm run preview # preview production build
 ```
 
-## 📖 What's Included
-
-This handbook covers:
-
-- **Overview** - Introduction to GitHub Copilot CLI
-- **Installation & Setup** - Complete installation guide for all platforms
-- **Keyboard Shortcuts** - All available shortcuts for interactive mode
-- **Slash Commands** - Quick reference for all slash commands
-- **Configuration Options** - Environment variables and configuration
-- **Instructions & Prompts** - How to write effective queries
-- **File Patterns & Filters** - Pattern matching and exclusions
-- **Context Management** - Understanding and controlling context
-- **Integrations** - Shell, IDE, and third-party integrations
-- **Version History** - Feature timeline and roadmap
-
-## 🛠️ Development
-
-The site is built with:
-- **Astro** - Static site generator
-- **Node.js** - Runtime environment
-- **TypeScript** - Type safety
-
-## 🌐 GitHub Pages Deployment
-
-This repository is configured to deploy to GitHub Pages from the `main` branch using the workflow at `.github/workflows/deploy.yml`.
-
-Repository settings required:
-
-1. Go to **Settings → Pages**.
-2. Under **Build and deployment**, set **Source** to **GitHub Actions**.
-   - If GitHub shows a template/build mode choice, use **Static HTML** (not **GitHub Pages Jekyll**).
-3. Ensure your default branch is `main` (the workflow deploy trigger branch).
-
-After that, every push to `main` will build and publish the site.
-
-### Project Structure
+## Project Structure
 
 ```
 /
 ├── src/
 │   ├── content/
 │   │   └── handbook/
-│   │       └── index.md   # Handbook content in Markdown
+│   │       └── index.md        # Handbook content in Markdown
 │   ├── layouts/
 │   │   └── BaseLayout.astro
 │   ├── pages/
-│   │   └── index.astro    # Renders Markdown content
+│   │   └── index.astro         # Renders Markdown content
 │   ├── styles/
 │   │   └── global.css
-│   └── content.config.ts  # Astro content collection config
-├── public/                # Static assets
-├── astro.config.mjs       # Astro configuration
-├── tsconfig.json          # TypeScript configuration
-└── package.json           # Dependencies and scripts
+│   └── content.config.ts       # Astro content collection config
+├── astro.config.mjs
+├── tsconfig.json
+└── package.json
 ```
 
-### Available Scripts
+## GitHub Pages Deployment
 
-- `npm run dev` - Start development server (http://localhost:4321)
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build locally
+Deployed via `.github/workflows/deploy.yml` on pushes to `main`.
 
-## 🎨 Features
+Repository settings: **Settings → Pages → Source → GitHub Actions** (select Static HTML, not Jekyll).
 
-- **Single Page Design** - Everything in one comprehensive page
-- **Dark Theme** - GitHub-inspired dark color scheme
-- **Responsive** - Works on all screen sizes
-- **Organized by Date** - Version history tracks feature additions
-- **Developer-Focused** - Written for programmers who use Copilot
+## Design Principles
 
-## 📝 License
+- **Single page** — everything on one scrollable page, no navigation to other routes.
+- **Grouped by release date** — newest releases at the top, oldest at the bottom.
+- **No fluff** — no installation guides, no "why Copilot is great" sections, no best practices. Just features and when they shipped.
+- **Dark theme** — GitHub-inspired dark color scheme.
+- **Responsive** — works on all screen sizes.
+
+## License
 
 See [LICENSE](LICENSE) file for details.
-
-## 🤝 Contributing
-
-This is a community resource. Contributions, corrections, and updates are welcome!
-
-## 📚 Additional Resources
-
-- [Official GitHub Copilot Documentation](https://docs.github.com/en/copilot)
-- [GitHub CLI Documentation](https://cli.github.com/manual/)
-- [GitHub Copilot CLI Extension](https://github.com/github/gh-copilot)
