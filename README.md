@@ -37,8 +37,6 @@ This handbook covers:
 - **File Patterns & Filters** - Pattern matching and exclusions
 - **Context Management** - Understanding and controlling context
 - **Integrations** - Shell, IDE, and third-party integrations
-- **Best Practices** - Tips for effective usage
-- **Troubleshooting** - Common issues and solutions
 - **Version History** - Feature timeline and roadmap
 
 ## 🛠️ Development
