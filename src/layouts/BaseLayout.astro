@@ -7,6 +7,8 @@ interface Props {
 }
 
 const { title, description = 'A practical reference for GitHub Copilot CLI users' } = Astro.props;
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
 ---
 
 <!doctype html>
@@ -25,12 +27,12 @@ const { title, description = 'A practical reference for GitHub Copilot CLI users
   </head>
   <body>
     <header class="site-shell site-header">
-      <a href="/" class="brand">GitHub Copilot CLI Handbook</a>
+      <a href={base} class="brand">GitHub Copilot CLI Handbook</a>
       <nav class="site-nav">
-        <a href="/instruction-file-surface">Instruction File Surface</a>
-        <a href="/slash-commands">Slash Commands</a>
-        <a href="/command-line-arguments">Command Line Arguments</a>
-        <a href="/mcp-configuration-files">MCP Configuration Files</a>
+        <a href={`${base}instruction-file-surface`}>Instruction File Surface</a>
+        <a href={`${base}slash-commands`}>Slash Commands</a>
+        <a href={`${base}command-line-arguments`}>Command Line Arguments</a>
+        <a href={`${base}mcp-configuration-files`}>MCP Configuration Files</a>
         <a href="https://github.com/aosama/copilot-cli-handbook" target="_blank" rel="noreferrer"
           >GitHub</a
         >
