@@ -48,6 +48,19 @@ The site is built with:
 - **Node.js** - Runtime environment
 - **TypeScript** - Type safety
 
+## 🌐 GitHub Pages Deployment
+
+This repository is configured to deploy to GitHub Pages from the `main` branch using the workflow at `.github/workflows/deploy.yml`.
+
+Repository settings required:
+
+1. Go to **Settings → Pages**.
+2. Under **Build and deployment**, set **Source** to **GitHub Actions**.
+   - If GitHub shows a template/build mode choice, use **Static HTML** (not **GitHub Pages Jekyll**).
+3. Ensure your default branch is `main` (the workflow deploy trigger branch).
+
+After that, every push to `main` will build and publish the site.
+
 ### Project Structure
 
 ```
@@ -88,4 +101,3 @@ This is a community resource. Contributions, corrections, and updates are welcom
 - [Official GitHub Copilot Documentation](https://docs.github.com/en/copilot)
 - [GitHub CLI Documentation](https://cli.github.com/manual/)
 - [GitHub Copilot CLI Extension](https://github.com/github/gh-copilot)
-
