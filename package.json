@@ -7,7 +7,11 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "lint": "prettier --check .",
+    "lint:fix": "prettier --write .",
+    "format": "prettier --write .",
+    "prepare": "husky || true"
   },
   "repository": {
     "type": "git",
@@ -21,7 +25,19 @@
     "url": "https://github.com/aosama/copilot-cli-handbook/issues"
   },
   "homepage": "https://github.com/aosama/copilot-cli-handbook#readme",
+  "lint-staged": {
+    "*.{js,mjs,ts,astro,json,css,md}": [
+      "prettier --write"
+    ]
+  },
   "devDependencies": {
-    "astro": "^5.17.2"
+    "@typescript-eslint/parser": "^8.55.0",
+    "astro": "^5.17.2",
+    "eslint": "^10.0.0",
+    "eslint-plugin-astro": "^1.6.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.8.1",
+    "prettier-plugin-astro": "^0.14.1"
   }
 }

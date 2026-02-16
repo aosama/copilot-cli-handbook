@@ -6,10 +6,7 @@ interface Props {
   description?: string;
 }
 
-const {
-  title,
-  description = 'A practical reference for GitHub Copilot CLI users',
-} = Astro.props;
+const { title, description = 'A practical reference for GitHub Copilot CLI users' } = Astro.props;
 ---
 
 <!doctype html>
@@ -33,7 +30,9 @@ const {
         <a href="/instruction-file-surface">Instruction File Surface</a>
         <a href="/slash-commands">Slash Commands</a>
         <a href="/command-line-arguments">Command Line Arguments</a>
-        <a href="https://github.com/aosama/copilot-cli-handbook" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="https://github.com/aosama/copilot-cli-handbook" target="_blank" rel="noreferrer"
+          >GitHub</a
+        >
         <button id="theme-toggle" type="button" aria-label="Dark mode">Dark mode</button>
       </nav>
     </header>

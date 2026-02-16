@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout 
+<BaseLayout
   title="Slash Commands — GitHub Copilot CLI Handbook"
   description="Interactive commands you can type in GitHub Copilot CLI"
 >
@@ -19,17 +19,27 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <li><code>/new</code> — Alias for <code>/clear</code> (v0.0.381, Jan 2026)</li>
       <li><code>/rename</code> — Rename current session (v0.0.392, Jan 2026)</li>
       <li><code>/session rename</code> — Rename current session</li>
-      <li><code>/share</code> — Save session as markdown file or GitHub gist (v0.0.359, Nov 2025)</li>
+      <li>
+        <code>/share</code> — Save session as markdown file or GitHub gist (v0.0.359, Nov 2025)
+      </li>
       <li><code>/compact</code> — Trigger session compaction manually (v0.0.374, Jan 2026)</li>
     </ul>
 
     <h2>Model and Settings</h2>
     <ul>
-      <li><code>/model</code> — Change the model interactively or with <code>/model &lt;model&gt;</code> (v0.0.329, Sep 2025)</li>
+      <li>
+        <code>/model</code> — Change the model interactively or with <code
+          >/model &lt;model&gt;</code
+        > (v0.0.329, Sep 2025)
+      </li>
       <li><code>/models</code> — Alias for <code>/model</code> (v0.0.389, Jan 2026)</li>
       <li><code>/theme</code> — Switch themes with GitHub Dark/Light (v0.0.400, Jan 2026)</li>
-      <li><code>/on-air</code> — Hide model names and quota details for streaming (v0.0.407, Feb 2026)</li>
-      <li><code>/streamer-mode</code> — Hide preview model names and quota details (v0.0.408, Feb 2026)</li>
+      <li>
+        <code>/on-air</code> — Hide model names and quota details for streaming (v0.0.407, Feb 2026)
+      </li>
+      <li>
+        <code>/streamer-mode</code> — Hide preview model names and quota details (v0.0.408, Feb 2026)
+      </li>
     </ul>
 
     <h2>Code Review and Changes</h2>
@@ -41,9 +51,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <h2>Context and Information</h2>
     <ul>
       <li><code>/context</code> — Visualize token usage (v0.0.372, Dec 2025)</li>
-      <li><code>/usage</code> — View premium request usage, session time, code changes, and per-model token stats (v0.0.333, Oct 2025)</li>
+      <li>
+        <code>/usage</code> — View premium request usage, session time, code changes, and per-model token
+        stats (v0.0.333, Oct 2025)
+      </li>
       <li><code>/changelog</code> — View release notes (v0.0.406, Feb 2026)</li>
-      <li><code>/help</code> — CLI agent can read its own help to answer capability questions (v0.0.355, Nov 2025)</li>
+      <li>
+        <code>/help</code> — CLI agent can read its own help to answer capability questions (v0.0.355,
+        Nov 2025)
+      </li>
     </ul>
 
     <h2>Working Directory</h2>
@@ -56,14 +72,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <h2>Agent and Task Management</h2>
     <ul>
       <li><code>/agent</code> — Invoke custom agents (v0.0.353, Oct 2025)</li>
-      <li><code>/delegate</code> — Delegate a task asynchronously to Copilot coding agent (v0.0.353, Oct 2025)</li>
+      <li>
+        <code>/delegate</code> — Delegate a task asynchronously to Copilot coding agent (v0.0.353, Oct
+        2025)
+      </li>
       <li><code>/tasks</code> — View and manage background tasks (v0.0.404, Feb 2026)</li>
     </ul>
 
     <h2>Plugins and Extensions</h2>
     <ul>
       <li><code>/plugin</code> — Plugin marketplace management (v0.0.392, Jan 2026)</li>
-      <li><code>/plugin install</code> — Install plugins from GitHub repos, URLs, and local paths (v0.0.396, Jan 2026)</li>
+      <li>
+        <code>/plugin install</code> — Install plugins from GitHub repos, URLs, and local paths (v0.0.396,
+        Jan 2026)
+      </li>
       <li><code>/plugin update</code> — Update installed plugins (v0.0.392, Jan 2026)</li>
     </ul>
 
@@ -71,25 +93,38 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <ul>
       <li><code>/mcp add</code> — Add MCP servers (v0.0.339, Oct 2025)</li>
       <li><code>/mcp show</code> — Display all configured MCP servers (v0.0.395, Jan 2026)</li>
-      <li><code>/mcp show &lt;server-name&gt;</code> — Display server details and available tools (v0.0.397, Jan 2026)</li>
+      <li>
+        <code>/mcp show &lt;server-name&gt;</code> — Display server details and available tools (v0.0.397,
+        Jan 2026)
+      </li>
     </ul>
 
     <h2>Instructions and Configuration</h2>
     <ul>
-      <li><code>/instructions</code> — View and toggle custom instruction files (v0.0.407, Feb 2026)</li>
+      <li>
+        <code>/instructions</code> — View and toggle custom instruction files (v0.0.407, Feb 2026)
+      </li>
       <li><code>/init</code> — Generate Copilot instructions (v0.0.396, Jan 2026)</li>
-      <li><code>/init suppress</code> — Control init suggestions per repository (v0.0.410, Feb 2026)</li>
+      <li>
+        <code>/init suppress</code> — Control init suggestions per repository (v0.0.410, Feb 2026)
+      </li>
     </ul>
 
     <h2>Experimental Features</h2>
     <ul>
-      <li><code>/experimental</code> — Show help screen listing experimental features (v0.0.405, Feb 2026)</li>
+      <li>
+        <code>/experimental</code> — Show help screen listing experimental features (v0.0.405, Feb 2026)
+      </li>
     </ul>
 
     <h2>Permissions</h2>
     <ul>
-      <li><code>/allow-all</code> — Auto-approve all permissions during a session (v0.0.399, Jan 2026)</li>
-      <li><code>/yolo</code> — Auto-approve all permissions during a session (v0.0.399, Jan 2026)</li>
+      <li>
+        <code>/allow-all</code> — Auto-approve all permissions during a session (v0.0.399, Jan 2026)
+      </li>
+      <li>
+        <code>/yolo</code> — Auto-approve all permissions during a session (v0.0.399, Jan 2026)
+      </li>
     </ul>
 
     <h2>IDE Integration</h2>
@@ -99,7 +134,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
     <h2>Terminal Setup</h2>
     <ul>
-      <li><code>/terminal-setup</code> — Set up multi-line input on terminals (v0.0.341, Oct 2025)</li>
+      <li>
+        <code>/terminal-setup</code> — Set up multi-line input on terminals (v0.0.341, Oct 2025)
+      </li>
     </ul>
 
     <h2>Exit Commands</h2>
@@ -111,15 +148,29 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <h2>Special Input Methods</h2>
     <ul>
       <li><code>!</code> — Execute shell commands directly (v0.0.333, Oct 2025)</li>
-      <li><code>&</code> — Prefix shortcut for delegating prompts to run in background (v0.0.384, Jan 2026)</li>
-      <li><code>?</code> — Quick help overlay with grouped shortcuts and commands (v0.0.409, Feb 2026)</li>
-      <li>Ctrl+X then <code>/</code> — Run slash commands without losing your input (v0.0.399, Jan 2026)</li>
+      <li>
+        <code>&</code> — Prefix shortcut for delegating prompts to run in background (v0.0.384, Jan 2026)
+      </li>
+      <li>
+        <code>?</code> — Quick help overlay with grouped shortcuts and commands (v0.0.409, Feb 2026)
+      </li>
+      <li>
+        Ctrl+X then <code>/</code> — Run slash commands without losing your input (v0.0.399, Jan 2026)
+      </li>
       <li>Ctrl+P — Runs slash commands while preserving input (v0.0.407, Feb 2026)</li>
       <li>Ctrl+D — Queue slash commands alongside messages (v0.0.394, Jan 2026)</li>
       <li>Ctrl+Q — Queue messages for later (replaces Ctrl+D queueing) (v0.0.407, Feb 2026)</li>
     </ul>
 
-    <hr>
-    <p><small>Source: <a href="https://github.com/github/copilot-cli/releases" target="_blank" rel="noreferrer">github/copilot-cli/releases</a> · Last updated: February 2026</small></p>
+    <hr />
+    <p>
+      <small
+        >Source: <a
+          href="https://github.com/github/copilot-cli/releases"
+          target="_blank"
+          rel="noreferrer">github/copilot-cli/releases</a
+        > · Last updated: February 2026</small
+      >
+    </p>
   </article>
 </BaseLayout>

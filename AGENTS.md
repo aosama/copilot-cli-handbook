@@ -8,7 +8,6 @@ A few pages static site (Astro) that lists user facing feature of GitHub Copilot
 
 The canonical source for content are links found in the readme.md -- they are official publications from github.com
 
-
 ## Content Rules
 
 1. **No fluff.** Do not add introductions, installation guides, best-practices, or explanatory prose beyond what is needed to describe a feature.
@@ -27,4 +26,3 @@ The canonical source for content are links found in the readme.md -- they are of
 - Layout: `src/layouts/BaseLayout.astro`. Styles: `src/styles/global.css`.
 - Build: `npm run build`. Dev server: `npm run dev`.
 - Astro 5.x, Node 18+.
-
