@@ -1,0 +1,238 @@
+:root,
+html[data-theme='light'] {
+  --background: #fdfdfd;
+  --surface: #f4f4f4;
+  --surface-2: #ececec;
+  --foreground: #282728;
+  --muted: #5b5b5b;
+  --accent: #006cac;
+  --border: #dedede;
+  --code-bg: #f2f3f5;
+}
+
+html[data-theme='dark'] {
+  --background: #212737;
+  --surface: #2a3247;
+  --surface-2: #343f60;
+  --foreground: #eaedf3;
+  --muted: #bbc3d6;
+  --accent: #ff6b01;
+  --border: #3f4a6c;
+  --code-bg: #1a2030;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  line-height: 1.7;
+}
+
+a {
+  color: var(--foreground);
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  text-underline-offset: 4px;
+}
+
+a:hover {
+  color: var(--accent);
+}
+
+.site-shell {
+  width: min(100%, 1100px);
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.site-header,
+.site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.site-footer {
+  border-bottom: 0;
+  border-top: 1px solid var(--border);
+  justify-content: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.brand {
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.site-nav a {
+  text-decoration: none;
+}
+
+#theme-toggle {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--foreground);
+  border-radius: 8px;
+  padding: 0.45rem 0.8rem;
+  cursor: pointer;
+  font: inherit;
+}
+
+#theme-toggle:hover {
+  border-color: var(--accent);
+}
+
+.site-main {
+  padding-top: 2rem;
+  padding-bottom: 2.5rem;
+}
+
+.page-intro {
+  margin-bottom: 1.5rem;
+}
+
+.page-intro h1 {
+  margin: 0;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+}
+
+.page-intro p {
+  margin-top: 0.6rem;
+  color: var(--muted);
+}
+
+.handbook-content h2 {
+  margin-top: 2.2rem;
+  margin-bottom: 1rem;
+  color: var(--accent);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.4rem;
+}
+
+.handbook-content h3,
+.handbook-content h4 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.7rem;
+}
+
+.handbook-content p,
+.handbook-content ul,
+.handbook-content ol {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.handbook-content ul,
+.handbook-content ol {
+  padding-left: 1.3rem;
+}
+
+.handbook-content section {
+  margin-bottom: 1.2rem;
+  padding: 1.2rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+.handbook-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.handbook-content th,
+.handbook-content td {
+  border-bottom: 1px solid var(--border);
+  padding: 0.65rem;
+  vertical-align: top;
+  text-align: left;
+}
+
+.handbook-content thead {
+  background: var(--surface-2);
+}
+
+.handbook-content .code-block {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.8rem;
+  overflow-x: auto;
+}
+
+.handbook-content .code-block pre {
+  margin: 0;
+}
+
+.handbook-content code,
+.handbook-content kbd {
+  font-family: inherit;
+  background: var(--code-bg);
+  border-radius: 5px;
+  padding: 0.1rem 0.35rem;
+}
+
+.handbook-content kbd {
+  border: 1px solid var(--border);
+}
+
+.handbook-content .info-box,
+.handbook-content .troubleshoot-item,
+.handbook-content .version-item {
+  margin: 1rem 0;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+}
+
+.handbook-content .info-box {
+  border-left: 4px solid var(--accent);
+}
+
+.handbook-content .version-item {
+  border-left: 4px solid #2ab060;
+}
+
+@media (max-width: 780px) {
+  .site-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .handbook-content section {
+    padding: 0.9rem;
+  }
+
+  .handbook-content table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}

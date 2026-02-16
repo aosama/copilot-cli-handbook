@@ -64,8 +64,16 @@ After that, every push to `main` will build and publish the site.
 ```
 /
 ├── src/
-│   └── pages/
-│       └── index.astro    # Main handbook page
+│   ├── content/
+│   │   └── handbook/
+│   │       └── index.md   # Handbook content in Markdown
+│   ├── layouts/
+│   │   └── BaseLayout.astro
+│   ├── pages/
+│   │   └── index.astro    # Renders Markdown content
+│   ├── styles/
+│   │   └── global.css
+│   └── content.config.ts  # Astro content collection config
 ├── public/                # Static assets
 ├── astro.config.mjs       # Astro configuration
 ├── tsconfig.json          # TypeScript configuration
