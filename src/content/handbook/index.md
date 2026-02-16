@@ -1,7 +1,7 @@
 ---
-title: "GitHub Copilot CLI — Feature Releases"
-description: "Every feature in GitHub Copilot CLI, grouped by release date"
-lastUpdated: "February 2026"
+title: 'GitHub Copilot CLI — Feature Releases'
+description: 'Every feature in GitHub Copilot CLI, grouped by release date'
+lastUpdated: 'February 2026'
 ---
 
 Every user-facing feature shipped in [GitHub Copilot CLI](https://github.com/github/copilot-cli/releases), newest first. No fluff — just what you can use and when it landed.
@@ -148,14 +148,14 @@ Every user-facing feature shipped in [GitHub Copilot CLI](https://github.com/git
 
 ## 0.0.394 — 2026-01-24
 
-- Support for GitHub Enterprise Cloud (*.ghe.com) in `/delegate` command
+- Support for GitHub Enterprise Cloud (\*.ghe.com) in `/delegate` command
 - `/delegate` command accepts optional prompt, uses conversation context
 - Queue slash commands alongside messages using Ctrl+D
 - Press `/` to search sessions in `/resume`
 
 ## 0.0.393 — 2026-01-23
 
-- GHE Cloud (*.ghe.com) remote custom agents
+- GHE Cloud (\*.ghe.com) remote custom agents
 - Esc-Esc to undo file changes to any previous snapshot
 
 ## 0.0.392 — 2026-01-22
