@@ -1,5 +1,7 @@
 # GitHub Copilot CLI Handbook
 
+Live site: https://aosama.github.io/copilot-cli-handbook
+
 A single-page, no-fluff reference of every feature available in GitHub Copilot CLI, grouped by release date. If you already use Copilot CLI, this page answers one question: **"What can I use, and when did it land?"**
 
 This is not a tutorial, installation guide, or marketing page. It is a concise feature inventory sourced from the official release history.
