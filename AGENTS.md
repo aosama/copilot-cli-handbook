@@ -2,14 +2,12 @@
 
 ## What This Project Is
 
-A single-page static site (Astro) that lists every feature of GitHub Copilot CLI, grouped by release date (newest first). Nothing else — no tutorials, no installation guides, no marketing copy.
+A few pages static site (Astro) that lists user facing feature of GitHub Copilot CLI, grouped by release date (newest first).
 
 ## Source of Truth
 
-The canonical source for content is the [GitHub Copilot CLI releases page](https://github.com/github/copilot-cli/releases). Every release listed there should have a corresponding section on the page. Each section contains:
+The canonical source for content are links found in the readme.md -- they are official publications from github.com
 
-- Version number and release date
-- A concise list of features, changes, and fixes introduced in that release
 
 ## Content Rules
 
@@ -26,16 +24,7 @@ The canonical source for content is the [GitHub Copilot CLI releases page](https
 
 ## Technical Notes
 
-- Content lives in `src/content/handbook/index.md` (Markdown, rendered via Astro content collection).
 - Layout: `src/layouts/BaseLayout.astro`. Styles: `src/styles/global.css`.
 - Build: `npm run build`. Dev server: `npm run dev`.
 - Astro 5.x, Node 18+.
 
-## Updating Content
-
-To add a new release:
-
-1. Fetch the release notes from https://github.com/github/copilot-cli/releases.
-2. Add a new section at the top of the releases list in `src/content/handbook/index.md`.
-3. Follow the existing Markdown heading/list structure.
-4. Update the "Last updated" date if present.
