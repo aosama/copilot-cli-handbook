@@ -2,13 +2,16 @@
 
 Live site: https://aosama.github.io/copilot-cli-handbook
 
-A single-page, no-fluff reference of every feature available in GitHub Copilot CLI, grouped by release date. If you already use Copilot CLI, this page answers one question: **"What can I use, and when did it land?"**
+A few straight to the point pages, no-fluff reference of every feature available in GitHub Copilot CLI, grouped by release date. If you already use Copilot CLI, this site answers one question: **"What can I use, and when did it land?"**
 
 This is not a tutorial, installation guide, or marketing page. It is a concise feature inventory sourced from the official release history.
 
 ## Source of Truth
 
-All content is derived from the [GitHub Copilot CLI releases page](https://github.com/github/copilot-cli/releases). Each release's features are listed under its version and date, newest first.
+All content is derived from 
+- [GitHub Copilot CLI releases page](https://github.com/github/copilot-cli/releases). Each release's features are listed under its version and date, newest first.
+- [How-tos for GitHub Copilot](https://docs.github.com/en/copilot/how-tos).
+- [Copilot CLI Command Reference](https://docs.github.com/en/copilot/reference/cli-command-reference?versionId=free-pro-team%40latest&productId=copilot&restPage=how-tos%2Ccopilot-cli%2Ccli-best-practices)
 
 ## Quick Start
 
