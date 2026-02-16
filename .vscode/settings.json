@@ -1,0 +1,6 @@
+{
+  "terminal.integrated.fontSize": 14,
+  "workbench.colorCustomizations": {
+    "terminal.background": "#000000"
+  }
+}
