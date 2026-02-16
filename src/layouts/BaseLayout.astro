@@ -31,7 +31,7 @@ const {
       <a href="/" class="brand">GitHub Copilot CLI Handbook</a>
       <nav class="site-nav">
         <a href="https://github.com/aosama/copilot-cli-handbook" target="_blank" rel="noreferrer">GitHub</a>
-        <button id="theme-toggle" type="button" aria-label="Toggle theme">Toggle theme</button>
+        <button id="theme-toggle" type="button" aria-label="Dark mode">Dark mode</button>
       </nav>
     </header>
 
@@ -45,12 +45,24 @@ const {
 
     <script is:inline>
       const toggleButton = document.getElementById('theme-toggle');
-      toggleButton?.addEventListener('click', () => {
-        const currentTheme = document.documentElement.dataset.theme;
-        const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        document.documentElement.dataset.theme = nextTheme;
-        localStorage.setItem('theme', nextTheme);
-      });
+      if (toggleButton) {
+        const setToggleLabel = () => {
+          const currentTheme = document.documentElement.dataset.theme;
+          const label = currentTheme === 'dark' ? 'Light mode' : 'Dark mode';
+          toggleButton.textContent = label;
+          toggleButton.setAttribute('aria-label', label);
+        };
+
+        setToggleLabel();
+
+        toggleButton.addEventListener('click', () => {
+          const currentTheme = document.documentElement.dataset.theme;
+          const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+          document.documentElement.dataset.theme = nextTheme;
+          localStorage.setItem('theme', nextTheme);
+          setToggleLabel();
+        });
+      }
     </script>
   </body>
 </html>
