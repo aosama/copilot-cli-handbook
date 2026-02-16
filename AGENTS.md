@@ -1,5 +1,10 @@
 # Agent Instructions — Copilot CLI Handbook
 
+## On Session Start
+
+- Know you MCP Servers
+- Read readme.md
+
 ## What This Project Is
 
 A few pages static site (Astro) that lists user facing feature of GitHub Copilot CLI, grouped by release date (newest first).
