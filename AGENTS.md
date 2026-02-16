@@ -32,8 +32,8 @@ The canonical source for content are links found in the readme.md -- they are of
 
 ## Content Rules
 
-1. **No fluff.** Do not add introductions, installation guides, best-practices, or explanatory prose beyond what is needed to describe a feature.
-2. **No jargon inflation.** Use the same terminology the release notes use. Do not invent categories or reword things to sound more impressive.
+1. Do not add introductions, installation guides.
+2. **No jargon inflation.** Use the same terminology the release notes use and from the blog. Do not invent categories or reword things to sound more impressive.
 3. **Grouped by date.** Releases are listed newest-first. Each release is its own section with version + date as the heading.
 4. **Only things a user can actively use.** Every bullet must describe something the user can do, invoke, configure, or opt into. Apply the test: "Can a user read this and go try it right now?" If not, leave it out. Examples of what to **exclude**:
    - Internal/automatic behaviors the user doesn't control (e.g., "Streaming responses automatically retry when interrupted by server errors")
@@ -48,3 +48,32 @@ The canonical source for content are links found in the readme.md -- they are of
 - Layout: `src/layouts/BaseLayout.astro`. Styles: `src/styles/global.css`.
 - Build: `npm run build`. Dev server: `npm run dev`.
 - Astro 5.x, Node 18+.
+
+### Pages must render from markdown
+
+- All user-facing page content must live in markdown under `src/content/handbook/*.md` (Astro content collection).
+- Every route in `src/pages/*.astro` should be a thin renderer that loads and renders a markdown entry from the `handbook` collection.
+- Do not embed long-form handbook content directly in `.astro` files.
+
+**When adding a new page**
+
+1. Create `src/content/handbook/<slug>.md`.
+2. Create `src/pages/<slug>.astro` using the standard pattern:
+
+   ```astro
+   ---
+   import { getEntry, render } from 'astro:content';
+   import BaseLayout from '../layouts/BaseLayout.astro';
+
+   const entry = await getEntry('handbook', '<slug>');
+   if (!entry) throw new Error('Missing handbook entry: <slug>');
+
+   const { Content } = await render(entry);
+   ---
+
+   <BaseLayout title={entry.data.title}>
+     <Content />
+   </BaseLayout>
+   ```
+
+3. If you add a nav link in `BaseLayout.astro`, make it GitHub Pages base-path aware (do not hardcode absolute `/...` paths); use `import.meta.env.BASE_URL`.
