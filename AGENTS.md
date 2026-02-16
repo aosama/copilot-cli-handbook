@@ -16,7 +16,13 @@ The canonical source for content is the [GitHub Copilot CLI releases page](https
 1. **No fluff.** Do not add introductions, installation guides, best-practices, or explanatory prose beyond what is needed to describe a feature.
 2. **No jargon inflation.** Use the same terminology the release notes use. Do not invent categories or reword things to sound more impressive.
 3. **Grouped by date.** Releases are listed newest-first. Each release is its own section with version + date as the heading.
-4. **Feature-focused.** Each bullet under a release should describe a concrete capability a user can now use, not an internal implementation detail.
+4. **Only things a user can actively use.** Every bullet must describe something the user can do, invoke, configure, or opt into. Apply the test: "Can a user read this and go try it right now?" If not, leave it out. Examples of what to **exclude**:
+   - Internal/automatic behaviors the user doesn't control (e.g., "Streaming responses automatically retry when interrupted by server errors")
+   - Backend or infrastructure changes (e.g., "Switched to per-subscription Copilot API endpoints", "ACP server supports agent and plan session modes")
+   - SDK/API internals not exposed to the end user (e.g., "SDK supports infinite sessions with automatic context compaction", "Expose session context in session.list SDK response")
+   - Passive improvements with no user action (e.g., "Significantly reduced token consumption", "Sessions load faster on startup")
+   - Recovery/hotfix releases that just restore broken functionality
+5. **Skip empty releases.** If after filtering a release has zero qualifying bullets, omit the entire release section.
 
 ## Technical Notes
 
