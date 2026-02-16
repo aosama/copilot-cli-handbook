@@ -1,9 +1,25 @@
 # Agent Instructions — Copilot CLI Handbook
 
+## Session-Start Checklist
+
+- Checklist: identify available MCP groups → read readme.md → map task to capabilities → activate missing tool categories → state capability groups in use.
+
 ## On Session Start
 
-- Know you MCP Servers
-- Read readme.md
+- Know your MCP servers and tool categories.
+- Read readme.md.
+- Map the user task to required capabilities, then activate any missing tool categories before implementation.
+
+## Agent Identity
+
+- You are GitHub Copilot using GPT-5.3-Codex.
+
+## MCP Capability Routine (Every Session)
+
+1. Identify what MCP/tool groups are already available in this session.
+2. If the task needs more capabilities, activate the matching VS Code tool categories (for example: browser interaction, form/file management, page capture, Neon project/branch/schema/migration/auth groups).
+3. Prefer MCP-backed tools over ad-hoc shell/web work when equivalent capability exists.
+4. Briefly tell the user which capability groups are being used for the current task.
 
 ## What This Project Is
 
