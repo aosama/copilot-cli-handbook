@@ -39,14 +39,22 @@ Formatting is automatically enforced on commit via pre-commit hooks.
 
 ```
 /
-├── src/
-│   ├── content/
-│   │   └── handbook/
-│   │       └── index.md        # Handbook content in Markdown
-│   ├── layouts/
-│   │   └── BaseLayout.astro
-│   ├── pages/
-│   │   └── index.astro         # Renders Markdown content
+ ├── src/
+ │   ├── content/
+ │   │   └── handbook/
+ │   │       ├── index.md
+ │   │       ├── instruction-file-surface.md
+ │   │       ├── slash-commands.md
+ │   │       ├── command-line-arguments.md
+ │   │       └── mcp-configuration-files.md  # Handbook content in Markdown
+ │   ├── layouts/
+ │   │   └── BaseLayout.astro
+ │   ├── pages/
+ │   │   ├── index.astro
+ │   │   ├── instruction-file-surface.astro
+ │   │   ├── slash-commands.astro
+ │   │   ├── command-line-arguments.astro
+ │   │   └── mcp-configuration-files.astro   # Renders Markdown content
 │   ├── styles/
 │   │   └── global.css
 │   └── content.config.ts       # Astro content collection config

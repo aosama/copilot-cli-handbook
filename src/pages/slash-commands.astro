@@ -1,73 +1,25 @@
 ---
+import { getEntry, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const handbook = await getEntry('handbook', 'slash-commands');
+
+if (!handbook) {
+  throw new Error('Handbook markdown entry was not found.');
+}
+
+const { Content } = await render(handbook);
 ---
 
 <BaseLayout
-  title="Slash Commands — GitHub Copilot CLI Handbook"
-  description="Interactive commands you can type in GitHub Copilot CLI"
+  title={`${handbook.data.title} — GitHub Copilot CLI Handbook`}
+  description={handbook.data.description}
 >
   <article class="handbook-content">
     <header class="page-intro">
-      <h1>Slash Commands</h1>
-      <p>Interactive commands you type in the CLI, starting with <code>/</code></p>
+      <h1>{handbook.data.title}</h1>
+      <p>{handbook.data.description}</p>
     </header>
-
-    <h2>Session Management</h2>
-    <ul>
-      <li><code>/clear</code> (or <code>/new</code> v0.0.381) — Start a fresh session.</li>
-      <li>
-        <code>/resume</code> (v0.0.386) — Switch to or resume a previous session (press <code
-          >/</code
-        > to search).
-      </li>
-      <li><code>/rename</code> (v0.0.392) — Rename the current session.</li>
-      <li><code>/login</code> (v0.0.401) — Login for ACP terminal-auth.</li>
-    </ul>
-
-    <h2>Review & Code</h2>
-    <ul>
-      <li>
-        <code>/diff</code> (v0.0.389) — Review session changes (full screen in v0.0.409).
-      </li>
-      <li><code>/review</code> (v0.0.388) — Analyze code changes.</li>
-    </ul>
-
-    <h2>Mode & Agents</h2>
-    <ul>
-      <li>
-        <code>/tasks</code> (v0.0.404) — View and manage background tasks/agents.
-      </li>
-      <li>
-        <code>/delegate</code> (v0.0.394) — Delegate a prompt to run in the background.
-      </li>
-      <li>
-        <code>/yolo</code> / <code>/allow-all</code> (v0.0.399) — Auto-approve all permissions for the
-        session.
-      </li>
-    </ul>
-
-    <h2>Tools & Extensions</h2>
-    <ul>
-      <li>
-        <code>/mcp</code> (v0.0.397) — Manage MCP tools (<code>/mcp show</code> in v0.0.406).
-      </li>
-      <li>
-        <code>/plugin</code> (v0.0.392) — Manage plugins (install/update).
-      </li>
-      <li><code>/init</code> (v0.0.396) — Generate Copilot instructions.</li>
-    </ul>
-
-    <h2>Configuration & Meta</h2>
-    <ul>
-      <li><code>/help</code> (<code>?</code> in v0.0.409) — Show help overlay.</li>
-      <li><code>/version</code> (v0.0.396) — Display CLI version.</li>
-      <li><code>/update</code> (v0.0.396) — Update the CLI.</li>
-      <li><code>/theme</code> (v0.0.400) — Switch between GitHub Dark/Light themes.</li>
-      <li><code>/on-air</code> (v0.0.407) — Hide model names and quota details.</li>
-      <li><code>/streamer-mode</code> (v0.0.408) — Hide preview model names and quota details.</li>
-      <li><code>/ide</code> (v0.0.409) — Details on VS Code integration.</li>
-      <li><code>/changelog</code> (v0.0.406) — View release notes.</li>
-      <li><code>/experimental</code> (v0.0.396) — Feature help screen (v0.0.405).</li>
-    </ul>
+    <Content />
   </article>
 </BaseLayout>

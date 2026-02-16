@@ -1,65 +1,25 @@
 ---
+import { getEntry, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const handbook = await getEntry('handbook', 'command-line-arguments');
+
+if (!handbook) {
+  throw new Error('Handbook markdown entry was not found.');
+}
+
+const { Content } = await render(handbook);
 ---
 
 <BaseLayout
-  title="Command Line Arguments — GitHub Copilot CLI Handbook"
-  description="Flags and arguments for the copilot or gh copilot CLI"
+  title={`${handbook.data.title} — GitHub Copilot CLI Handbook`}
+  description={handbook.data.description}
 >
   <article class="handbook-content">
     <header class="page-intro">
-      <h1>Command Line Arguments</h1>
-      <p>Flags passed to the <code>copilot</code> or <code>gh copilot</code> executable.</p>
+      <h1>{handbook.data.title}</h1>
+      <p>{handbook.data.description}</p>
     </header>
-
-    <h2>Configuration Flags</h2>
-    <ul>
-      <li><code>--no-experimental</code> (v0.0.406) — Disables experimental features.</li>
-      <li><code>--experimental</code> (v0.0.396) — Opt into experimental features.</li>
-      <li>
-        <code>--config-dir</code> (v0.0.382) — Override the default configuration directory location.
-      </li>
-      <li><code>--silent</code> (v0.0.365) — Suppress stats output for scripting.</li>
-    </ul>
-
-    <h2>Interface & Mode</h2>
-    <ul>
-      <li>
-        <code>--alt-screen</code> (v0.0.407) — Enable experimental alternate screen buffer mode.
-      </li>
-      <li><code>--acp</code> (v0.0.397) — Start as an Agent Client Protocol server.</li>
-      <li><code>--agent</code> (v0.0.380) — Enable agent mode in interactive sessions.</li>
-      <li><code>--resume</code> (v0.0.372) — Continue a remote session locally.</li>
-    </ul>
-
-    <h2>Permissions & Tools</h2>
-    <ul>
-      <li>
-        <code>--enable-all-github-mcp-tools</code> (v0.0.388) — Enables read-write GitHub MCP tools.
-      </li>
-      <li>
-        <code>--allow-all</code> / <code>--yolo</code> (v0.0.381) — Enable all permissions at once.
-      </li>
-      <li><code>--available-tools</code> (v0.0.370) — Filter which tools the model can use.</li>
-      <li><code>--excluded-tools</code> (v0.0.370) — Filter which tools the model cannot use.</li>
-    </ul>
-
-    <h2>Sharing</h2>
-    <ul>
-      <li>
-        <code>--share</code> (v0.0.375) — Session sharing information in non-interactive mode.
-      </li>
-      <li>
-        <code>--share-gist</code> (v0.0.375) — Session sharing via Gist in non-interactive mode.
-      </li>
-    </ul>
-
-    <h2>Subcommands</h2>
-    <ul>
-      <li><code>copilot login</code> (v0.0.401) — Login for ACP terminal-auth.</li>
-      <li><code>copilot plugin</code> (v0.0.400) — Non-interactive plugin management.</li>
-      <li><code>copilot version</code> (v0.0.396) — Show version.</li>
-      <li><code>copilot update</code> (v0.0.396) — Update CLI.</li>
-    </ul>
+    <Content />
   </article>
 </BaseLayout>
