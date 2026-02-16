@@ -4,127 +4,62 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <BaseLayout
   title="Command Line Arguments — GitHub Copilot CLI Handbook"
-  description="Flags and options for launching GitHub Copilot CLI"
+  description="Flags and arguments for the copilot or gh copilot CLI"
 >
   <article class="handbook-content">
     <header class="page-intro">
       <h1>Command Line Arguments</h1>
-      <p>Flags and options you pass when starting the CLI</p>
+      <p>Flags passed to the <code>copilot</code> or <code>gh copilot</code> executable.</p>
     </header>
 
-    <h2>Session Control</h2>
+    <h2>Configuration Flags</h2>
     <ul>
-      <li><code>--resume</code> — Continue remote sessions locally (v0.0.372, Dec 2025)</li>
+      <li><code>--no-experimental</code> (v0.0.406) — Disables experimental features.</li>
+      <li><code>--experimental</code> (v0.0.396) — Opt into experimental features.</li>
       <li>
-        <code>--continue</code> — Resume the most recently closed session (v0.0.333, Oct 2025)
+        <code>--config-dir</code> (v0.0.382) — Override the default configuration directory location.
       </li>
-      <li>
-        <code>--share</code> — Enable session sharing in non-interactive mode (v0.0.375, Jan 2026)
-      </li>
-      <li>
-        <code>--share-gist</code> — Share session as GitHub gist in non-interactive mode (v0.0.375, Jan
-        2026)
-      </li>
+      <li><code>--silent</code> (v0.0.365) — Suppress stats output for scripting.</li>
     </ul>
 
-    <h2>Agent and Mode Selection</h2>
+    <h2>Interface & Mode</h2>
     <ul>
-      <li><code>--agent &lt;agent&gt;</code> — Specify custom agent (v0.0.353, Oct 2025)</li>
-      <li><code>--agent</code> — Works in interactive mode (v0.0.380, Jan 2026)</li>
-      <li><code>--acp</code> — Start as Agent Client Protocol server (v0.0.397, Jan 2026)</li>
       <li>
-        <code>--prompt</code> / <code>-p</code> — Non-interactive prompt mode (v0.0.359, Nov 2025)
+        <code>--alt-screen</code> (v0.0.407) — Enable experimental alternate screen buffer mode.
       </li>
+      <li><code>--acp</code> (v0.0.397) — Start as an Agent Client Protocol server.</li>
+      <li><code>--agent</code> (v0.0.380) — Enable agent mode in interactive sessions.</li>
+      <li><code>--resume</code> (v0.0.372) — Continue a remote session locally.</li>
     </ul>
 
-    <h2>Permissions</h2>
+    <h2>Permissions & Tools</h2>
     <ul>
-      <li><code>--allow-all</code> — Enable all permissions at once (v0.0.381, Jan 2026)</li>
-      <li><code>--yolo</code> — Enable all permissions at once (v0.0.381, Jan 2026)</li>
       <li>
-        <code>--allow-all-paths</code> — Approve access to all paths in <code>-p</code> mode (v0.0.340,
-        Oct 2025)
+        <code>--enable-all-github-mcp-tools</code> (v0.0.388) — Enables read-write GitHub MCP tools.
       </li>
-      <li><code>--allow-tool</code> — Filter which tools the model can use (v0.0.329, Sep 2025)</li>
-      <li><code>--deny-tool</code> — Filter which tools the model can deny (v0.0.329, Sep 2025)</li>
       <li>
-        <code>--available-tools</code> — Filter which tools the model can use (v0.0.370, Dec 2025)
+        <code>--allow-all</code> / <code>--yolo</code> (v0.0.381) — Enable all permissions at once.
       </li>
-      <li><code>--excluded-tools</code> — Filter which tools to exclude (v0.0.370, Dec 2025)</li>
-      <li>
-        <code>--enable-all-github-mcp-tools</code> — Enable read-write GitHub MCP tools (v0.0.388, Jan
-        2026)
-      </li>
-      <li><code>--disallow-temp-dir</code> — Disable temp directory access (v0.0.349, Oct 2025)</li>
+      <li><code>--available-tools</code> (v0.0.370) — Filter which tools the model can use.</li>
+      <li><code>--excluded-tools</code> (v0.0.370) — Filter which tools the model cannot use.</li>
     </ul>
 
-    <h2>Display and UI</h2>
+    <h2>Sharing</h2>
     <ul>
       <li>
-        <code>--alt-screen</code> — Experimental alternate screen buffer mode (v0.0.407, Feb 2026)
+        <code>--share</code> (v0.0.375) — Session sharing information in non-interactive mode.
       </li>
       <li>
-        <code>--screen-reader</code> — Screen reader mode with informative labels (v0.0.333, Oct 2025)
-      </li>
-      <li><code>--silent</code> — Suppress stats output for scripting (v0.0.365, Nov 2025)</li>
-      <li>
-        <code>--stream off</code> — Disable token-by-token streaming output (v0.0.348, Oct 2025)
-      </li>
-    </ul>
-
-    <h2>Features and Experiments</h2>
-    <ul>
-      <li><code>--experimental</code> — Opt into experimental features (v0.0.396, Jan 2026)</li>
-      <li><code>--no-experimental</code> — Disable experimental features (v0.0.406, Feb 2026)</li>
-      <li>
-        <code>--disable-parallel-tools-execution</code> — Disable parallel tool calling (v0.0.349, Oct
-        2025)
-      </li>
-    </ul>
-
-    <h2>Configuration</h2>
-    <ul>
-      <li>
-        <code>--config-dir</code> — Override default configuration directory location (v0.0.382, Jan 2026)
-      </li>
-      <li>
-        <code>--additional-mcp-config</code> — Augment MCP server configuration per session (v0.0.343,
-        Oct 2025)
+        <code>--share-gist</code> (v0.0.375) — Session sharing via Gist in non-interactive mode.
       </li>
     </ul>
 
     <h2>Subcommands</h2>
     <ul>
-      <li><code>copilot version</code> — Show version information (v0.0.396, Jan 2026)</li>
-      <li><code>copilot update</code> — Update Copilot CLI (v0.0.396, Jan 2026)</li>
-      <li><code>copilot login</code> — ACP terminal-auth login (v0.0.401, Feb 2026)</li>
-      <li><code>copilot plugin</code> — Non-interactive plugin management (v0.0.400, Jan 2026)</li>
+      <li><code>copilot login</code> (v0.0.401) — Login for ACP terminal-auth.</li>
+      <li><code>copilot plugin</code> (v0.0.400) — Non-interactive plugin management.</li>
+      <li><code>copilot version</code> (v0.0.396) — Show version.</li>
+      <li><code>copilot update</code> (v0.0.396) — Update CLI.</li>
     </ul>
-
-    <h2>Environment Variables</h2>
-    <ul>
-      <li>
-        <code>COPILOT_GITHUB_TOKEN</code> — Authentication token (takes precedence over GH_TOKEN) (v0.0.354,
-        Nov 2025)
-      </li>
-      <li><code>GITHUB_TOKEN</code> — Accessible in agent shell sessions (v0.0.404, Feb 2026)</li>
-      <li><code>GH_TOKEN</code> — GitHub authentication token</li>
-      <li><code>GITHUB_ASKPASS</code> — Supported for authentication (v0.0.363, Nov 2025)</li>
-      <li><code>GH_HOST</code> — Non-interactive GHE logins (v0.0.342, Oct 2025)</li>
-      <li>
-        <code>HTTPS_PROXY</code> / <code>HTTP_PROXY</code> — Proxy support (v0.0.336, Oct 2025)
-      </li>
-    </ul>
-
-    <hr />
-    <p>
-      <small
-        >Source: <a
-          href="https://github.com/github/copilot-cli/releases"
-          target="_blank"
-          rel="noreferrer">github/copilot-cli/releases</a
-        > · Last updated: February 2026</small
-      >
-    </p>
   </article>
 </BaseLayout>
