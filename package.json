@@ -11,7 +11,9 @@
     "lint": "prettier --check .",
     "lint:fix": "prettier --write .",
     "format": "prettier --write .",
-    "prepare": "husky || true"
+    "prepare": "husky || true",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
   },
   "repository": {
     "type": "git",
@@ -31,6 +33,7 @@
     ]
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
     "@typescript-eslint/parser": "^8.55.0",
     "astro": "^5.17.2",
     "eslint": "^9.39.2",
