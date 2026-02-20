@@ -29,5 +29,9 @@ export default defineConfig({
     url: 'http://localhost:4321/copilot-cli-handbook',
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,
+    env: {
+      /* Disable Astro telemetry so it doesn't attempt network calls during build/preview */
+      ASTRO_TELEMETRY_DISABLED: '1',
+    },
   },
 });
