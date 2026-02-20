@@ -26,7 +26,7 @@ export default defineConfig({
   /* Run your Astro preview server before starting the tests */
   webServer: {
     command: 'npm run build && npm run preview',
-    url: 'http://localhost:4321',
+    url: 'http://localhost:4321/copilot-cli-handbook',
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,
   },
