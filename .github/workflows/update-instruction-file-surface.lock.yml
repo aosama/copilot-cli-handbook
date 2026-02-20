@@ -23,7 +23,7 @@
 #
 # Keep instruction-file-surface.md aligned with recent Copilot CLI releases and GitHub Blog updates.
 #
-# gh-aw-metadata: {"schema_version":"v1","frontmatter_hash":"4e21837bb71889ac8ba99ac8b6986c473ad86c73bf72b7d0edbd14b279a96698","compiler_version":"v0.47.4"}
+# gh-aw-metadata: {"schema_version":"v1","frontmatter_hash":"b0b4b64f832c84f0013d5284a993a6a2c3decaa3009cb99d117ea0671bbd1be5","compiler_version":"v0.47.4"}
 
 name: "Update instruction-file-surface handbook page"
 "on":
