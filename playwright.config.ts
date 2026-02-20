@@ -14,7 +14,7 @@ export default defineConfig({
   reporter: 'html',
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: 'http://localhost:4321',
+    baseURL: 'http://localhost:4321/copilot-cli-handbook',
     trace: 'on-first-retry',
   },
   projects: [

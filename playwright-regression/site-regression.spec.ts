@@ -10,7 +10,7 @@ test.describe('Site Regression Tests', () => {
     test.setTimeout(120 * 1000);
 
     const visited = new Set<string>();
-    const queue = ['/'];
+    const queue = ['/copilot-cli-handbook'];
     const externalLinksToVerify = new Set<string>();
 
     while (queue.length > 0) {
@@ -47,7 +47,7 @@ test.describe('Site Regression Tests', () => {
         const url = new URL(href, baseURL);
 
         // If it's an internal link, queue it for full page validation
-        if (url.origin === baseURL) {
+        if (url.origin === new URL(baseURL!).origin) {
           const pathWithQuery = url.pathname + url.search;
           if (!visited.has(pathWithQuery) && !queue.includes(pathWithQuery)) {
             queue.push(pathWithQuery);
