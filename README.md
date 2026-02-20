@@ -69,6 +69,22 @@ Deployed via `.github/workflows/deploy.yml` on pushes to `main`.
 
 Repository settings: **Settings → Pages → Source → GitHub Actions** (select Static HTML, not Jekyll).
 
+## Agentic Workflow: Instruction File Surface Updater
+
+This repo includes an Agentic Workflow that keeps `instruction-file-surface.md` current:
+
+- Source file: `.github/workflows/update-instruction-file-surface.md`
+- Compiled lock file: `.github/workflows/update-instruction-file-surface.lock.yml`
+- Engine: Copilot (`claude-sonnet-4.6` model)
+- Trigger: daily schedule + manual dispatch
+- Output: draft PR only when relevant changes are detected
+
+Required secret:
+
+```bash
+gh aw secrets set COPILOT_GITHUB_TOKEN --value "<fine-grained-pat-with-copilot-requests>"
+```
+
 ## Design Principles
 
 - **Multi-page with navigation** — Landing page shows all features by release date; dedicated pages for Instruction File Surface, Slash Commands, and Command Line Arguments.
