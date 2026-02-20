@@ -3,7 +3,7 @@ title: 'Instruction File Surface'
 description: 'How GitHub Copilot CLI uses instruction files to customize behavior'
 ---
 
-Copilot CLI looks for custom instruction files in your repository to tailor its behavior.
+Copilot CLI looks for custom instruction files in your repository and in your user-level instructions directory to tailor its behavior.
 
 ## Supported Files
 
