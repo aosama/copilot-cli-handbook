@@ -43,6 +43,33 @@ The canonical source for content are links found in the readme.md -- they are of
    - Recovery/hotfix releases that just restore broken functionality
 5. **Skip empty releases.** If after filtering a release has zero qualifying bullets, omit the entire release section.
 
+## Submitting Changes via Pull Request
+
+All code changes **must** be submitted as a pull request — never push directly to `main`.
+
+### PR Requirements
+
+1. **Descriptive title** — clearly state what changed (e.g., `Add v0.23.0 release section`, `Fix broken nav link on mobile`).
+2. **Detailed body** — the PR description must include:
+   - **What** was changed and **why**.
+   - A summary of every file touched and the reasoning behind each change.
+   - Any assumptions made or trade-offs considered.
+3. **Screenshots** — for any change that affects the visual appearance of the site (new page, layout tweak, style change, content addition), include at least one before/after screenshot captured with the Playwright browser tools or equivalent. Embed them directly in the PR body using markdown image syntax.
+4. **One logical change per PR** — do not bundle unrelated changes. If the task requires multiple independent changes, open separate PRs.
+
+### How to Open a PR
+
+```bash
+# Create a branch, commit, push, then open the PR with a full description
+git checkout -b <descriptive-branch-name>
+git add <files>
+git commit -m "<concise commit message>"
+git push -u origin <descriptive-branch-name>
+gh pr create --title "<title>" --body "<full description with screenshots>"
+```
+
+---
+
 ## Technical Notes
 
 - Layout: `src/layouts/BaseLayout.astro`. Styles: `src/styles/global.css`.
