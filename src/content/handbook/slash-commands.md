@@ -5,6 +5,14 @@ description: 'Interactive commands you can type in GitHub Copilot CLI'
 
 Interactive commands you type in the CLI, starting with `/`.
 
+## Table of Contents
+
+- [Session Management](#session-management)
+- [Review & Code](#review--code)
+- [Mode & Agents](#mode--agents)
+- [Tools & Extensions](#tools--extensions)
+- [Configuration & Meta](#configuration--meta)
+
 ## Session Management
 
 - `/clear` (or `/new` v0.0.381) — Start a fresh session.
