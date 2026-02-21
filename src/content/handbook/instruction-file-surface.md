@@ -16,7 +16,7 @@ Copilot CLI looks for custom instruction files in your repository to tailor its 
 
 - `/instructions` — View and toggle which instruction files are active ([v0.0.407](https://github.com/github/copilot-cli/releases/tag/v0.0.407))
 - `/instructions` with `--alt-screen` enabled — Opens as a full-screen picker ([v0.0.412](https://github.com/github/copilot-cli/releases/tag/v0.0.412))
-- `/init` — Generate a `copilot-instructions.md` for your repository ([v0.0.396](https://github.com/github/copilot-cli/releases/tag/v0.0.396))
+- `/init` — Generate a `.github/copilot-instructions.md` instruction file for your repository ([v0.0.396](https://github.com/github/copilot-cli/releases/tag/v0.0.396))
 - `/init suppress` — Stop `/init` suggestions for a specific repository ([v0.0.410](https://github.com/github/copilot-cli/releases/tag/v0.0.410))
 
 ## Notes
