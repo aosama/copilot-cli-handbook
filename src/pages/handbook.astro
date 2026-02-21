@@ -2,7 +2,7 @@
 import { getEntry, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const handbook = await getEntry('handbook', 'instruction-file-surface');
+const handbook = await getEntry('handbook', 'index');
 
 if (!handbook) {
   throw new Error('Handbook markdown entry was not found.');
@@ -11,10 +11,7 @@ if (!handbook) {
 const { Content } = await render(handbook);
 ---
 
-<BaseLayout
-  title={`${handbook.data.title} — GitHub Copilot CLI Handbook`}
-  description={handbook.data.description}
->
+<BaseLayout title={handbook.data.title} description={handbook.data.description}>
   <article class="handbook-content">
     <header class="page-intro">
       <h1>{handbook.data.title}</h1>

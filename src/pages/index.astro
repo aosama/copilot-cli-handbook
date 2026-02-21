@@ -2,7 +2,7 @@
 import { getEntry, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const handbook = await getEntry('handbook', 'index');
+const handbook = await getEntry('handbook', 'handbook');
 
 if (!handbook) {
   throw new Error('Handbook markdown entry was not found.');

@@ -61,7 +61,7 @@ a:hover {
 .site-footer {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 1rem;
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
@@ -74,12 +74,6 @@ a:hover {
   justify-content: center;
   color: var(--muted);
   font-size: 0.9rem;
-}
-
-.brand {
-  font-size: 1.1rem;
-  font-weight: 700;
-  text-decoration: none;
 }
 
 .site-nav {
@@ -100,14 +94,41 @@ a:hover {
   background: var(--surface);
 }
 
+.github-icon-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  opacity: 0.75;
+  transition:
+    opacity 0.2s,
+    background-color 0.2s;
+}
+
+.github-icon-link:hover {
+  opacity: 1;
+  background: var(--surface);
+}
+
 #theme-toggle {
   border: 1px solid var(--border);
   background: var(--surface);
   color: var(--foreground);
   border-radius: 8px;
-  padding: 0.45rem 0.8rem;
+  padding: 0.4rem;
   cursor: pointer;
   font: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  transition:
+    background-color 0.2s,
+    border-color 0.2s,
+    color 0.2s;
 }
 
 #theme-toggle:hover {
@@ -233,7 +254,7 @@ a:hover {
 @media (max-width: 780px) {
   .site-header {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
   }
 
   .handbook-content section {

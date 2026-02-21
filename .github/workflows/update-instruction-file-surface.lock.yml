@@ -21,11 +21,11 @@
 #
 # For more information: https://github.github.com/gh-aw/introduction/overview/
 #
-# Keep instruction-file-surface.md aligned with recent Copilot CLI releases and GitHub Blog updates.
+# Keep all sections of handbook.md aligned with recent Copilot CLI releases and GitHub Blog updates.
 #
-# gh-aw-metadata: {"schema_version":"v1","frontmatter_hash":"b0b4b64f832c84f0013d5284a993a6a2c3decaa3009cb99d117ea0671bbd1be5","compiler_version":"v0.47.4"}
+# gh-aw-metadata: {"schema_version":"v1","frontmatter_hash":"a92358534e5f0c3f215be169577afb3ff63dc33fde4993fbbe4017b03d9e435b","compiler_version":"v0.47.4"}
 
-name: "Update instruction-file-surface handbook page"
+name: "Update handbook page"
 "on":
   schedule:
   - cron: "28 4 * * *"
@@ -37,7 +37,7 @@ permissions: {}
 concurrency:
   group: "gh-aw-${{ github.workflow }}"
 
-run-name: "Update instruction-file-surface handbook page"
+run-name: "Update handbook page"
 
 jobs:
   activation:
@@ -238,7 +238,7 @@ jobs:
     env:
       DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
       GH_AW_ASSETS_ALLOWED_EXTS: ".png"
-      GH_AW_ASSETS_BRANCH: "assets/update-instruction-file-surface"
+      GH_AW_ASSETS_BRANCH: "assets/update-handbook"
       GH_AW_ASSETS_MAX_SIZE_KB: 10240
       GH_AW_MCP_LOG_DIR: /tmp/gh-aw/mcp-logs/safeoutputs
       GH_AW_SAFE_OUTPUTS: /opt/gh-aw/safeoutputs/outputs.jsonl
@@ -302,7 +302,7 @@ jobs:
               version: "",
               agent_version: "0.0.412",
               cli_version: "v0.47.4",
-              workflow_name: "Update instruction-file-surface handbook page",
+              workflow_name: "Update handbook page",
               experimental: false,
               supports_tools_allowlist: true,
               run_id: context.runId,
@@ -364,7 +364,7 @@ jobs:
           cat > /opt/gh-aw/safeoutputs/tools.json << 'GH_AW_SAFE_OUTPUTS_TOOLS_EOF'
           [
             {
-              "description": "Create a new GitHub pull request to propose code changes. Use this after making file edits to submit them for review and merging. The PR will be created from the current branch with your committed changes. For code review comments on an existing PR, use create_pull_request_review_comment instead. CONSTRAINTS: Maximum 1 pull request(s) can be created. Title will be prefixed with \"[instruction-file-surface] \". Labels [documentation] will be automatically added. PRs will be created as drafts.",
+              "description": "Create a new GitHub pull request to propose code changes. Use this after making file edits to submit them for review and merging. The PR will be created from the current branch with your committed changes. For code review comments on an existing PR, use create_pull_request_review_comment instead. CONSTRAINTS: Maximum 1 pull request(s) can be created. Title will be prefixed with \"[handbook] \". Labels [documentation] will be automatically added. PRs will be created as drafts.",
               "inputSchema": {
                 "additionalProperties": false,
                 "properties": {
@@ -718,7 +718,7 @@ jobs:
           COPILOT_AGENT_RUNNER_TYPE: STANDALONE
           COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_GITHUB_TOKEN }}
           GH_AW_ASSETS_ALLOWED_EXTS: ".png"
-          GH_AW_ASSETS_BRANCH: "assets/update-instruction-file-surface"
+          GH_AW_ASSETS_BRANCH: "assets/update-handbook"
           GH_AW_ASSETS_MAX_SIZE_KB: 10240
           GH_AW_MCP_CONFIG: /home/runner/.copilot/mcp-config.json
           GH_AW_PROMPT: /tmp/gh-aw/aw-prompts/prompt.txt
@@ -916,7 +916,7 @@ jobs:
         env:
           GH_AW_AGENT_OUTPUT: ${{ env.GH_AW_AGENT_OUTPUT }}
           GH_AW_NOOP_MAX: 1
-          GH_AW_WORKFLOW_NAME: "Update instruction-file-surface handbook page"
+          GH_AW_WORKFLOW_NAME: "Update handbook page"
         with:
           github-token: ${{ secrets.GH_AW_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
           script: |
@@ -929,7 +929,7 @@ jobs:
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         env:
           GH_AW_AGENT_OUTPUT: ${{ env.GH_AW_AGENT_OUTPUT }}
-          GH_AW_WORKFLOW_NAME: "Update instruction-file-surface handbook page"
+          GH_AW_WORKFLOW_NAME: "Update handbook page"
         with:
           github-token: ${{ secrets.GH_AW_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
           script: |
@@ -942,7 +942,7 @@ jobs:
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         env:
           GH_AW_AGENT_OUTPUT: ${{ env.GH_AW_AGENT_OUTPUT }}
-          GH_AW_WORKFLOW_NAME: "Update instruction-file-surface handbook page"
+          GH_AW_WORKFLOW_NAME: "Update handbook page"
           GH_AW_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           GH_AW_AGENT_CONCLUSION: ${{ needs.agent.result }}
           GH_AW_WORKFLOW_ID: "update-instruction-file-surface"
@@ -961,7 +961,7 @@ jobs:
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         env:
           GH_AW_AGENT_OUTPUT: ${{ env.GH_AW_AGENT_OUTPUT }}
-          GH_AW_WORKFLOW_NAME: "Update instruction-file-surface handbook page"
+          GH_AW_WORKFLOW_NAME: "Update handbook page"
           GH_AW_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           GH_AW_AGENT_CONCLUSION: ${{ needs.agent.result }}
           GH_AW_NOOP_MESSAGE: ${{ steps.noop.outputs.noop_message }}
@@ -978,7 +978,7 @@ jobs:
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         env:
           GH_AW_AGENT_OUTPUT: ${{ env.GH_AW_AGENT_OUTPUT }}
-          GH_AW_WORKFLOW_NAME: "Update instruction-file-surface handbook page"
+          GH_AW_WORKFLOW_NAME: "Update handbook page"
           GH_AW_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         with:
           github-token: ${{ secrets.GH_AW_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
@@ -1023,8 +1023,8 @@ jobs:
       - name: Setup threat detection
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         env:
-          WORKFLOW_NAME: "Update instruction-file-surface handbook page"
-          WORKFLOW_DESCRIPTION: "Keep instruction-file-surface.md aligned with recent Copilot CLI releases and GitHub Blog updates."
+          WORKFLOW_NAME: "Update handbook page"
+          WORKFLOW_DESCRIPTION: "Keep all sections of handbook.md aligned with recent Copilot CLI releases and GitHub Blog updates."
           HAS_PATCH: ${{ needs.agent.outputs.has_patch }}
         with:
           script: |
@@ -1103,7 +1103,7 @@ jobs:
       GH_AW_ENGINE_ID: "copilot"
       GH_AW_ENGINE_MODEL: "claude-sonnet-4.6"
       GH_AW_WORKFLOW_ID: "update-instruction-file-surface"
-      GH_AW_WORKFLOW_NAME: "Update instruction-file-surface handbook page"
+      GH_AW_WORKFLOW_NAME: "Update handbook page"
     outputs:
       create_discussion_error_count: ${{ steps.process_safe_outputs.outputs.create_discussion_error_count }}
       create_discussion_errors: ${{ steps.process_safe_outputs.outputs.create_discussion_errors }}
@@ -1157,7 +1157,7 @@ jobs:
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         env:
           GH_AW_AGENT_OUTPUT: ${{ env.GH_AW_AGENT_OUTPUT }}
-          GH_AW_SAFE_OUTPUTS_HANDLER_CONFIG: "{\"create_pull_request\":{\"base_branch\":\"main\",\"draft\":true,\"fallback_as_issue\":false,\"if_no_changes\":\"warn\",\"labels\":[\"documentation\"],\"max\":1,\"max_patch_size\":1024,\"title_prefix\":\"[instruction-file-surface] \"},\"missing_data\":{},\"missing_tool\":{}}"
+          GH_AW_SAFE_OUTPUTS_HANDLER_CONFIG: "{\"create_pull_request\":{\"base_branch\":\"main\",\"draft\":true,\"fallback_as_issue\":false,\"if_no_changes\":\"warn\",\"labels\":[\"documentation\"],\"max\":1,\"max_patch_size\":1024,\"title_prefix\":\"[handbook] \"},\"missing_data\":{},\"missing_tool\":{}}"
         with:
           github-token: ${{ secrets.GH_AW_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
           script: |
@@ -1233,10 +1233,10 @@ jobs:
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         env:
           GH_AW_AGENT_OUTPUT: ${{ env.GH_AW_AGENT_OUTPUT }}
-          GH_AW_ASSETS_BRANCH: "assets/update-instruction-file-surface"
+          GH_AW_ASSETS_BRANCH: "assets/update-handbook"
           GH_AW_ASSETS_MAX_SIZE_KB: 10240
           GH_AW_ASSETS_ALLOWED_EXTS: ".png"
-          GH_AW_WORKFLOW_NAME: "Update instruction-file-surface handbook page"
+          GH_AW_WORKFLOW_NAME: "Update handbook page"
           GH_AW_ENGINE_ID: "copilot"
           GH_AW_ENGINE_MODEL: "claude-sonnet-4.6"
         with:
