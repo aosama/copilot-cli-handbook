@@ -1,5 +1,5 @@
 ---
-title: 'GitHub Copilot CLI — Feature Releases'
+title: 'Release Tracker'
 description: 'Every feature in GitHub Copilot CLI, grouped by release date'
 lastUpdated: 'February 2026'
 ---
