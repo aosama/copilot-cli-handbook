@@ -11,6 +11,8 @@ Copilot CLI looks for custom instruction files in your repository to tailor its 
 
 - `.github/copilot-instructions.md`
 - `.copilot/instructions.md`
+- `~/.copilot/instructions/*.instructions.md` — user-level instructions (v0.0.412)
+- `AGENTS.md` — agent-specific instructions
 
 ### Behavior
 
@@ -18,10 +20,13 @@ Copilot CLI looks for custom instruction files in your repository to tailor its 
   priority-based fallback system; now, multiple files are merged to provide comprehensive context.
 - **View & Toggle (v0.0.407):** You can interactively view and enable/disable specific instruction files
   using the `/instructions` command.
+- **Case-insensitive filenames:** Instruction filenames are matched without regard to case (for example,
+  `INSTRUCTIONS.MD` is treated the same as `instructions.md`).
 
 ### Commands
 
-- `/instructions` — View and toggle custom instruction files (v0.0.407)
+- `/instructions` — View and toggle custom instruction files; use `--alt-screen` for a full-screen
+  picker (v0.0.407)
 - `/init` — Generate Copilot instructions (v0.0.396)
 - `/init suppress` — Control init suggestions per repository (v0.0.410)
 
