@@ -11,6 +11,7 @@ Copilot CLI looks for custom instruction files in your repository to tailor its 
 
 - `.github/copilot-instructions.md`
 - `.copilot/instructions.md`
+- `~/.copilot/instructions/*.instructions.md` (v0.0.412) — User-level instructions applied across all repositories.
 
 ### Behavior
 
@@ -46,10 +47,11 @@ Interactive commands you type in the CLI, starting with `/`.
 - `/tasks` (v0.0.404) — View and manage background tasks/agents.
 - `/delegate` (v0.0.394) — Delegate a prompt to run in the background.
 - `/yolo` / `/allow-all` (v0.0.399) — Auto-approve all permissions for the session.
+- `/fleet` (v0.0.411) — Dispatch multiple subagents in parallel (available to all users).
 
 ### Tools & Extensions
 
-- `/mcp` (v0.0.397) — Manage MCP tools (`/mcp show` in v0.0.406).
+- `/mcp` (v0.0.397) — Manage MCP tools (`/mcp show` in v0.0.406, `/mcp reload` in v0.0.412).
 - `/plugin` (v0.0.392) — Manage plugins (install/update).
 - `/init` (v0.0.396) — Generate Copilot instructions.
 
@@ -75,10 +77,11 @@ Flags passed to the `copilot` or `gh copilot` executable.
 - `--experimental` (v0.0.396) — Opt into experimental features.
 - `--config-dir` (v0.0.382) — Override the default configuration directory location.
 - `--silent` (v0.0.365) — Suppress stats output for scripting.
+- `--bash-env` (v0.0.412) — Source BASH_ENV in shell sessions.
 
 ### Interface & Mode
 
-- `--alt-screen` (v0.0.407) — Enable experimental alternate screen buffer mode.
+- `--alt-screen` (v0.0.407) — Enable experimental alternate screen buffer mode (`--alt-screen on` / `--alt-screen off` syntax added in v0.0.411).
 - `--acp` (v0.0.397) — Start as an Agent Client Protocol server.
 - `--agent` (v0.0.380) — Enable agent mode in interactive sessions.
 - `--resume` (v0.0.372) — Continue a remote session locally.
@@ -110,10 +113,11 @@ Flags passed to the `copilot` or `gh copilot` executable.
 - `--config-dir PATH` — Overrides the config directory (default `~/.copilot`).
 - `.vscode/mcp.json` (v0.0.407) — Workspace-local MCP configuration.
 - `.mcp.json` (v0.0.401) — Claude-style MCP config format supported without the `mcpServers` wrapper.
+- Windows On-Device Registry (v0.0.411) — MCP servers can be configured via the Windows registry.
 
 ### CLI commands
 
-- `/mcp [show|add|edit|delete|disable|enable] [SERVER-NAME]` — Manage MCP server configuration.
+- `/mcp [show|add|edit|delete|disable|enable|reload] [SERVER-NAME]` — Manage MCP server configuration.
 
 ### CLI flags
 
@@ -130,6 +134,14 @@ Flags passed to the `copilot` or `gh copilot` executable.
 - `--add-github-mcp-tool TOOL` — Add tools for the GitHub MCP server (use `*` for all tools).
 
 ### Release timeline
+
+#### 0.0.412 — 2026-02-19
+
+- `/mcp reload` command to reload MCP configuration.
+
+#### 0.0.411 — 2026-02-17
+
+- Support MCP servers from Windows On-Device Registry.
 
 #### 0.0.410 — 2026-02-14
 
