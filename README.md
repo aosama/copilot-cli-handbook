@@ -69,6 +69,15 @@ Deployed via `.github/workflows/deploy.yml` on pushes to `main`.
 
 Repository settings: **Settings → Pages → Source → GitHub Actions** (select Static HTML, not Jekyll).
 
+## Pull Request Preview Deployment
+
+This repo includes a dedicated preview deployment workflow:
+
+- Workflow: `.github/workflows/preview-deploy.yml`
+- Trigger: `pull_request` (`opened`, `synchronize`, `reopened`) + manual dispatch
+- Behavior: builds the site and attempts a GitHub Pages preview deployment for the PR
+- UX: posts/updates a PR comment with the preview URL
+
 ## Agentic Workflow: Instruction File Surface Updater
 
 This repo includes an Agentic Workflow that keeps `instruction-file-surface.md` current:

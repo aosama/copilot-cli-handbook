@@ -16,12 +16,36 @@ network:
     - defaults
     - github
     - github.blog
+    - node
 tools:
   edit:
+  bash:
+    [
+      'npm',
+      'npx',
+      'node',
+      'cat',
+      'ls',
+      'pwd',
+      'grep',
+      'head',
+      'tail',
+      'mkdir',
+      'rm',
+      'cp',
+      'mv',
+      'kill',
+    ]
   web-fetch:
+  playwright:
+    allowed_domains: ['localhost', '127.0.0.1']
   github:
     toolsets: [repos, search]
 safe-outputs:
+  upload-asset:
+    branch: 'assets/update-instruction-file-surface'
+    allowed-exts: [.png]
+    max: 3
   create-pull-request:
     title-prefix: '[instruction-file-surface] '
     labels: [documentation]
@@ -69,4 +93,16 @@ You maintain this repository page:
   - a short summary of what changed
   - source links used
   - why each change is relevant to instruction-file-surface
-- If no relevant changes are found, do not create a pull request.
+  - a `## Screenshots` section that embeds at least one uploaded screenshot
+- Screenshot requirements for changed runs:
+  1. Build and preview locally (`npm ci`, `npm run build`, `npm run preview -- --host 127.0.0.1 --port 4321`)
+  2. Capture a full-page screenshot of:
+     - `http://127.0.0.1:4321/copilot-cli-handbook/instruction-file-surface/`
+  3. Save screenshot to:
+     - `/tmp/gh-aw/screenshots/instruction-file-surface-updated.png`
+  4. Publish the image with `upload_asset` before creating the PR.
+  5. Include the uploaded image URL in the PR body using Markdown image syntax.
+- If no relevant changes are found:
+  - do not create screenshots
+  - do not upload assets
+  - do not create a pull request.
