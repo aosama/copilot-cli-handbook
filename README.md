@@ -78,9 +78,9 @@ This repo includes a dedicated preview deployment workflow:
 - Behavior: builds the site and attempts a GitHub Pages preview deployment for the PR
 - UX: posts/updates a PR comment with the preview URL
 
-## Agentic Workflow: Instruction File Surface Updater
+## Agentic Workflow: Release Tracker Updater
 
-This repo includes an Agentic Workflow that keeps `instruction-file-surface.md` current:
+This repo includes an Agentic Workflow that keeps `src/content/handbook/index.md` (Release Tracker) current:
 
 - Source file: `.github/workflows/update-instruction-file-surface.md`
 - Compiled lock file: `.github/workflows/update-instruction-file-surface.lock.yml`

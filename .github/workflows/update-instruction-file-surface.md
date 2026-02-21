@@ -1,6 +1,6 @@
 ---
-name: Update handbook page
-description: Keep all sections of handbook.md aligned with recent Copilot CLI releases and GitHub Blog updates.
+name: Update release tracker page
+description: Keep index.md release sections aligned with recent Copilot CLI releases and GitHub Blog updates.
 on:
   schedule: daily
   workflow_dispatch:
@@ -55,26 +55,13 @@ safe-outputs:
     fallback-as-issue: false
 ---
 
-# Update all sections in `handbook.md`
+# Update release tracker in `index.md`
 
 You maintain this file:
 
-- `src/content/handbook/handbook.md`
+- `src/content/handbook/index.md`
 
-The handbook page is rendered at: `http://127.0.0.1:4321/copilot-cli-handbook/`
-
-## Sections you are responsible for
-
-The file contains four top-level sections (each a `##` heading). You must review and update
-all four every run:
-
-1. `## Instruction File Surface` — instruction files, `/instructions`, `/init`, supported
-   file paths, and related behavior.
-2. `## Slash Commands` — interactive `/` commands available in the CLI session.
-3. `## Command Line Arguments` — flags and subcommands passed to the `copilot`/`gh copilot`
-   executable.
-4. `## MCP Configuration Files` — MCP config files, CLI commands, CLI flags, and the GitHub
-   MCP server tool-selection flags.
+The release tracker page is rendered at: `http://127.0.0.1:4321/copilot-cli-handbook/handbook/`
 
 Do not touch the frontmatter (`title`, `description`).
 
@@ -88,7 +75,7 @@ Do not touch the frontmatter (`title`, `description`).
 
 ## Content rules (strict)
 
-- Edit only `src/content/handbook/handbook.md`. Do not create or edit any other file.
+- Edit only `src/content/handbook/index.md`. Do not create or edit any other file.
 - Keep content concise and user-actionable. Apply the test: "Can a user read this and go
   try it right now?" If not, leave it out.
 - **Include** only things a user can actively invoke, configure, or opt into.
@@ -98,27 +85,22 @@ Do not touch the frontmatter (`title`, `description`).
   - SDK/API internals not exposed to the end user.
   - Passive performance improvements with no user action required.
   - Recovery/hotfix releases that merely restore broken functionality.
-- Keep version tags in bullets where applicable (e.g. `(v0.0.XXX)`), matching existing style.
+- Group entries by release date (`## x.y.z — YYYY-MM-DD`) in newest-first order.
+- If after filtering a release has zero qualifying bullets, omit that release section.
 - Do not reword or reformat existing bullets unless they are factually incorrect.
-- Do not add, rename, or remove `##` top-level headings.
-- Add new `###` sub-sections only if clearly warranted by the release notes and content volume.
-- If after filtering a section has zero new qualifying items, leave that section unchanged.
 
 ## Update procedure
 
-1. Read the full `src/content/handbook/handbook.md` to understand the current state of every
-   section.
+1. Read the full `src/content/handbook/index.md` to understand the current release tracker state.
 2. Fetch the latest Copilot CLI release notes and blog posts from the sources above.
-3. For each of the four sections, identify new user-facing changes not yet reflected.
-4. Update each section's sub-headings as needed. Ensure every added or changed bullet is
-   grounded in one of the official sources above.
-5. For `## MCP Configuration Files`, also update the `### Release timeline` sub-section with
-   a new dated entry if any MCP-related changes were added.
+3. Identify new user-facing release changes not yet reflected.
+4. Add or update release sections and bullets in newest-first order.
+5. Ensure every added or changed bullet is grounded in one of the official sources above.
 
 ## Output behavior
 
-- If there are any content changes (across any section), prepare a pull request with:
-  - a summary of what changed, broken down by section
+- If there are any content changes, prepare a pull request with:
+  - a summary of what changed, broken down by release
   - the source links used
   - why each change is relevant (maps to a user-actionable feature)
   - a `## Screenshots` section that embeds at least one uploaded screenshot
