@@ -81,7 +81,7 @@ Flags passed to the `copilot` or `gh copilot` executable.
 
 ### Interface & Mode
 
-- `--alt-screen` (v0.0.407) — Enable experimental alternate screen buffer mode (`--alt-screen on` / `--alt-screen off` syntax added in v0.0.411).
+- `--alt-screen` (v0.0.407) — Enable experimental alternate screen buffer mode (`--alt-screen on` / `--alt-screen off` syntax added in v0.0.411). Enabled by default when running with `--experimental` (v0.0.413).
 - `--acp` (v0.0.397) — Start as an Agent Client Protocol server.
 - `--agent` (v0.0.380) — Enable agent mode in interactive sessions.
 - `--resume` (v0.0.372) — Continue a remote session locally.
@@ -132,8 +132,13 @@ Flags passed to the `copilot` or `gh copilot` executable.
 - `--enable-all-github-mcp-tools` — Enable all GitHub MCP server tools.
 - `--add-github-mcp-toolset TOOLSET` — Add toolsets for the GitHub MCP server (use `all` for all toolsets).
 - `--add-github-mcp-tool TOOL` — Add tools for the GitHub MCP server (use `*` for all tools).
+- Explore agent can use GitHub MCP tools when they are enabled (v0.0.414).
 
 ### Release timeline
+
+#### 0.0.414 — 2026-02-21
+
+- Explore agent can use GitHub MCP tools when they are enabled.
 
 #### 0.0.412 — 2026-02-19
 
