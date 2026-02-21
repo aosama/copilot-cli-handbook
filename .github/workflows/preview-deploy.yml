@@ -2,66 +2,109 @@ name: Deploy PR Preview
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
-  workflow_dispatch:
+    types: [opened, synchronize, reopened, closed]
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
   pull-requests: write
 
 concurrency:
-  group: preview-${{ github.event.pull_request.number || github.run_id }}
-  cancel-in-progress: true
+  group: pages
+  cancel-in-progress: false
 
 jobs:
-  build:
-    if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
+  preview:
+    if: ${{ github.event_name == 'pull_request' && github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
     env:
       ASTRO_TELEMETRY_DISABLED: 1
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      ASTRO_BASE: /copilot-cli-handbook/pull/${{ github.event.pull_request.number }}
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
+
       - run: npm ci
       - run: npm run build
+
+      - name: Ensure gh-pages branch exists
+        run: |
+          set -euo pipefail
+          if git ls-remote --exit-code --heads origin gh-pages >/dev/null 2>&1; then
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git switch --orphan gh-pages
+          git rm -rf . || true
+          touch .nojekyll
+          git add .nojekyll
+          git commit -m "Initialize gh-pages"
+          git push -u origin gh-pages
+
+      - name: Checkout gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Publish preview to gh-pages
+        run: |
+          set -euo pipefail
+          rm -rf "gh-pages/pull/${PR_NUMBER}"
+          mkdir -p "gh-pages/pull/${PR_NUMBER}"
+          rsync -a --delete dist/ "gh-pages/pull/${PR_NUMBER}/"
+          touch gh-pages/.nojekyll
+
+      - name: Commit and push gh-pages
+        run: |
+          set -euo pipefail
+          cd gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No gh-pages changes to commit."
+            exit 0
+          fi
+          git commit -m "Update preview for PR #${PR_NUMBER}"
+          git push
+
+      - name: Prepare Pages artifact
+        run: |
+          set -euo pipefail
+          rm -rf site
+          mkdir site
+          rsync -a --delete --exclude .git gh-pages/ site/
+
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: site
 
-  deploy:
-    needs: build
-    if: ${{ needs.build.result == 'success' }}
-    environment:
-      name: github-pages-preview
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy preview to GitHub Pages
+      - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          preview: true
 
       - name: Comment preview URL on pull request
-        if: ${{ github.event_name == 'pull_request' }}
         uses: actions/github-script@v7
         env:
-          PREVIEW_URL: ${{ steps.deployment.outputs.page_url }}
+          PREVIEW_URL: https://aosama.github.io/copilot-cli-handbook/pull/${{ github.event.pull_request.number }}/
         with:
           script: |
             const marker = '<!-- pr-preview-url -->';
             const body = [
               marker,
-              '🚀 Preview deployment is ready.',
+              '🚀 PR preview is ready.',
               '',
               `Preview URL: ${process.env.PREVIEW_URL}`,
-              '',
-              '_If this URL is empty or inaccessible, GitHub Pages preview deployments may not be available for this repository yet._',
             ].join('\n');
 
             const { owner, repo } = context.repo;
@@ -89,3 +132,68 @@ jobs:
                 body,
               });
             }
+
+  cleanup:
+    if: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == github.repository }}
+    runs-on: ubuntu-latest
+    env:
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check gh-pages branch exists
+        id: ghpages
+        run: |
+          set -euo pipefail
+          if git ls-remote --exit-code --heads origin gh-pages >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Checkout gh-pages
+        if: ${{ steps.ghpages.outputs.exists == 'true' }}
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Remove preview folder
+        if: ${{ steps.ghpages.outputs.exists == 'true' }}
+        run: |
+          set -euo pipefail
+          rm -rf "gh-pages/pull/${PR_NUMBER}"
+          touch gh-pages/.nojekyll
+
+      - name: Commit and push gh-pages
+        if: ${{ steps.ghpages.outputs.exists == 'true' }}
+        run: |
+          set -euo pipefail
+          cd gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No gh-pages changes to commit."
+            exit 0
+          fi
+          git commit -m "Remove preview for PR #${PR_NUMBER}"
+          git push
+
+      - name: Prepare Pages artifact
+        if: ${{ steps.ghpages.outputs.exists == 'true' }}
+        run: |
+          set -euo pipefail
+          rm -rf site
+          mkdir site
+          rsync -a --delete --exclude .git gh-pages/ site/
+
+      - uses: actions/upload-pages-artifact@v3
+        if: ${{ steps.ghpages.outputs.exists == 'true' }}
+        with:
+          path: site
+
+      - name: Deploy to GitHub Pages
+        if: ${{ steps.ghpages.outputs.exists == 'true' }}
+        id: deployment
+        uses: actions/deploy-pages@v4
