@@ -31,15 +31,37 @@ jobs:
           cache: npm
 
       - run: npm ci
-      - run: npm run build
 
-      - name: Ensure gh-pages branch exists
+      - name: Check gh-pages branch exists
+        id: ghpages
         run: |
           set -euo pipefail
           if git ls-remote --exit-code --heads origin gh-pages >/dev/null 2>&1; then
-            exit 0
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: Build preview
+        run: |
+          set -euo pipefail
+          ASTRO_BASE="/copilot-cli-handbook/pull/${PR_NUMBER}" npm run build
+          mv dist dist-preview
+
+      - name: Build production from main (first run only)
+        if: ${{ steps.ghpages.outputs.exists == 'false' }}
+        run: |
+          set -euo pipefail
+          git fetch origin main --depth=1
+          git checkout --detach origin/main
+          npm ci
+          ASTRO_BASE=/copilot-cli-handbook npm run build
+          mv dist dist-main
+
+      - name: Ensure gh-pages branch exists
+        if: ${{ steps.ghpages.outputs.exists == 'false' }}
+        run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
@@ -56,12 +78,20 @@ jobs:
           ref: gh-pages
           path: gh-pages
 
+      - name: Update gh-pages root from main (first run only)
+        if: ${{ steps.ghpages.outputs.exists == 'false' }}
+        run: |
+          set -euo pipefail
+          mkdir -p gh-pages/pull
+          rsync -a --delete --exclude pull --exclude .git dist-main/ gh-pages/
+          touch gh-pages/.nojekyll
+
       - name: Publish preview to gh-pages
         run: |
           set -euo pipefail
           rm -rf "gh-pages/pull/${PR_NUMBER}"
           mkdir -p "gh-pages/pull/${PR_NUMBER}"
-          rsync -a --delete dist/ "gh-pages/pull/${PR_NUMBER}/"
+          rsync -a --delete dist-preview/ "gh-pages/pull/${PR_NUMBER}/"
           touch gh-pages/.nojekyll
 
       - name: Commit and push gh-pages
