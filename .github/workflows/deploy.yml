@@ -6,30 +6,85 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
     env:
       ASTRO_TELEMETRY_DISABLED: 1
+      ASTRO_BASE: /copilot-cli-handbook
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
+
       - run: npm ci
       - run: npm run build
+
+      - name: Ensure gh-pages branch exists
+        run: |
+          set -euo pipefail
+          if git ls-remote --exit-code --heads origin gh-pages >/dev/null 2>&1; then
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git switch --orphan gh-pages
+          git rm -rf . || true
+          touch .nojekyll
+          git add .nojekyll
+          git commit -m "Initialize gh-pages"
+          git push -u origin gh-pages
+
+      - name: Checkout gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Update gh-pages root (preserve pull/)
+        run: |
+          set -euo pipefail
+          mkdir -p gh-pages/pull
+          rsync -a --delete --exclude pull --exclude .git dist/ gh-pages/
+          touch gh-pages/.nojekyll
+
+      - name: Commit and push gh-pages
+        run: |
+          set -euo pipefail
+          cd gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No gh-pages changes to commit."
+            exit 0
+          fi
+          git commit -m "Publish main site"
+          git push
+
+      - name: Prepare Pages artifact
+        run: |
+          set -euo pipefail
+          rm -rf site
+          mkdir site
+          rsync -a --delete --exclude .git gh-pages/ site/
+
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: site
 
   deploy:
     needs: build
