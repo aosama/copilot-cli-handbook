@@ -9,20 +9,16 @@ Copilot CLI looks for custom instruction files in your repository to tailor its 
 
 - `.github/copilot-instructions.md`
 - `.copilot/instructions.md`
-- `~/.copilot/instructions/*.instructions.md` — user-level instructions applied across all repositories (v0.0.412)
-
-## Behavior
-
-- **Combination (v0.0.385):** All custom instruction files found are combined. Earlier versions used a
-  priority-based fallback system; now, multiple files are merged to provide comprehensive context.
-- **View & Toggle (v0.0.407):** You can interactively view and enable/disable specific instruction files
-  using the `/instructions` command.
-- **Case-insensitive (v0.0.411):** Instruction files are recognized regardless of filename casing.
-- **Full-screen picker (v0.0.412):** The instructions picker opens as a full-screen view when alt-screen
-  mode is enabled.
+- `~/.copilot/instructions/*.instructions.md` — user-level instructions applied across all repositories ([v0.0.412](https://github.com/github/copilot-cli/releases/tag/v0.0.412))
+- `AGENTS.md` — agent-specific instructions for guidelines, project structure, or environment details
 
 ## Commands
 
-- `/instructions` — View and toggle custom instruction files (v0.0.407)
-- `/init` — Generate Copilot instructions (v0.0.396)
-- `/init suppress` — Control init suggestions per repository (v0.0.410)
+- `/instructions` — View and toggle which instruction files are active ([v0.0.407](https://github.com/github/copilot-cli/releases/tag/v0.0.407))
+- `/instructions` with `--alt-screen` enabled — Opens as a full-screen picker ([v0.0.412](https://github.com/github/copilot-cli/releases/tag/v0.0.412))
+- `/init` — Generate a `copilot-instructions.md` for your repository ([v0.0.396](https://github.com/github/copilot-cli/releases/tag/v0.0.396))
+- `/init suppress` — Stop `/init` suggestions for a specific repository ([v0.0.410](https://github.com/github/copilot-cli/releases/tag/v0.0.410))
+
+## Notes
+
+- Instruction filenames are matched case-insensitively ([v0.0.411](https://github.com/github/copilot-cli/releases/tag/v0.0.411))
