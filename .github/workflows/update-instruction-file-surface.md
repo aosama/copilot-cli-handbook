@@ -11,6 +11,13 @@ permissions:
 engine:
   id: copilot
   model: claude-sonnet-4.6
+  args:
+    - --allow-url
+    - github.com
+    - --allow-url
+    - github.blog
+    - --allow-url
+    - api.github.com
 network:
   allowed:
     - defaults
