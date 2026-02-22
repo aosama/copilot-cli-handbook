@@ -8,6 +8,39 @@ Every user-facing feature shipped in [GitHub Copilot CLI](https://github.com/git
 
 ---
 
+## 0.0.413 — 2026-02-20
+
+- `ctrl+insert` copies selected text in alt-screen view
+- Alt-screen mode enabled by default when running with `--experimental` flag
+- Support remote plugin sources (GitHub repos and git URLs) in `marketplace.json` plugin entries
+- Ctrl+A, Ctrl+E, and Ctrl+U navigate to logical line boundaries (newlines) instead of visual wrap boundaries
+- Add configurable status line to display dynamic session information via custom shell scripts
+
+## 0.0.412 — 2026-02-19
+
+- Hide custom agents with `user-invocable: false` from the `/agents` picker
+- Allow `/reset-allowed-tools` to run during agent execution
+- Add `/mcp reload` command to reload MCP configuration without restarting
+- Skills support `disable-model-invocation` frontmatter field
+- Edit plan in terminal editor with `ctrl+y`
+- Configure LSP server request timeouts in `lsp.json`
+- Add `/update` command to view changelog and update instructions
+- Support `~/.copilot/instructions/*.instructions.md` for user-level instructions across all repositories
+- Double-click selects word, triple-click selects line in alt-screen text selection
+- Edit the prompt in your preferred terminal editor with `ctrl+x ctrl+e`
+- Command files no longer require YAML frontmatter — plain markdown files work with name and description derived automatically
+- Add cross-session memory: ask about past work, files, and PRs across sessions (experimental)
+- Add `--bash-env` flag to source `BASH_ENV` in shell sessions
+- `ctrl+x /` restored as alternate shortcut to run commands while preserving input
+
+## 0.0.411 — 2026-02-17
+
+- Custom agents use `disable-model-invocation` instead of `infer` (backward compatible)
+- Support for Claude Sonnet 4.6 model
+- Support MCP servers from Windows On-Device Registry
+- Support `--alt-screen on` and `--alt-screen off` syntax
+- Add `include_coauthor` config option to disable Co-authored-by trailer in git commits
+
 ## 0.0.410 — 2026-02-14
 
 - `/init suppress` to control init suggestions per repository
