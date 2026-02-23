@@ -8,6 +8,10 @@ Every user-facing feature shipped in [GitHub Copilot CLI](https://github.com/git
 
 ---
 
+## 0.0.414 — 2026-02-21
+
+- Explore agent can now use GitHub MCP tools when available
+
 ## 0.0.413 — 2026-02-20
 
 - `ctrl+insert` copies selected text in alt-screen view
