@@ -8,6 +8,15 @@ Every user-facing feature shipped in [GitHub Copilot CLI](https://github.com/git
 
 ---
 
+## 0.0.415 — 2026-02-23
+
+- Custom agents support the `model` field to specify which model to use
+- Plan approval menu shows model-curated actions with a recommended option highlighted first, including autopilot+fleet for parallelizable work
+- Add `show_file` tool for presenting code and diffs to the user
+- `/plugin marketplace add` and `/plugin install` support local paths containing spaces
+- `/mcp show` groups servers into User, Workspace, Plugins, and Built-in sections and makes all servers navigable
+- Ctrl+A/E cycle through visual lines in wrapped input; Home/End navigate within a visual line; Ctrl+Home/End jump to text boundaries
+
 ## 0.0.414 — 2026-02-21
 
 - Explore agent can now use GitHub MCP tools when available
