@@ -8,6 +8,16 @@ Every user-facing feature shipped in [GitHub Copilot CLI](https://github.com/git
 
 ---
 
+## 0.0.417 — 2026-02-25
+
+- `/research` command for deep research with exportable reports
+- Plugin skills and commands load from custom paths declared in `plugin.json`
+
+## 0.0.416 — 2026-02-24
+
+- `--help` content expanded with descriptions, examples, and sorted flags
+- Undo operations now always require confirmation
+
 ## 0.0.415 — 2026-02-23
 
 - Custom agents support the `model` field to specify which model to use
