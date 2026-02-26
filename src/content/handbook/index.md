@@ -15,7 +15,7 @@ Every user-facing feature shipped in [GitHub Copilot CLI](https://github.com/git
 
 ## 0.0.417 — 2026-02-25
 
-- Add `/research` command for deep research with exportable reports
+- `/research` command for deep research with exportable reports
 - Plugin skills and commands load from custom paths declared in `plugin.json`
 
 ## 0.0.416 — 2026-02-24
