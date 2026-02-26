@@ -8,6 +8,11 @@ Every user-facing feature shipped in [GitHub Copilot CLI](https://github.com/git
 
 ---
 
+## 0.0.418 — 2026-02-25
+
+- GitHub Copilot CLI is now [generally available](https://github.blog/changelog/2026-02-25-github-copilot-cli-is-now-generally-available)
+- `--disable-parallel-tools-execution` flag and `parallel_tool_execution` config option removed
+
 ## 0.0.417 — 2026-02-25
 
 - `/research` command for deep research with exportable reports
