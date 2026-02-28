@@ -8,6 +8,19 @@ Every user-facing feature shipped in [GitHub Copilot CLI](https://github.com/git
 
 ---
 
+## 0.0.420 — 2026-02-27
+
+- Type `#` to reference GitHub issues, pull requests, and discussions
+
+## 0.0.419 — 2026-02-27
+
+- `/chronicle` command with `standup`, `tips`, and `improve` subcommands powered by session history (experimental)
+- `--mouse`/`--no-mouse` flag and `mouse` config to disable mouse mode in alt-screen
+- Ctrl+F/Ctrl+B as page down/up shortcuts for scrolling in alt-screen views
+- Home and End keys jump to the top and bottom of the alt-screen scroll buffer
+- Ctrl+G keyboard shortcut for editing prompts in external editor and dismissing UI elements
+- MCP server names now support dots, slashes, and `@` characters (e.g., `@modelcontextprotocol/server`, `io.github/server`)
+
 ## 0.0.418 — 2026-02-25
 
 - GitHub Copilot CLI is now [generally available](https://github.blog/changelog/2026-02-25-github-copilot-cli-is-now-generally-available)
