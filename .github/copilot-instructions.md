@@ -2,12 +2,12 @@
 
 ## Session-Start Checklist
 
-- Checklist: identify available MCP groups → read readme.md → map task to capabilities → activate missing tool categories → state capability groups in use.
+- Checklist: identify available MCP groups → read README.md → map task to capabilities → activate missing tool categories → state capability groups in use.
 
 ## On Session Start
 
 - Know your MCP servers and tool categories.
-- Read readme.md.
+- Read README.md.
 - Map the user task to required capabilities, then activate any missing tool categories before implementation.
 - Ensure GitHub CLI (`gh`) is installed and available for the coding agent to use.
 
@@ -28,7 +28,7 @@ A small static site (Astro 5.x, Node 18+) that lists user-facing features of Git
 
 ## Source of Truth
 
-The canonical source for content are links found in the readme.md -- they are official publications from github.com
+The canonical source for content are links found in README.md -- they are official publications from github.com
 
 ## Build, Lint, and Test
 
