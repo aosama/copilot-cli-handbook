@@ -28,7 +28,7 @@ A small static site (Astro 5.x, Node 18+) that lists user-facing features of Git
 
 ## Source of Truth
 
-The canonical source for content are links found in README.md -- they are official publications from github.com
+The canonical sources for content are links found in README.md -- they are official publications from github.com
 
 ## Build, Lint, and Test
 
