@@ -1,12 +1,22 @@
 ---
 title: 'Release Tracker'
 description: 'Every feature in GitHub Copilot CLI, grouped by release date'
-lastUpdated: 'February 2026'
+lastUpdated: 'March 2026'
 ---
 
 Every user-facing feature shipped in [GitHub Copilot CLI](https://github.com/github/copilot-cli/releases), newest first. No fluff — just what you can use and when it landed.
 
 ---
+
+## 0.0.421 — 2026-03-03
+
+- `--plugin-dir` flag to load a plugin from a local directory
+- Structured form input for the `ask_user` tool using MCP Elicitations (experimental)
+- Plugin commands read `extraKnownMarketplaces` from `.claude/settings.json` for Claude compatibility
+- `COPILOT_CLI=1` environment variable detectable by git hooks to skip interactive prompts
+- Click links in the terminal to open them in your default browser
+- Mouse text selection automatically copied to Linux primary selection buffer (middle-click to paste)
+- Repo-level config via `.github/copilot/config.json` for shared project settings like marketplaces and launch messages
 
 ## 0.0.420 — 2026-02-27
 
