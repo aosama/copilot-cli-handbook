@@ -8,6 +8,23 @@ Every user-facing feature shipped in [GitHub Copilot CLI](https://github.com/git
 
 ---
 
+## 0.0.422 — 2026-03-05
+
+- GPT-5.4 model available
+- `/copy` command to copy the last response to clipboard
+- `--output-format json` flag to emit JSONL in prompt mode for programmatic integrations
+- `copy_on_select` config option to auto-copy selected text to clipboard in alt screen mode
+- Load personal hooks from `~/.copilot/hooks` in addition to repo-level `.github/hooks`
+- Ctrl+R to search command history with reverse incremental search (like Bash); Ctrl+J to accept, Ctrl+G to cancel
+- Ctrl+K joins lines when cursor is at end of line
+- Mouse scroll support in `/diff` alt-screen mode
+- Click in the prompt input to reposition the text cursor
+- Startup prompt hooks to auto-submit prompts or slash commands when a session starts
+- `enabledPlugins` in config for automatic plugin installation at startup
+- Support installing plugins from `ssh://` URLs
+- `launch_messages` config setting renamed to `companyAnnouncements`
+- Repository config path renamed from `.github/copilot/config.json` to `.github/copilot/settings.json`
+
 ## 0.0.421 — 2026-03-03
 
 - `--plugin-dir` flag to load a plugin from a local directory
