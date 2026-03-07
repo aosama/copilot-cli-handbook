@@ -8,6 +8,37 @@ Every user-facing feature shipped in [GitHub Copilot CLI](https://github.com/git
 
 ---
 
+## 1.0.2 — 2026-03-06
+
+- Type `exit` as a bare command to close the CLI
+- `ask_user` form submits with Enter key; enum fields allow custom responses
+- `command` field in hook configs as cross-platform alias for `bash`/`powershell`
+- Hook configs accept `timeout` as alias for `timeoutSec`
+
+## 0.0.423 — 2026-03-06
+
+- MCP servers can request users to visit a URL for out-of-band interactions such as OAuth flows or API key entry
+- Elicitation enum and boolean fields require Enter to confirm selection, with ✓ indicator for confirmed values
+
+## 0.0.422 — 2026-03-05
+
+- Load personal hooks from `~/.copilot/hooks` in addition to repo-level `.github/hooks`
+- GPT-5.4 model available
+- `copy_on_select` config option to auto-copy selected text to clipboard in alt-screen mode
+- Mouse scroll support in `/diff` in alt-screen mode
+- Click in the prompt input to reposition the text cursor
+- `/copy` command to copy the last response to clipboard
+- `--output-format json` flag to emit JSONL in prompt mode for programmatic integrations
+- Press Ctrl+R to search command history with reverse incremental search (like Bash)
+- Startup prompt hooks to auto-submit prompts or slash commands when a session starts
+- Ctrl+K joins lines when cursor is at end of line
+- `launch_messages` config setting renamed to `companyAnnouncements`
+- `enabledPlugins` config option for automatic plugin installation at startup
+- Ctrl+J to accept, Ctrl+G to cancel in reverse history search
+- Repository config renamed from `.github/copilot/config.json` to `.github/copilot/settings.json`
+- Install plugins from `ssh://` URLs
+- Session usage metrics (requests, tokens, code changes) persisted to `events.jsonl` after each session
+
 ## 0.0.421 — 2026-03-03
 
 - `--plugin-dir` flag to load a plugin from a local directory
@@ -498,4 +529,4 @@ Every user-facing feature shipped in [GitHub Copilot CLI](https://github.com/git
 
 ---
 
-Source: [github/copilot-cli/releases](https://github.com/github/copilot-cli/releases) · Last updated: March 2026
+Source: [github/copilot-cli/releases](https://github.com/github/copilot-cli/releases) · Last updated: March 2026 (1.0.2)
