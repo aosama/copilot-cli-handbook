@@ -1,108 +1,87 @@
 # GitHub Copilot CLI Handbook
 
+> A no-fluff, community-maintained reference for user-facing GitHub Copilot CLI features.
+
 Live site: https://aosama.github.io/copilot-cli-handbook
 
-A few straight to the point pages, no-fluff reference of every feature available in GitHub Copilot CLI, grouped by release date. If you already use Copilot CLI, this site answers one question: **"What can I use, and when did it land?"**
+## What This Is
 
-This is not a tutorial, installation guide, or marketing page. It is a concise feature inventory sourced from the official release history.
+This project exists to answer one question: **"What can I use in GitHub Copilot CLI, and when did it land?"**
+
+It is a friendly handbook for the community, not a tutorial, installation guide, or marketing page. The goal is simple: keep a concise, accurate record of what people can actually use in Copilot CLI, backed by official sources.
+
+The site currently has two pages:
+
+| Page            | Route       | Purpose                                                                 |
+| --------------- | ----------- | ----------------------------------------------------------------------- |
+| Handbook        | `/`         | Instruction files, slash commands, CLI arguments, and MCP configuration |
+| Release Tracker | `/handbook` | User-facing Copilot CLI features grouped by release date, newest first  |
 
 ## Source of Truth
 
-All content is derived from
+All content is derived from official GitHub sources:
 
-- [GitHub Copilot CLI releases page](https://github.com/github/copilot-cli/releases). Each release's features are listed under its version and date, newest first.
-- [How-tos for GitHub Copilot](https://docs.github.com/en/copilot/how-tos).
-- [Copilot CLI Command Reference](https://docs.github.com/en/copilot/reference/cli-command-reference?versionId=free-pro-team%40latest&productId=copilot&restPage=how-tos%2Ccopilot-cli%2Ccli-best-practices)
+- [GitHub Copilot CLI releases](https://github.com/github/copilot-cli/releases)
+- [How-tos for GitHub Copilot](https://docs.github.com/en/copilot/how-tos)
+- [Copilot CLI Command Reference](https://docs.github.com/en/copilot/reference/cli-command-reference)
 
-## Quick Start
+## Local Development
+
+Requires Node 18+.
 
 ```bash
-npm install     # install dependencies
-npm run dev     # development server at http://localhost:4321
-npm run build   # production build
-npm run preview # preview production build
-npm run lint    # check code formatting
-npm run format  # fix code formatting
+npm install          # install dependencies
+npm run dev          # local dev server → http://localhost:4321
+npm run build        # production build → dist/
+npm run preview      # preview the production build locally
+npm run lint         # check formatting with Prettier
+npm run format       # auto-fix formatting
+npm run test:e2e     # Playwright end-to-end tests
+npm run test:e2e:ui  # Playwright UI mode
 ```
 
-## Code Quality
-
-This project uses:
-
-- **Prettier** for code formatting
-- **Husky** for Git hooks
-- **lint-staged** for pre-commit formatting
-
-Formatting is automatically enforced on commit via pre-commit hooks.
+Formatting is enforced with Prettier, Husky, and lint-staged.
 
 ## Project Structure
 
-```
-/
- ├── src/
- │   ├── content/
- │   │   └── handbook/
- │   │       ├── index.md
- │   │       ├── instruction-file-surface.md
- │   │       ├── slash-commands.md
- │   │       ├── command-line-arguments.md
- │   │       └── mcp-configuration-files.md  # Handbook content in Markdown
- │   ├── layouts/
- │   │   └── BaseLayout.astro
- │   ├── pages/
- │   │   ├── index.astro
- │   │   ├── instruction-file-surface.astro
- │   │   ├── slash-commands.astro
- │   │   ├── command-line-arguments.astro
- │   │   └── mcp-configuration-files.astro   # Renders Markdown content
-│   ├── styles/
-│   │   └── global.css
-│   └── content.config.ts       # Astro content collection config
+```text
+.
+├── src/
+│   ├── content/
+│   │   └── handbook/
+│   │       ├── handbook.md        # Handbook page content (route /)
+│   │       └── index.md           # Release Tracker content (route /handbook)
+│   ├── content.config.ts          # Astro content collection schema
+│   ├── layouts/
+│   │   └── BaseLayout.astro       # Shared layout and navigation
+│   ├── pages/
+│   │   ├── handbook.astro         # Renders index.md
+│   │   └── index.astro            # Renders handbook.md
+│   └── styles/
+│       └── global.css             # Global theme and layout styles
+├── playwright-regression/
+│   └── site-regression.spec.ts    # End-to-end site coverage
 ├── astro.config.mjs
-├── tsconfig.json
-└── package.json
+├── playwright.config.ts
+└── .github/workflows/
+    ├── deploy.yml
+    ├── preview-deploy.yml
+    ├── regression.yml
+    └── update-instruction-file-surface.md
 ```
 
-## GitHub Pages Deployment
+Astro pages stay thin on purpose; long-form content lives in Markdown under `src/content/handbook/`.
 
-Deployed via `.github/workflows/deploy.yml` on pushes to `main`.
+## Contributing
 
-Repository settings: **Settings → Pages → Source → GitHub Actions** (select Static HTML, not Jekyll).
+Contributions are welcome. If you spot a missing feature, a stale release entry, or wording that could better help the Copilot CLI community:
 
-## Pull Request Preview Deployment
+1. Open an [issue](https://github.com/aosama/copilot-cli-handbook/issues)
+2. Send a pull request with the proposed fix
+3. Keep changes factual and grounded in the official sources listed above
 
-This repo includes a dedicated preview deployment workflow:
-
-- Workflow: `.github/workflows/preview-deploy.yml`
-- Trigger: `pull_request` (`opened`, `synchronize`, `reopened`) + manual dispatch
-- Behavior: builds the site and attempts a GitHub Pages preview deployment for the PR
-- UX: posts/updates a PR comment with the preview URL
-
-## Agentic Workflow: Release Tracker Updater
-
-This repo includes an Agentic Workflow that keeps `src/content/handbook/index.md` (Release Tracker) current:
-
-- Source file: `.github/workflows/update-instruction-file-surface.md`
-- Compiled lock file: `.github/workflows/update-instruction-file-surface.lock.yml`
-- Engine: Copilot (`claude-sonnet-4.6` model)
-- Trigger: daily schedule + manual dispatch
-- Output: draft PR only when relevant changes are detected
-
-Required secret:
-
-```bash
-gh aw secrets set COPILOT_GITHUB_TOKEN --value "<fine-grained-pat-with-copilot-requests>"
-```
-
-## Design Principles
-
-- **Multi-page with navigation** — Landing page shows all features by release date; dedicated pages for Instruction File Surface, Slash Commands, and Command Line Arguments.
-- **Grouped by release date** — newest releases at the top on the landing page, oldest at the bottom.
-- **Categorized content** — features organized by category (instructions, commands, arguments) for easy reference.
-- **No fluff** — no installation guides, no "why Copilot is great" sections, no best practices. Just features and when they shipped.
-- **Dark theme** — GitHub-inspired dark color scheme.
-- **Responsive** — works on all screen sizes.
+Pull requests are checked with formatting and Playwright regression tests.
 
 ## License
 
-See [LICENSE](LICENSE) file for details.
+Licensed under [Apache-2.0](LICENSE).
