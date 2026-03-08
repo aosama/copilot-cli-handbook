@@ -9,52 +9,31 @@
 <h2 id="102--2026-03-06">1.0.2 — 2026-03-06</h2>
 <ul>
 <li>Type <code>exit</code> as a bare command to close the CLI</li>
+<li><code>ask_user</code> form submits with Enter key; enum fields allow custom responses</li>
 <li><code>command</code> field in hook configs as a cross-platform alias for <code>bash</code>/<code>powershell</code></li>
-<li>Hook configurations accept <code>timeout</code> as alias for <code>timeoutSec</code></li>
+<li>Hook configs accept <code>timeout</code> as alias for <code>timeoutSec</code></li>
 </ul>
 <h2 id="00423--2026-03-06">0.0.423 — 2026-03-06</h2>
 <ul>
 <li>MCP servers can request users to visit a URL for out-of-band interactions such as OAuth flows or API key entry</li>
+<li>Elicitation enum and boolean fields require Enter to confirm selection</li>
 </ul>
 <h2 id="00422--2026-03-05">0.0.422 — 2026-03-05</h2>
 <ul>
-<li>Personal hooks loadable from <code>~/.copilot/hooks</code> in addition to repo-level <code>.github/hooks</code></li>
+<li>Load personal hooks from <code>~/.copilot/hooks</code> in addition to repo-level <code>.github/hooks</code></li>
 <li>GPT-5.4 model available</li>
 <li><code>copy_on_select</code> config option to auto-copy selected text to clipboard in alt-screen mode</li>
 <li>Mouse scroll support in <code>/diff</code> alt-screen mode</li>
+<li>Click in the prompt input to reposition the text cursor</li>
 <li><code>/copy</code> command to copy the last response to clipboard</li>
-<li><code>--output-format json</code> flag in prompt mode to emit JSONL for programmatic integrations</li>
-<li>Ctrl+R to search command history with reverse incremental search (like Bash); Ctrl+J to accept, Ctrl+G to cancel</li>
-<li>Startup prompt hooks to auto-submit prompts or slash commands when a session starts</li>
+<li><code>--output-format json</code> flag to emit JSONL in prompt mode for programmatic integrations</li>
+<li>Press Ctrl+R to search command history with reverse incremental search (like Bash); Ctrl+J to accept, Ctrl+G to cancel</li>
+<li>Add startup prompt hooks to auto-submit prompts or slash commands when a session starts</li>
 <li>Ctrl+K joins lines when cursor is at end of line</li>
-<li><code>companyAnnouncements</code> config setting (renamed from <code>launch_messages</code>)</li>
-<li><code>enabledPlugins</code> in config for automatic plugin installation at startup</li>
-<li>Support installing plugins from <code>ssh://</code> URLs</li>
-<li>Session usage metrics (requests, tokens, code changes) persisted to <code>events.jsonl</code> after each session</li>
-<li>Repository config file renamed from <code>.github/copilot/config.json</code> to <code>.github/copilot/settings.json</code></li>
-</ul>
-<h2 id="00421--2026-03-03">0.0.421 — 2026-03-03</h2>
-<ul>
-<li><code>--plugin-dir</code> flag to load a plugin from a local directory</li>
-<li>Structured form input for the <code>ask_user</code> tool using MCP Elicitations (experimental)</li>
-<li>Plugin commands read <code>extraKnownMarketplaces</code> from <code>.claude/settings.json</code> for Claude compatibility</li>
-<li><code>COPILOT_CLI=1</code> environment variable detectable by git hooks to skip interactive prompts</li>
-<li>Click links in the terminal to open them in your default browser</li>
-<li>Mouse text selection automatically copied to Linux primary selection buffer (middle-click to paste)</li>
-<li>Repo-level config via <code>.github/copilot/config.json</code> for shared project settings like marketplaces and launch messages</li>
-</ul>
-<h2 id="00420--2026-02-27">0.0.420 — 2026-02-27</h2>
-<ul>
-<li>Type <code>#</code> to reference GitHub issues, pull requests, and discussions in prompts</li>
-</ul>
-<h2 id="00419--2026-02-27">0.0.419 — 2026-02-27</h2>
-<ul>
-<li><code>/chronicle</code> command with <code>standup</code>, <code>tips</code>, and <code>improve</code> subcommands powered by session history (experimental)</li>
-<li><code>Ctrl+F</code>/<code>Ctrl+B</code> as page down/up shortcuts for scrolling in alt-screen views</li>
-<li><code>--mouse</code>/<code>--no-mouse</code> flag and <code>mouse</code> config option to disable mouse mode in alt screen</li>
-<li>Home and End keys jump to the top and bottom of the alt-screen scroll buffer</li>
-<li><code>Ctrl+G</code> keyboard shortcut for editing prompts in external editor and dismissing UI elements</li>
-<li>MCP server names now support dots, slashes, and <code>@</code> characters (e.g., <code>@modelcontextprotocol/server</code>)</li>
+<li><code>launch_messages</code> config setting renamed to <code>companyAnnouncements</code></li>
+<li><code>enabledPlugins</code> config option for automatic plugin installation at startup</li>
+<li>Repository config renamed from <code>.github/copilot/config.json</code> to <code>.github/copilot/settings.json</code></li>
+<li>Install plugins from <code>ssh://</code> URLs</li>
 </ul>
 <h2 id="00418--2026-02-25">0.0.418 — 2026-02-25</h2>
 <ul>
