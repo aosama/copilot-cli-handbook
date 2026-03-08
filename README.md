@@ -2,7 +2,7 @@
 
 > A no-fluff, community-maintained reference for user-facing GitHub Copilot CLI features.
 
-Live site: https://aosama.github.io/copilot-cli-handbook
+Live site: [aosama.github.io/copilot-cli-handbook](https://aosama.github.io/copilot-cli-handbook)
 
 ## What This Is
 

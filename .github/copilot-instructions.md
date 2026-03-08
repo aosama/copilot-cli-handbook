@@ -48,7 +48,7 @@ npm run test:e2e:ui  # same with interactive UI
 
 ## Project Layout
 
-```
+```text
 src/
   content/
     handbook/

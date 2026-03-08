@@ -8,7 +8,8 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "lint": "prettier --check .",
+    "lint": "prettier --check . && npm run lint:md",
+    "lint:md": "markdownlint-cli2 \"README.md\" \".github/**/*.md\" \"src/**/*.md\"",
     "lint:fix": "prettier --write .",
     "format": "prettier --write .",
     "prepare": "husky || true",
@@ -28,8 +29,12 @@
   },
   "homepage": "https://github.com/aosama/copilot-cli-handbook#readme",
   "lint-staged": {
-    "*.{js,mjs,ts,astro,json,css,md}": [
+    "*.{js,mjs,ts,astro,json,css}": [
       "prettier --write"
+    ],
+    "*.md": [
+      "prettier --write",
+      "markdownlint-cli2"
     ]
   },
   "devDependencies": {
@@ -40,6 +45,7 @@
     "eslint-plugin-astro": "^1.6.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
+    "markdownlint-cli2": "^0.21.0",
     "prettier": "^3.8.1",
     "prettier-plugin-astro": "^0.14.1"
   }

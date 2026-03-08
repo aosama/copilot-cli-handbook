@@ -176,5 +176,5 @@ Flags passed to the `copilot` or `gh copilot` executable.
 
 ### Sources
 
-- https://docs.github.com/en/copilot/reference/cli-command-reference
-- https://github.com/github/copilot-cli/releases
+- [Copilot CLI Command Reference](https://docs.github.com/en/copilot/reference/cli-command-reference)
+- [GitHub Copilot CLI releases](https://github.com/github/copilot-cli/releases)
