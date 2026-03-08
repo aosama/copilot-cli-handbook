@@ -1,5 +1,5 @@
 ---
-description: 'Store only durable, evidence-backed repository facts that improve future assistant performance across tasks and models.'
+description: 'Policy for storing durable, evidence-backed repository memory across future sessions and models.'
 applyTo: '**'
 ---
 
