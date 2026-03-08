@@ -13,7 +13,7 @@ Every user-facing feature shipped in [GitHub Copilot CLI](https://github.com/git
 - GPT-5.4 model available
 - `/copy` command to copy the last response to clipboard
 - `--output-format json` flag to emit JSONL in prompt mode for programmatic integrations
-- `copy_on_select` config option to auto-copy selected text to clipboard in alt screen mode
+- `copy_on_select` config option to auto-copy selected text to clipboard in alt-screen mode
 - Load personal hooks from `~/.copilot/hooks` in addition to repo-level `.github/hooks`
 - Ctrl+R to search command history with reverse incremental search (like Bash); Ctrl+J to accept, Ctrl+G to cancel
 - Ctrl+K joins lines when cursor is at end of line
