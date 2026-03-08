@@ -8,6 +8,33 @@ Every user-facing feature shipped in [GitHub Copilot CLI](https://github.com/git
 
 ---
 
+## 1.0.2 — 2026-03-06
+
+- Type `exit` as a bare command to close the CLI
+- `command` field in hook configs as a cross-platform alias for `bash`/`powershell`
+- Hook configurations accept `timeout` as alias for `timeoutSec`
+
+## 0.0.423 — 2026-03-06
+
+- MCP servers can request users to visit a URL for out-of-band interactions such as OAuth flows or API key entry
+
+## 0.0.422 — 2026-03-05
+
+- Personal hooks loadable from `~/.copilot/hooks` in addition to repo-level `.github/hooks`
+- GPT-5.4 model available
+- `copy_on_select` config option to auto-copy selected text to clipboard in alt-screen mode
+- Mouse scroll support in `/diff` alt-screen mode
+- `/copy` command to copy the last response to clipboard
+- `--output-format json` flag in prompt mode to emit JSONL for programmatic integrations
+- Ctrl+R to search command history with reverse incremental search (like Bash); Ctrl+J to accept, Ctrl+G to cancel
+- Startup prompt hooks to auto-submit prompts or slash commands when a session starts
+- Ctrl+K joins lines when cursor is at end of line
+- `companyAnnouncements` config setting (renamed from `launch_messages`)
+- `enabledPlugins` in config for automatic plugin installation at startup
+- Support installing plugins from `ssh://` URLs
+- Session usage metrics (requests, tokens, code changes) persisted to `events.jsonl` after each session
+- Repository config file renamed from `.github/copilot/config.json` to `.github/copilot/settings.json`
+
 ## 0.0.421 — 2026-03-03
 
 - `--plugin-dir` flag to load a plugin from a local directory
@@ -498,4 +525,4 @@ Every user-facing feature shipped in [GitHub Copilot CLI](https://github.com/git
 
 ---
 
-Source: [github/copilot-cli/releases](https://github.com/github/copilot-cli/releases) · Last updated: March 2026
+Source: [github/copilot-cli/releases](https://github.com/github/copilot-cli/releases) · Last updated: March 2026 (1.0.2)
