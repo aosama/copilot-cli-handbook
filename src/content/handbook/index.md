@@ -8,28 +8,34 @@ Every user-facing feature shipped in [GitHub Copilot CLI](https://github.com/git
 
 ---
 
-## 0.0.421 — 2026-03-03
+## 1.0.2 — 2026-03-06
 
-- `--plugin-dir` flag to load a plugin from a local directory
-- Structured form input for the `ask_user` tool using MCP Elicitations (experimental)
-- Plugin commands read `extraKnownMarketplaces` from `.claude/settings.json` for Claude compatibility
-- `COPILOT_CLI=1` environment variable detectable by git hooks to skip interactive prompts
-- Click links in the terminal to open them in your default browser
-- Mouse text selection automatically copied to Linux primary selection buffer (middle-click to paste)
-- Repo-level config via `.github/copilot/config.json` for shared project settings like marketplaces and launch messages
+- Type `exit` as a bare command to close the CLI
+- `ask_user` form submits with Enter key; enum fields allow custom responses
+- `command` field in hook configs as a cross-platform alias for `bash`/`powershell`
+- Hook configs accept `timeout` as alias for `timeoutSec`
 
-## 0.0.420 — 2026-02-27
+## 0.0.423 — 2026-03-06
 
-- Type `#` to reference GitHub issues, pull requests, and discussions in prompts
+- MCP servers can request users to visit a URL for out-of-band interactions such as OAuth flows or API key entry
+- Elicitation enum and boolean fields require Enter to confirm selection
 
-## 0.0.419 — 2026-02-27
+## 0.0.422 — 2026-03-05
 
-- `/chronicle` command with `standup`, `tips`, and `improve` subcommands powered by session history (experimental)
-- `Ctrl+F`/`Ctrl+B` as page down/up shortcuts for scrolling in alt-screen views
-- `--mouse`/`--no-mouse` flag and `mouse` config option to disable mouse mode in alt screen
-- Home and End keys jump to the top and bottom of the alt-screen scroll buffer
-- `Ctrl+G` keyboard shortcut for editing prompts in external editor and dismissing UI elements
-- MCP server names now support dots, slashes, and `@` characters (e.g., `@modelcontextprotocol/server`)
+- Load personal hooks from `~/.copilot/hooks` in addition to repo-level `.github/hooks`
+- GPT-5.4 model available
+- `copy_on_select` config option to auto-copy selected text to clipboard in alt-screen mode
+- Mouse scroll support in `/diff` alt-screen mode
+- Click in the prompt input to reposition the text cursor
+- `/copy` command to copy the last response to clipboard
+- `--output-format json` flag to emit JSONL in prompt mode for programmatic integrations
+- Press Ctrl+R to search command history with reverse incremental search (like Bash); Ctrl+J to accept, Ctrl+G to cancel
+- Add startup prompt hooks to auto-submit prompts or slash commands when a session starts
+- Ctrl+K joins lines when cursor is at end of line
+- `launch_messages` config setting renamed to `companyAnnouncements`
+- `enabledPlugins` config option for automatic plugin installation at startup
+- Repository config renamed from `.github/copilot/config.json` to `.github/copilot/settings.json`
+- Install plugins from `ssh://` URLs
 
 ## 0.0.418 — 2026-02-25
 
@@ -498,4 +504,4 @@ Every user-facing feature shipped in [GitHub Copilot CLI](https://github.com/git
 
 ---
 
-Source: [github/copilot-cli/releases](https://github.com/github/copilot-cli/releases) · Last updated: March 2026
+Source: [github/copilot-cli/releases](https://github.com/github/copilot-cli/releases) · Last updated: March 2026 (1.0.2)
