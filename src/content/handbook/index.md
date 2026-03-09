@@ -37,6 +37,25 @@ Every user-facing feature shipped in [GitHub Copilot CLI](https://github.com/git
 - Repository config renamed from `.github/copilot/config.json` to `.github/copilot/settings.json`
 - Install plugins from `ssh://` URLs
 
+## 0.0.421 — 2026-03-03
+
+- `--plugin-dir` flag to load a plugin from a local directory
+- Click links in the terminal to open them in your default browser
+- `COPILOT_CLI=1` environment variable set in subprocesses so git hooks can detect Copilot CLI and skip interactive prompts
+
+## 0.0.420 — 2026-02-27
+
+- Type `#` to reference GitHub issues, pull requests, and discussions
+
+## 0.0.419 — 2026-02-27
+
+- `/chronicle` command with `standup`, `tips`, and `improve` subcommands powered by session history (experimental)
+- `--mouse`/`--no-mouse` flag and `mouse` config option to disable mouse mode in alt-screen
+- `Ctrl+F`/`Ctrl+B` as page down/up shortcuts for scrolling in alt-screen views
+- Home and End keys jump to top and bottom of alt-screen scroll buffer
+- `Ctrl+G` shortcut to edit the prompt in an external editor or dismiss UI elements
+- MCP server names support dots, slashes, and `@` characters (e.g., `@modelcontextprotocol/server-name`)
+
 ## 0.0.418 — 2026-02-25
 
 - GitHub Copilot CLI is now [generally available](https://github.blog/changelog/2026-02-25-github-copilot-cli-is-now-generally-available)
