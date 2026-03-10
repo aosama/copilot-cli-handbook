@@ -1,12 +1,23 @@
 ---
 title: 'Release Tracker'
 description: 'Every feature in GitHub Copilot CLI, grouped by release date'
-lastUpdated: 'March 2026'
+lastUpdated: 'March 2026 (1.0.3)'
 ---
 
 Every user-facing feature shipped in [GitHub Copilot CLI](https://github.com/github/copilot-cli/releases), newest first. No fluff — just what you can use and when it landed.
 
 ---
+
+## 1.0.3 — 2026-03-09
+
+- Extensions available as an experimental feature — ask Copilot to write custom tools and hooks for itself
+- Read MCP server configuration from `.devcontainer/devcontainer.json`
+- `--binary-version` flag to query the CLI binary version without launching
+- `/restart` command to hot restart the CLI while preserving your session
+- Type `quit` to exit the CLI (in addition to `exit`)
+- `extraKnownMarketplaces` repository setting to define custom plugin marketplaces
+- Windows Terminal support added to `/terminal-setup` command
+- `mergeStrategy` config key (renamed from `merge_strategy`)
 
 ## 1.0.2 — 2026-03-06
 
@@ -36,6 +47,15 @@ Every user-facing feature shipped in [GitHub Copilot CLI](https://github.com/git
 - `enabledPlugins` config option for automatic plugin installation at startup
 - Repository config renamed from `.github/copilot/config.json` to `.github/copilot/settings.json`
 - Install plugins from `ssh://` URLs
+
+## 0.0.421 — 2026-03-03
+
+- `AUTO` theme reads terminal's ANSI color palette directly so colors match your terminal theme
+- Structured form input for the `ask_user` tool via MCP Elicitations (experimental)
+- `COPILOT_CLI=1` environment variable set in subprocesses so git hooks can detect Copilot CLI and skip interactive prompts
+- `--plugin-dir` flag to load a plugin from a local directory
+- Mouse text selection automatically copied to Linux primary selection buffer (middle-click to paste)
+- Click links in the terminal to open them in your default browser
 
 ## 0.0.418 — 2026-02-25
 
@@ -504,4 +524,4 @@ Every user-facing feature shipped in [GitHub Copilot CLI](https://github.com/git
 
 ---
 
-Source: [github/copilot-cli/releases](https://github.com/github/copilot-cli/releases) · Last updated: March 2026 (1.0.2)
+Source: [github/copilot-cli/releases](https://github.com/github/copilot-cli/releases) · Last updated: March 2026 (1.0.3)
