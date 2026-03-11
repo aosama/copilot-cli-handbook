@@ -8,6 +8,17 @@ Every user-facing feature shipped in [GitHub Copilot CLI](https://github.com/git
 
 ---
 
+## 1.0.3 — 2026-03-09
+
+- Extensions available as an experimental feature — ask Copilot to write custom tools and hooks for itself
+- Read MCP server configuration from `.devcontainer/devcontainer.json`
+- `--binary-version` flag to query the CLI binary version without launching
+- `/restart` command to hot restart the CLI while preserving your session
+- Type `quit` to exit the CLI, in addition to `exit`
+- `extraKnownMarketplaces` repository setting to customize plugin marketplaces
+- Windows Terminal support in `/terminal-setup` command
+- `merge_strategy` config renamed to `mergeStrategy`
+
 ## 1.0.2 — 2026-03-06
 
 - Type `exit` as a bare command to close the CLI
@@ -504,4 +515,4 @@ Every user-facing feature shipped in [GitHub Copilot CLI](https://github.com/git
 
 ---
 
-Source: [github/copilot-cli/releases](https://github.com/github/copilot-cli/releases) · Last updated: March 2026 (1.0.2)
+Source: [github/copilot-cli/releases](https://github.com/github/copilot-cli/releases) · Last updated: March 2026 (1.0.3)
