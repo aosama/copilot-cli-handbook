@@ -1,12 +1,35 @@
 ---
 title: 'Release Tracker'
 description: 'Every feature in GitHub Copilot CLI, grouped by release date'
-lastUpdated: 'March 2026'
+lastUpdated: 'March 2026 (1.0.4)'
 ---
 
 Every user-facing feature shipped in [GitHub Copilot CLI](https://github.com/github/copilot-cli/releases), newest first. No fluff — just what you can use and when it landed.
 
 ---
+
+## 1.0.4 — 2026-03-11
+
+- Adaptive color engine with dynamic color modes and interactive theme picker
+- `/pr view [local|web]` replaces `/pr open` to view PR status locally or open in browser
+- `--reasoning-effort` flag to set reasoning effort level
+- `disableAllHooks` flag in hook config files to disable all hooks
+- Hooks support `ask` permission decision to request user confirmation before tool execution
+- `configure-copilot` sub-agent for managing MCP servers, custom agents, and skills via the task tool
+- `/instructions` picker shows individual instruction file names with `[external]` labels for injected files
+- Path permission dialog offers a one-time approval option in addition to adding the path to the allowed list
+- Extensions can be written as CommonJS modules (`.cjs`)
+
+## 1.0.3 — 2026-03-09
+
+- Extensions available as an experimental feature — ask Copilot to write custom tools and hooks using `@github/copilot-sdk`
+- Read MCP server configuration from `.devcontainer/devcontainer.json`
+- `--binary-version` flag to query the CLI binary version without launching
+- `/restart` command to hot restart the CLI while preserving your session
+- Type `quit` to exit the CLI, in addition to `exit`
+- `extraKnownMarketplaces` repository setting to configure additional plugin marketplaces
+- `/terminal-setup` command now supports Windows Terminal
+- `mergeStrategy` config replaces `merge_strategy` (renamed for consistency)
 
 ## 1.0.2 — 2026-03-06
 
@@ -504,4 +527,4 @@ Every user-facing feature shipped in [GitHub Copilot CLI](https://github.com/git
 
 ---
 
-Source: [github/copilot-cli/releases](https://github.com/github/copilot-cli/releases) · Last updated: March 2026 (1.0.2)
+Source: [github/copilot-cli/releases](https://github.com/github/copilot-cli/releases) · Last updated: March 2026 (1.0.4)
