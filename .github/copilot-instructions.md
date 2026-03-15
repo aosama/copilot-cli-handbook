@@ -70,8 +70,8 @@ playwright-regression/
   deploy.yml                            # Push-to-main → GitHub Pages deploy
   preview-deploy.yml                    # PR preview deploy + comment
   regression.yml                        # Playwright e2e on PRs
-  update-instruction-file-surface.md    # Agentic workflow source (human-readable)
-  update-instruction-file-surface.lock.yml  # Compiled lock file (generated — do not edit directly)
+  update-release-tracker.md             # Agentic workflow source (human-readable)
+  update-release-tracker.lock.yml       # Compiled lock file (generated — do not edit directly)
 ```
 
 ## Key Conventions

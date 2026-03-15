@@ -45,7 +45,6 @@ tools:
     ]
   web-fetch:
   playwright:
-    allowed_domains: ['localhost', '127.0.0.1']
   github:
     toolsets: [repos, search]
 safe-outputs:
@@ -80,6 +79,16 @@ Do not touch the frontmatter (`title`, `description`).
    - `https://github.blog/?s=Copilot+CLI`
    - `https://github.blog/changelog/?s=Copilot+CLI`
 
+## Pull request hygiene
+
+Before proposing any new pull request:
+
+1. Inspect open pull requests in this repository that look like release-tracker updates.
+2. If an open draft PR already covers the same latest release, or a newer release than the one you would add, do not create another PR.
+3. If multiple overlapping draft PRs already exist, prefer a no-op over creating one more duplicate PR.
+
+This workflow should create a draft PR only when the default branch is behind and there is no equivalent draft PR already open.
+
 ## Content rules (strict)
 
 - Edit only `src/content/handbook/index.md`. Do not create or edit any other file.
@@ -113,10 +122,10 @@ Do not touch the frontmatter (`title`, `description`).
   - a `## Screenshots` section that embeds at least one uploaded screenshot
 - Screenshot requirements for changed runs:
   1. Build and preview locally (`npm ci`, `npm run build`, `npm run preview -- --host 127.0.0.1 --port 4321`)
-  2. Capture a full-page screenshot of the handbook landing page:
-     - `http://127.0.0.1:4321/copilot-cli-handbook/`
+  2. Capture a full-page screenshot of the release tracker page:
+     - `http://127.0.0.1:4321/copilot-cli-handbook/handbook/`
   3. Save screenshot to:
-     - `/tmp/gh-aw/screenshots/handbook-updated.png`
+     - `/tmp/gh-aw/screenshots/release-tracker-updated.png`
   4. Publish the image with `upload_asset` before creating the PR.
   5. Include the uploaded image URL in the PR body using Markdown image syntax.
 - If no relevant changes are found across any section:

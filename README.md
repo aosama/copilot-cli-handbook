@@ -31,9 +31,9 @@ Requires Node 18+.
 
 ```bash
 npm install          # install dependencies
-npm run dev          # local dev server → http://localhost:4321
+npm run dev          # local dev server → http://localhost:4321/copilot-cli-handbook
 npm run build        # production build → dist/
-npm run preview      # preview the production build locally
+npm run preview      # preview build → http://localhost:4321/copilot-cli-handbook
 npm run lint         # check formatting with Prettier
 npm run format       # auto-fix formatting
 npm run test:e2e     # Playwright end-to-end tests
@@ -67,7 +67,7 @@ Formatting is enforced with Prettier, Husky, and lint-staged.
     ├── deploy.yml
     ├── preview-deploy.yml
     ├── regression.yml
-    └── update-instruction-file-surface.md
+    └── update-release-tracker.md
 ```
 
 Astro pages stay thin on purpose; long-form content lives in Markdown under `src/content/handbook/`.
