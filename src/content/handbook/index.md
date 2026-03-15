@@ -1,12 +1,36 @@
 ---
 title: 'Release Tracker'
 description: 'Every feature in GitHub Copilot CLI, grouped by release date'
-lastUpdated: 'March 2026'
+lastUpdated: 'March 2026 (1.0.4)'
 ---
 
 Every user-facing feature shipped in [GitHub Copilot CLI](https://github.com/github/copilot-cli/releases), newest first. No fluff — just what you can use and when it landed.
 
 ---
+
+## 1.0.4 — 2026-03-11
+
+- Adaptive color engine with dynamic color modes and interactive theme picker
+- `/pr view [local|web]` replaces `/pr open` to view PR status locally or open in the browser
+- Extensions can be written as CommonJS modules (`extension.cjs`)
+- `disableAllHooks` lets you disable all hooks from a configuration file
+- Hooks can request user confirmation before tool execution with the `ask` permission decision
+- `configure-copilot` sub-agent helps manage MCP servers, custom agents, and skills
+- `/instructions` shows individual file names with `[external]` labels for injected files
+- Path permission dialog offers a one-time approval option
+- `--reasoning-effort` flag sets reasoning effort from the CLI
+- `/update` automatically restarts after updating
+
+## 1.0.3 — 2026-03-09
+
+- Extensions are available as an experimental feature using `@github/copilot-sdk`
+- Read MCP server configuration from `.devcontainer/devcontainer.json`
+- `--binary-version` queries the CLI binary version without launching a full session
+- `/restart` hot restarts the CLI while preserving your session
+- Type `quit` to exit the CLI in addition to `exit`
+- `extraKnownMarketplaces` repository setting replaces the default plugin marketplaces
+- `/terminal-setup` supports Windows Terminal
+- `mergeStrategy` replaces `merge_strategy` in config
 
 ## 1.0.2 — 2026-03-06
 
@@ -36,6 +60,28 @@ Every user-facing feature shipped in [GitHub Copilot CLI](https://github.com/git
 - `enabledPlugins` config option for automatic plugin installation at startup
 - Repository config renamed from `.github/copilot/config.json` to `.github/copilot/settings.json`
 - Install plugins from `ssh://` URLs
+
+## 0.0.421 — 2026-03-03
+
+- `AUTO` theme reads your terminal's ANSI color palette directly
+- `ask_user` supports structured form input through MCP Elicitations (experimental)
+- `COPILOT_CLI=1` helps git hooks detect Copilot CLI subprocesses and skip interactive prompts
+- `--plugin-dir` loads a plugin from a local directory
+- Click links in the terminal to open them in your default browser
+- `.github/copilot/config.json` introduces shared repository settings
+
+## 0.0.420 — 2026-02-27
+
+- Type `#` to reference GitHub issues, pull requests, and discussions
+
+## 0.0.419 — 2026-02-27
+
+- `/chronicle` adds `standup`, `tips`, and `improve` subcommands powered by session history (experimental)
+- `--mouse`/`--no-mouse` flag and `mouse` config disable mouse mode in alt-screen
+- `Ctrl+F`/`Ctrl+B` work as page down/up shortcuts in alt-screen views
+- Home and End keys jump to the top and bottom of the alt-screen scroll buffer
+- `Ctrl+G` edits the prompt in an external editor or dismisses UI elements
+- MCP server names support dots, slashes, and `@` characters
 
 ## 0.0.418 — 2026-02-25
 
@@ -504,4 +550,4 @@ Every user-facing feature shipped in [GitHub Copilot CLI](https://github.com/git
 
 ---
 
-Source: [github/copilot-cli/releases](https://github.com/github/copilot-cli/releases) · Last updated: March 2026 (1.0.2)
+Source: [github/copilot-cli/releases](https://github.com/github/copilot-cli/releases) · Last updated: March 2026 (1.0.4)

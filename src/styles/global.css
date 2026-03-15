@@ -154,6 +154,51 @@ a:hover {
   color: var(--muted);
 }
 
+.page-meta {
+  font-size: 0.95rem;
+}
+
+.page-jump-nav {
+  margin: 0 0 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+.page-jump-nav summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 0.9rem 1rem;
+  font-weight: 700;
+}
+
+.page-jump-nav summary::-webkit-details-marker {
+  display: none;
+}
+
+.page-jump-nav[open] summary {
+  border-bottom: 1px solid var(--border);
+}
+
+.jump-link-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  padding: 1rem;
+}
+
+.jump-link-list a {
+  text-decoration: none;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--background);
+}
+
+.jump-link-list a:hover {
+  background: var(--surface-2);
+}
+
 .handbook-content h2 {
   margin-top: 2.2rem;
   margin-bottom: 1rem;
@@ -255,6 +300,12 @@ a:hover {
   .site-header {
     flex-direction: column;
     align-items: center;
+  }
+
+  .jump-link-list {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 1.1rem;
   }
 
   .handbook-content section {

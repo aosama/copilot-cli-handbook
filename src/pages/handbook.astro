@@ -8,7 +8,9 @@ if (!handbook) {
   throw new Error('Handbook markdown entry was not found.');
 }
 
-const { Content } = await render(handbook);
+const { Content, headings } = await render(handbook);
+const isReleaseTracker = handbook.id === 'index';
+const releaseHeadings = isReleaseTracker ? headings.filter((heading) => heading.depth === 2) : [];
 ---
 
 <BaseLayout title={handbook.data.title} description={handbook.data.description}>
@@ -16,7 +18,24 @@ const { Content } = await render(handbook);
     <header class="page-intro">
       <h1>{handbook.data.title}</h1>
       <p>{handbook.data.description}</p>
+      {
+        handbook.data.lastUpdated && (
+          <p class="page-meta">Last updated: {handbook.data.lastUpdated}</p>
+        )
+      }
     </header>
+    {
+      releaseHeadings.length > 0 && (
+        <details class="page-jump-nav" data-page-nav open>
+          <summary>Jump to a release</summary>
+          <nav class="jump-link-list" aria-label="Release quick jump">
+            {releaseHeadings.map((heading) => (
+              <a href={`#${heading.slug}`}>{heading.text}</a>
+            ))}
+          </nav>
+        </details>
+      )
+    }
     <Content />
   </article>
 </BaseLayout>
