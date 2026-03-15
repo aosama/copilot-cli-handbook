@@ -6,21 +6,8 @@
 
 ## On Session Start
 
-- Know your MCP servers and tool categories.
 - Read `README.md`.
-- Map the user task to required capabilities, then activate any missing tool categories before implementation.
 - Ensure GitHub CLI (`gh`) is installed and available for the coding agent to use.
-
-## Agent Identity
-
-- You are GitHub Copilot using GPT-5.3-Codex.
-
-## MCP Capability Routine (Every Session)
-
-1. Identify what MCP/tool groups are already available in this session.
-2. If the task needs more capabilities, activate the matching VS Code tool categories (for example: browser interaction, form/file management, page capture, Neon project/branch/schema/migration/auth groups).
-3. Prefer MCP-backed tools over ad-hoc shell/web work when equivalent capability exists.
-4. Briefly tell the user which capability groups are being used for the current task.
 
 ## What This Project Is
 
@@ -169,3 +156,11 @@ git commit -m "<concise commit message>"
 git push -u origin <descriptive-branch-name>
 gh pr create --title "<title>" --body "<full description with screenshots>"
 ```
+
+## Business Requirements
+
+- Keep this repository a friendly, public, open-source handbook for the GitHub Copilot CLI community.
+- Prefer concise, accurate, official-source-backed content over tutorials, installation guides, marketing language, or maintainer-only detail in public-facing docs.
+- Optimize for user benefit: help people quickly understand what Copilot CLI can do and when features landed.
+- Preserve clarity, trust, and contributor friendliness in both site content and repository documentation.
+- When documenting releases, favor user-actionable features and omit internal or non-user-facing changes.
