@@ -33,34 +33,6 @@ npm run test:e2e:ui  # same with interactive UI
 - `npm run test:e2e` auto-starts `astro build && astro preview`; no need to run the dev server first.
 - Use `eslint 9.x` with `@typescript-eslint/parser 8.55.0`. Do **not** upgrade to eslint 10 — it causes `ERESOLVE` in CI.
 
-## Project Layout
-
-```text
-src/
-  content/
-    handbook/
-      handbook.md     # Content for route / (Handbook — instruction files, slash commands, CLI args, MCP config)
-      index.md        # Content for route /handbook (Release Tracker — features by release date, newest first)
-  content.config.ts   # Astro content collection schema (title, description, lastUpdated)
-  layouts/
-    BaseLayout.astro  # Shared layout: nav, theme toggle, footer
-  pages/
-    index.astro       # Route / — renders handbook.md (Handbook page)
-    handbook.astro    # Route /handbook — renders index.md (Release Tracker)
-  styles/
-    global.css        # All styles (GitHub-inspired dark/light theme)
-astro.config.mjs      # site + base ('/copilot-cli-handbook') + telemetry:false
-playwright.config.ts  # e2e config; webServer auto-starts build+preview
-playwright-regression/
-  site-regression.spec.ts  # e2e tests
-.github/workflows/
-  deploy.yml                            # Push-to-main → GitHub Pages deploy
-  preview-deploy.yml                    # PR preview deploy + comment
-  regression.yml                        # Playwright e2e on PRs
-  update-release-tracker.md             # Agentic workflow source (human-readable)
-  update-release-tracker.lock.yml       # Compiled lock file (generated — do not edit directly)
-```
-
 ## Key Conventions
 
 ### Pages must render from Markdown
