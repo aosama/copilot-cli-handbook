@@ -24,7 +24,7 @@ Use this file like a cache for Astro site structure, content conventions, and wo
 ## Maintenance snapshot
 
 - Last verified: 2026-03-16
-- Verification scope (high level): Astro pages/content collection, base-path handling, Playwright e2e config, npm scripts, agentic release-tracker workflow, content rules from copilot-instructions.md, CI workflows, and PR submission process.
+- Verification scope (high level): Astro pages/content collection, base-path handling, Playwright e2e config, npm scripts, content rules from business-requirements.instructions.md, CI workflows, and handbook routing after Release Tracker removal.
 
 Keep this section short: the goal is to preserve the last verified date and why it can be trusted, not to fully inventory every subsystem.
 
@@ -33,36 +33,35 @@ Keep this section short: the goal is to preserve the last verified date and why 
 Mandatory startup reads (per copilot-instructions.md):
 
 - README.md
-- .github/copilot-instructions.md (session checklist, content rules, page pattern, PR requirements)
+- .github/copilot-instructions.md (startup rules, linting note, page pattern, base-path rule)
 - .github/instructions/business-requirements.instructions.md
 - .github/instructions/repository-memory.instructions.md
 
 Additional high-signal files:
 
-- .github/workflows/update-release-tracker.md (agentic updater + strict content rules)
 - astro.config.mjs (site + base path)
 - src/content.config.ts (handbook collection schema)
 - playwright.config.ts (e2e baseURL + webServer)
-- src/pages/index.astro + src/pages/handbook.astro (thin MD renderers)
+- src/pages/index.astro (thin MD renderer)
 - src/layouts/BaseLayout.astro (BASE_URL nav + theme)
 - .github/workflows/{deploy.yml,preview-deploy.yml,regression.yml}
 
 ## 2. Project structure map
 
-Static Astro site (no backend/runtime services beyond dev server):
+Static Astro site (no backend/runtime services beyond dev server; Release Tracker removed):
 
 ```mermaid
 graph TB
-    Content["src/content/handbook/*.md<br/>(handbook.md → /, index.md → /handbook)"] --> Pages["src/pages/*.astro<br/>(thin getEntry/render)"]
+    Content["src/content/handbook/*.md<br/>(index.md → /)"] --> Pages["src/pages/*.astro<br/>(thin getEntry/render)"]
     Pages --> Layout["src/layouts/BaseLayout.astro<br/>(BASE_URL nav)"]
     Layout --> Styles["src/styles/global.css"]
-    Workflows[".github/workflows/*.yml + update-release-tracker.md"] --> Content
+    Workflows[".github/workflows/*.yml"] --> Content
 ```
 
 Key navigation anchors:
 
-- Content rules & page pattern: `.github/copilot-instructions.md`
-- Release tracker updater: `.github/workflows/update-release-tracker.md` (edits **only** `src/content/handbook/index.md`)
+- Content rules: `.github/instructions/business-requirements.instructions.md`
+- Page pattern: `.github/copilot-instructions.md`
 - Base path: `astro.config.mjs` + `import.meta.env.BASE_URL`
 - Tests: `playwright-regression/site-regression.spec.ts` + `playwright.config.ts`
 - Lint: `package.json` scripts + `.markdownlint.json` + `.husky/pre-commit`
@@ -90,14 +89,13 @@ No persistent services, PID files, or complex profiles. Pure static.
 
 ## 4. Content & workflow anchors
 
-- **Content rules** (strict, from copilot-instructions.md): user-actionable only ("Can a user read this and go try it right now?"), newest-first date-grouped releases (`## x.y.z — YYYY-MM-DD`), omit internal/backend/passive changes, skip empty releases.
-- Release tracker (`src/content/handbook/index.md`) updated **only** by agentic workflow in update-release-tracker.md.
+- **Content rules** (strict, from business-requirements.instructions.md): user-actionable only ("Can a user read this and go try it right now?"), omit internal, backend, or passive changes.
 - Lock files: never edit `*.lock.yml` directly (sync from .md source).
-- PRs: use `gh pr create` with descriptive title, detailed body (what/why + per-file summary), screenshots for visual changes, one logical change per PR. No direct pushes to main.
+- Contribution flow: README.md points contributors to issues and pull requests; run `npm run lint` locally before opening a PR.
 
 ## 5. CI reality (verified)
 
-- Node 20 in all workflows.
+- Workflows use the Node version pinned in `.nvmrc` (currently Node 24 LTS).
 - `regression.yml`: runs on PR/push to main; executes `npm run test:e2e`.
 - `deploy.yml`: builds + deploys to GitHub Pages on main (sets ASTRO_BASE).
 - `preview-deploy.yml`: PR previews + comments.
@@ -107,4 +105,4 @@ No persistent services, PID files, or complex profiles. Pure static.
 
 ## When to update this file
 
-Update on drift in file paths, npm scripts, content rules, base-path usage, test config, or workflow behavior. Re-verify against copilot-instructions.md and actual CI files.
+Update on drift in file paths, npm scripts, content rules, base-path usage, test config, or workflow behavior. Re-verify against the current instruction files and actual CI files.

@@ -1,553 +1,360 @@
 ---
-title: 'Release Tracker'
-description: 'Every feature in GitHub Copilot CLI, grouped by release date'
-lastUpdated: 'March 2026 (1.0.4)'
+title: 'Copilot CLI Handbook'
+description: 'Custom instructions, commands, permissions, agents, hooks, configuration, and MCP for GitHub Copilot CLI'
+lastUpdated: 'March 2026'
 ---
 
-Every user-facing feature shipped in [GitHub Copilot CLI](https://github.com/github/copilot-cli/releases), newest first. No fluff — just what you can use and when it landed.
-
----
+## Instruction Files
+
+Copilot CLI can load repository and user instructions from files such as `AGENTS.md`, `.github/copilot-instructions.md`, `.copilot/instructions.md`, and user instruction directories.
+
+### Common instruction locations
+
+- `AGENTS.md`
+- `.github/copilot-instructions.md`
+- `.copilot/instructions.md`
+- `~/.copilot/instructions/*.instructions.md`
+- `COPILOT_CUSTOM_INSTRUCTIONS_DIRS` — Add extra instruction directories as a comma-separated list.
+
+### Useful commands and flags
+
+- `/init` — Initialize Copilot custom instructions and agentic features for the repository.
+- `/instructions` — View loaded instruction files and enable or disable them.
+- `copilot init` — Non-interactive entry point for repository initialization.
+- `--no-custom-instructions` — Start without loading `AGENTS.md` and related instruction files.
+
+## Interactive Commands
+
+### Session and navigation
+
+- `/clear`, `/new` — Clear the conversation history.
+- `/resume [SESSION-ID]` — Resume a previous session.
+- `/session [checkpoints [n]|files|plan|rename NAME]` — Inspect session details and workspace state.
+- `/rename NAME` — Rename the current session.
+- `/compact` — Summarize history to reduce context usage.
+- `/context` — Show context window usage.
+- `/cwd`, `/cd [PATH]` — Show or change the working directory.
+- `/add-dir PATH` — Add a directory to the allowed file-access list.
+- `/list-dirs` — Show directories that already have file access.
+- `/exit`, `/quit` — Exit the CLI.
+
+### Planning, review, and collaboration
+
+- `/diff` — Review changes in the current directory.
+- `/review [PROMPT]` — Run the code review agent against your changes.
+- `/plan [PROMPT]` — Draft an implementation plan before editing.
+- `/delegate [PROMPT]` — Delegate work to a remote repository with an AI-generated pull request.
+- `/share [file|gist] [PATH]` — Export the session to Markdown or a secret gist.
+- `/changelog` — Browse release notes from inside the CLI.
+- `/pr` — Create or inspect pull requests, fix CI failures, address review feedback, and resolve merge conflicts.
+
+### Agents, models, skills, and extensions
+
+- `/agent` — Choose from available agents.
+- `/fleet [PROMPT]` — Run parts of a task in parallel with subagents.
+- `/model`, `/models [MODEL]` — View or change the active model.
+- `/skills [list|info|add|remove|reload] [ARGS...]` — Manage skills.
+- `/plugin [marketplace|install|uninstall|update|list] [ARGS...]` — Manage plugins and plugin marketplaces.
+- `/extensions` — View, enable, and disable CLI extensions.
+
+### Tools, account, and setup
+
+- `/allow-all`, `/yolo` — Enable all permissions for tools, paths, and URLs.
+- `/reset-allowed-tools` — Clear previously granted tool approvals.
+- `/mcp [show|add|edit|delete|disable|enable] [SERVER-NAME]` — Manage MCP servers.
+- `/lsp [show|test|reload|help] [SERVER-NAME]` — Manage language server configuration.
+- `/ide` — Connect to an IDE workspace.
+- `/terminal-setup` — Configure multiline terminal input support.
+- `/login`, `/logout` — Sign in or out.
+- `/user [show|list|switch]` — Manage the current GitHub account.
+- `/help`, `/feedback`, `/usage`, `/version`, `/update`, `/theme`, `/experimental` — Session help, reporting, usage, updates, UI, and feature toggles.
+
+### Keyboard shortcuts
+
+- `@ FILENAME` — Include file contents in the prompt context.
+- `! COMMAND` — Run a shell command directly.
+- `Ctrl + X` then `/` — Run a slash command after you already started typing.
+- `Shift + Tab` — Cycle between standard, plan, and autopilot mode.
+- `Ctrl + O`, `Ctrl + E`, `Ctrl + T` — Expand recent timeline items, expand all, or toggle reasoning display.
+- `Ctrl + G` — Edit the prompt in an external editor.
+- `Ctrl + L`, `Ctrl + C`, `Ctrl + D` — Clear screen, cancel, or shut down.
+
+## Command-Line Commands and Flags
+
+### Core commands
+
+- `copilot` — Launch the interactive interface.
+- `copilot help [topic]` — Show help for config, commands, environment, logging, or permissions.
+- `copilot init` — Initialize instructions for the current repository.
+- `copilot update` — Download and install the latest version.
+- `copilot version` — Show version information and check for updates.
+- `copilot login`, `copilot logout` — Authenticate or remove credentials.
+- `copilot plugin` — Manage plugins outside the interactive session.
+
+### Automation and session control
+
+- `-p, --prompt=PROMPT` — Run a prompt programmatically and exit after completion.
+- `-i, --interactive=PROMPT` — Start an interactive session and run an initial prompt.
+- `--continue` — Resume the most recent session.
+- `--resume=SESSION-ID` — Resume a specific session.
+- `--agent=AGENT` — Pick a custom agent up front.
+- `--autopilot` — Let Copilot continue autonomously in prompt mode.
+- `--max-autopilot-continues=COUNT` — Cap autonomous follow-up turns.
+- `--output-format=text|json` — Return plain text or JSONL.
+- `--share=PATH`, `--share-gist` — Export a programmatic session after it finishes.
+- `-s, --silent` — Suppress usage statistics and print only the answer.
+- `--no-ask-user` — Disable the ask-user tool for fully autonomous runs.
+
+### Permissions and safety
 
-## 1.0.4 — 2026-03-11
+- `--allow-all`, `--yolo` — Approve all tools, paths, and URLs.
+- `--allow-all-tools`, `--allow-all-paths`, `--allow-all-urls` — Approve one permission category at a time.
+- `--allow-tool=TOOL`, `--deny-tool=TOOL` — Pre-allow or pre-deny tool patterns.
+- `--allow-url=URL`, `--deny-url=URL` — Control URL access.
+- `--available-tools=TOOL`, `--excluded-tools=TOOL` — Reduce the tool surface available to the model.
+- `--disallow-temp-dir` — Block automatic access to the system temp directory.
 
-- Adaptive color engine with dynamic color modes and interactive theme picker
-- `/pr view [local|web]` replaces `/pr open` to view PR status locally or open in the browser
-- Extensions can be written as CommonJS modules (`extension.cjs`)
-- `disableAllHooks` lets you disable all hooks from a configuration file
-- Hooks can request user confirmation before tool execution with the `ask` permission decision
-- `configure-copilot` sub-agent helps manage MCP servers, custom agents, and skills
-- `/instructions` shows individual file names with `[external]` labels for injected files
-- Path permission dialog offers a one-time approval option
-- `--reasoning-effort` flag sets reasoning effort from the CLI
-- `/update` automatically restarts after updating
+### UI, output, and logging
 
-## 1.0.3 — 2026-03-09
+- `--model=MODEL` — Select the model.
+- `--alt-screen=on|off`, `--no-alt-screen` — Control alternate screen buffer usage.
+- `--banner` — Show the startup banner.
+- `--plain-diff` — Disable rich diff rendering.
+- `--screen-reader` — Enable screen-reader optimizations.
+- `--stream=on|off` — Turn streaming output on or off.
+- `--secret-env-vars=VAR` — Redact extra environment variables in output.
+- `--config-dir=PATH` — Override the config directory.
+- `--bash-env`, `--no-bash-env` — Control `BASH_ENV` sourcing.
+- `--experimental`, `--no-experimental` — Toggle experimental features.
+- `--log-dir=DIRECTORY`, `--log-level=LEVEL` — Control CLI logging.
+- `--no-auto-update` — Disable automatic updates.
 
-- Extensions are available as an experimental feature using `@github/copilot-sdk`
-- Read MCP server configuration from `.devcontainer/devcontainer.json`
-- `--binary-version` queries the CLI binary version without launching a full session
-- `/restart` hot restarts the CLI while preserving your session
-- Type `quit` to exit the CLI in addition to `exit`
-- `extraKnownMarketplaces` repository setting replaces the default plugin marketplaces
-- `/terminal-setup` supports Windows Terminal
-- `mergeStrategy` replaces `merge_strategy` in config
-
-## 1.0.2 — 2026-03-06
-
-- Type `exit` as a bare command to close the CLI
-- `ask_user` form submits with Enter key; enum fields allow custom responses
-- `command` field in hook configs as a cross-platform alias for `bash`/`powershell`
-- Hook configs accept `timeout` as alias for `timeoutSec`
-
-## 0.0.423 — 2026-03-06
-
-- MCP servers can request users to visit a URL for out-of-band interactions such as OAuth flows or API key entry
-- Elicitation enum and boolean fields require Enter to confirm selection
-
-## 0.0.422 — 2026-03-05
-
-- Load personal hooks from `~/.copilot/hooks` in addition to repo-level `.github/hooks`
-- GPT-5.4 model available
-- `copy_on_select` config option to auto-copy selected text to clipboard in alt-screen mode
-- Mouse scroll support in `/diff` alt-screen mode
-- Click in the prompt input to reposition the text cursor
-- `/copy` command to copy the last response to clipboard
-- `--output-format json` flag to emit JSONL in prompt mode for programmatic integrations
-- Press Ctrl+R to search command history with reverse incremental search (like Bash); Ctrl+J to accept, Ctrl+G to cancel
-- Add startup prompt hooks to auto-submit prompts or slash commands when a session starts
-- Ctrl+K joins lines when cursor is at end of line
-- `launch_messages` config setting renamed to `companyAnnouncements`
-- `enabledPlugins` config option for automatic plugin installation at startup
-- Repository config renamed from `.github/copilot/config.json` to `.github/copilot/settings.json`
-- Install plugins from `ssh://` URLs
-
-## 0.0.421 — 2026-03-03
-
-- `AUTO` theme reads your terminal's ANSI color palette directly
-- `ask_user` supports structured form input through MCP Elicitations (experimental)
-- `COPILOT_CLI=1` helps git hooks detect Copilot CLI subprocesses and skip interactive prompts
-- `--plugin-dir` loads a plugin from a local directory
-- Click links in the terminal to open them in your default browser
-- `.github/copilot/config.json` introduces shared repository settings
-
-## 0.0.420 — 2026-02-27
-
-- Type `#` to reference GitHub issues, pull requests, and discussions
-
-## 0.0.419 — 2026-02-27
-
-- `/chronicle` adds `standup`, `tips`, and `improve` subcommands powered by session history (experimental)
-- `--mouse`/`--no-mouse` flag and `mouse` config disable mouse mode in alt-screen
-- `Ctrl+F`/`Ctrl+B` work as page down/up shortcuts in alt-screen views
-- Home and End keys jump to the top and bottom of the alt-screen scroll buffer
-- `Ctrl+G` edits the prompt in an external editor or dismisses UI elements
-- MCP server names support dots, slashes, and `@` characters
-
-## 0.0.418 — 2026-02-25
-
-- GitHub Copilot CLI is now [generally available](https://github.blog/changelog/2026-02-25-github-copilot-cli-is-now-generally-available)
-- `--disable-parallel-tools-execution` flag and `parallel_tool_execution` config option removed
-
-## 0.0.417 — 2026-02-25
-
-- `/research` command for deep research with exportable reports
-- Plugin skills and commands load from custom paths declared in `plugin.json`
-
-## 0.0.416 — 2026-02-24
-
-- `--help` content expanded with descriptions, examples, and sorted flags
-- Undo operations now always require confirmation
-
-## 0.0.415 — 2026-02-23
-
-- Custom agents support the `model` field to specify which model to use
-- Plan approval menu shows model-curated actions with a recommended option highlighted first, including autopilot+fleet for parallelizable work
-- Add `show_file` tool for presenting code and diffs to the user
-- `/plugin marketplace add` and `/plugin install` support local paths containing spaces
-- `/mcp show` groups servers into User, Workspace, Plugins, and Built-in sections and makes all servers navigable
-- Ctrl+A/E cycle through visual lines in wrapped input; Home/End navigate within a visual line; Ctrl+Home/End jump to text boundaries
-
-## 0.0.414 — 2026-02-21
-
-- Explore agent can now use GitHub MCP tools when available
-
-## 0.0.413 — 2026-02-20
-
-- `ctrl+insert` copies selected text in alt-screen view
-- Alt-screen mode enabled by default when running with `--experimental` flag
-- Support remote plugin sources (GitHub repos and git URLs) in `marketplace.json` plugin entries
-- Ctrl+A, Ctrl+E, and Ctrl+U navigate to logical line boundaries (newlines) instead of visual wrap boundaries
-- Add configurable status line to display dynamic session information via custom shell scripts
-
-## 0.0.412 — 2026-02-19
-
-- Hide custom agents with `user-invocable: false` from the `/agents` picker
-- Allow `/reset-allowed-tools` to run during agent execution
-- Add `/mcp reload` command to reload MCP configuration without restarting
-- Skills support `disable-model-invocation` frontmatter field
-- Edit plan in terminal editor with `ctrl+y`
-- Configure LSP server request timeouts in `lsp.json`
-- Add `/update` command to view changelog and update instructions
-- Support `~/.copilot/instructions/*.instructions.md` for user-level instructions across all repositories
-- Double-click selects word, triple-click selects line in alt-screen text selection
-- Edit the prompt in your preferred terminal editor with `ctrl+x ctrl+e`
-- Command files no longer require YAML frontmatter — plain markdown files work with name and description derived automatically
-- Add cross-session memory: ask about past work, files, and PRs across sessions (experimental)
-- Add `--bash-env` flag to source `BASH_ENV` in shell sessions
-- `ctrl+x /` restored as alternate shortcut to run commands while preserving input
-
-## 0.0.411 — 2026-02-17
-
-- Custom agents use `disable-model-invocation` instead of `infer` (backward compatible)
-- Support for Claude Sonnet 4.6 model
-- Support MCP servers from Windows On-Device Registry
-- Support `--alt-screen on` and `--alt-screen off` syntax
-- Add `include_coauthor` config option to disable Co-authored-by trailer in git commits
-
-## 0.0.410 — 2026-02-14
-
-- `/init suppress` to control init suggestions per repository
-- Show IDE file selection indicator in the status bar when connected to an IDE
-- Repo-level settings to disable individual validation tools
-- Page Up/Page Down keyboard scrolling in alt-screen mode
-- Ctrl+Z suspend/resume support on Unix platforms
-- Tilde (~) expansion in MCP server cwd configuration
-- ctrl+n and ctrl+p as arrow key alternatives
-- Exit CLI with ctrl+d on empty prompt
-- Shift+Enter inserts newlines in terminals with kitty keyboard protocol
-- Shell mode removed from Shift+Tab cycle, accessed only via `!`
-- Copilot co-authored-by trailer added to git commits automatically
-
-## 0.0.409 — 2026-02-12
-
-- `/diff` uses full screen in alt-screen mode
-- Quick help overlay: press `?` to see grouped shortcuts and commands
-- CLI integrates with VS Code — use `/ide` for details
-- Default plugin marketplaces (copilot-plugins, awesome-copilot) included for easier plugin discovery
-
-## 0.0.408 — 2026-02-12
-
-- Add `/streamer-mode` to hide preview model names and quota details for streaming
-- Add mouse text selection in --alt-screen mode
-- Add substring matching to slash command autocomplete
-- Change run command shortcut from ctrl+p to ctrl+s
-
-## 0.0.407 — 2026-02-11
-
-- Theme picker shows live preview of diffs and markdown, adds colorblind and tritanopia theme variants
-- `/on-air` mode to hide model names and quota details for streaming
-- `/tasks` shows Recent Activity for background agents
-- `--alt-screen` experimental alternate screen buffer mode
-- Add option to approve tool permissions permanently for a location
-- `/instructions` command to view and toggle custom instruction files
-- Ctrl-b and ctrl-f cursor movement now available on all platforms
-- Ctrl+d now favors deleting character after cursor, with queueing moved to ctrl+q (or ctrl+enter)
-- Workspace-local MCP configuration via `.vscode/mcp.json`
-- Tab cycles modes forward, Shift+Tab backward; shell is now a mode
-- Ctrl+P runs slash commands while preserving input (replaces Ctrl+X → /)
-- MCP servers using Microsoft OAuth configure automatically without manual client ID setup
-- Support for gpt-5.3-codex model
-
-## 0.0.406 — 2026-02-07
-
-- Support for Claude Opus 4.6 Fast (Preview)
-- Markdown formatting displays in non-interactive mode output
-- Warning displayed when user has no Copilot subscription
-- Commands from plugins are now translated into skills
-- `/changelog` command to view release notes
-- Plugin marketplace add accepts URLs as sources
-- `--no-experimental` flag disables experimental features
-- `/mcp show` displays enabled/disabled status for MCP tools
-
-## 0.0.405 — 2026-02-05
-
-- `/experimental` shows help screen listing experimental features
-- Plugins can bundle LSP server configurations
-
-## 0.0.404 — 2026-02-05
-
-- Support for claude-opus-4.6 model
-- `/allow-all` and `/yolo` execute immediately
-- `/tasks` command to view and manage background tasks
-- Background agents enabled for all users
-- GITHUB_TOKEN environment variable accessible in agent shell sessions
-
-## 0.0.403 — 2026-02-04
-
-- Reasoning summaries enabled by default for supporting models
-- Comma-separated tools supported in custom agent frontmatter
-
-## 0.0.402 — 2026-02-03
-
-- Plugins can provide hooks for session lifecycle events
-
-## 0.0.401 — 2026-02-03
-
-- `.agents/skills` directory for auto-loading skills
-- Claude-style `.mcp.json` format supported without mcpServers wrapper
-- Shift+Enter inserts new line in VS Code integrated terminal
-- `copilot login` subcommand for ACP terminal-auth
-- agentStop and subagentStop hooks to control agent completion
-- /diff displays accurate line numbers with dual column layout
+### MCP and tooling flags
 
-## 0.0.400 — 2026-01-30
+- `--acp` — Start an Agent Client Protocol server.
+- `--additional-mcp-config=JSON|@path` — Add MCP servers for the current session only.
+- `--disable-builtin-mcps` — Disable built-in MCP servers.
+- `--disable-mcp-server=SERVER-NAME` — Disable a specific MCP server.
+- `--enable-all-github-mcp-tools` — Enable the full GitHub MCP tool surface.
+- `--add-github-mcp-toolset=TOOLSET`, `--add-github-mcp-tool=TOOL` — Expand the GitHub MCP subset.
 
-- MCP server instructions support
-- `/theme` command with GitHub Dark/Light themes
-- Show progress indicator in terminal tab when thinking
-- Autopilot mode for autonomous task completion (experimental)
-- Fuzzy search in model picker
-- `copilot plugin` subcommand for non-interactive plugin management
-- Diff mode file list uses carousel navigation, showing up to 5 files at a time
-- UNIX keyboard bindings (Ctrl+A/E/W/U/K, Alt+arrows) and multiline content in text inputs
-- `launch_messages` config for startup announcements
+## Permission Prompts and Tool Rules
 
-## 0.0.399 — 2026-01-29
+When Copilot CLI asks for permission, these one-key responses are available:
 
-- Ctrl+X then / to run slash commands without losing your input
-- `/allow-all` and `/yolo` commands to auto-approve all permissions during a session
-- Agent creation wizard can auto-generate name, description, and instructions from an initial description
-- LSP (Language Server Protocol) tool for code intelligence
-- Sessions get AI-generated names from first message
-- `.claude/commands/` single-file commands as simpler alternative to skills
-- `/diff` command to review session changes
-- Undo/rewind to previous states with double-Esc
+- `y` — Allow once.
+- `n` — Deny once.
+- `!` — Allow similar requests for the rest of the session.
+- `#` — Deny similar requests for the rest of the session.
+- `?` — Show more detail about the request.
 
-## 0.0.398 — 2026-01-28
+Tool rules use the `Kind(argument)` pattern. Deny rules always override allow rules.
 
-- Skills from parent directories are now invocable and work in non-git directories
+```bash
+# Allow all git commands except git push
+copilot --allow-tool='shell(git:*)' --deny-tool='shell(git push)'
 
-## 0.0.397 — 2026-01-28
+# Allow one MCP tool
+copilot --allow-tool='MyMCP(create_issue)'
 
-- `/mcp show <server-name>` displays server details and available tools
-- Content pasted into the prompt over 30 KB is automatically saved to workspace files
-- `--acp` flag to start as Agent Client Protocol server
-- Directories appear in @mention autocomplete
+# Allow all tools from one MCP server
+copilot --allow-tool='MyMCP'
+```
 
-## 0.0.396 — 2026-01-27
+## Configuration Files
 
-- Create custom agents through interactive CLI wizard
-- `copilot version` and `copilot update` commands
-- preToolUse hooks can deny tool execution and modify arguments
-- `/plugin install` supports GitHub repos, URLs, and local paths
-- `/experimental` command and `--experimental` flag to opt into experimental features
-- `/init` command to generate Copilot instructions
-- Plugins can provide custom agents
-- Commenting in /diff mode for line-specific feedback
+Settings cascade from broader scopes to narrower scopes. Command-line flags and environment variables always win.
 
-## 0.0.395 — 2026-01-26
+- `~/.copilot/config.json` — User-wide defaults.
+- `.github/copilot/settings.json` — Repository-wide shared settings.
+- `.github/copilot/settings.local.json` — Local personal overrides that should not be committed.
 
-- `/mcp show` displays all configured MCP servers including defaults and plugin servers
-- Load local shell configuration in agent sessions
-- Plugin skills usable by the agent
-- Completed tool calls display in prompt mode
+### Common user settings
 
-## 0.0.394 — 2026-01-24
+- `model` — Default model selection.
+- `theme` — `auto`, `dark`, or `light`.
+- `reasoning_effort` — `low`, `medium`, `high`, or `xhigh`.
+- `experimental` — Enable experimental features by default.
+- `alt_screen` — Use the terminal alternate screen buffer.
+- `trusted_folders` — Pre-granted file access.
+- `allowed_urls`, `denied_urls` — URL allowlists and blocklists.
+- `screen_reader` — Screen-reader mode.
+- `stream` — Streaming responses.
+- `auto_update` — Automatic updates.
+- `bash_env` — `BASH_ENV` support.
 
-- Support for GitHub Enterprise Cloud (\*.ghe.com) in `/delegate` command
-- `/delegate` command accepts optional prompt, uses conversation context
-- Queue slash commands alongside messages using Ctrl+D
-- Press `/` to search sessions in `/resume`
+### Repository-level settings
 
-## 0.0.393 — 2026-01-23
+Repository settings support shared plugin behavior and startup messaging, including:
 
-- GHE Cloud (\*.ghe.com) remote custom agents
-- Esc-Esc to undo file changes to any previous snapshot
+- Enabled plugins for the repository.
+- Extra known plugin marketplaces.
+- Shared startup announcements.
 
-## 0.0.392 — 2026-01-22
+## Hooks
 
-- `/plugin` command for plugin marketplace management
-- `/rename` command as alias for `/session rename`
-- `/plugin update` command to update installed plugins
-- Edit tool displays diffs when expanded in timeline
+Hook configuration files live in `.github/hooks/*.json`.
 
-## 0.0.390 — 2026-01-22
+### What hooks can do
 
-- Enable steering during plan mode
+- Run shell commands before or after tool use.
+- Auto-submit a prompt or slash command when a session starts.
+- Allow, deny, or modify tool calls before they execute.
+- Block an agent or subagent from finishing and force another turn.
 
-## 0.0.389 — 2026-01-22
+### Main hook events
 
-- MSI installer for Windows
-- MCP servers can authenticate using OAuth 2.0 with automatic token management and refresh
-- Plugins can bundle MCP servers that load automatically when installed
-- Invoke skills using slash commands like `/skill-name`
-- `/diff` command to review changes made during the current session
-- `/models` as alias for `/model` command
-- Shell commands (`!`) can run in parallel while agent is working
+- `sessionStart`, `sessionEnd`
+- `userPromptSubmitted`
+- `preToolUse`, `postToolUse`
+- `agentStop`, `subagentStop`
+- `errorOccurred`
 
-## 0.0.388 — 2026-01-20
+### Hook formats
 
-- `/review` command to analyze code changes
-- `--enable-all-github-mcp-tools` flag enables read-write GitHub MCP tools
+- Command hooks support `bash`, `powershell`, `cwd`, `env`, and `timeoutSec`.
+- Prompt hooks support a `prompt` string and can submit either plain text or a slash command.
+- `preToolUse` can return `allow`, `deny`, or `ask`, and can also replace tool arguments with `modifiedArgs`.
+- `agentStop` and `subagentStop` can return `allow` or `block`.
 
-## 0.0.387 — 2026-01-20
+### Useful recent hook updates
 
-- ask_user tool for interactive clarification questions
-- Plan mode with dedicated panel for viewing implementation plans
+- `preCompact` hooks can run before context compaction starts.
+- Hooks can ask for confirmation before a tool runs.
+- Hook configuration files can omit the `version` field.
 
-## 0.0.386 — 2026-01-19
+## MCP Servers
 
-- `/resume` command to switch sessions
+Copilot CLI can load MCP servers from several places.
 
-## 0.0.385 — 2026-01-19
+### Configuration sources
 
-- Current intent displayed in terminal tab title
-- All custom instruction files combined instead of priority-based fallbacks
-- Infinite sessions with automatic context management through compaction checkpoints
+- `~/.copilot/mcp-config.json`
+- `.github/mcp.json`
+- `.mcp.json`
+- `.vscode/mcp.json`
+- `.devcontainer/devcontainer.json`
 
-## 0.0.384 — 2026-01-16
+### Built-in MCP servers
 
-- `&` prefix shortcut for delegating prompts to run in background (equivalent to `/delegate`)
-- Configure reasoning effort for GPT models
-- `/cd` as alias for `/cwd` command
-- Files created by the CLI available for @-mention
-- Extended thinking for Anthropic Claude models
-- 'Approve for session' auto-approves pending parallel permission requests of the same type
-- Reasoning view setting persists across sessions
-- Repo memories injected in prompt; memory storage tool to remember facts across sessions
-- Proxy URLs supported without scheme (e.g., localhost:9999)
+- `github-mcp-server` — GitHub API actions such as issues, pull requests, commits, code search, and GitHub Actions.
+- `playwright` — Browser automation.
+- `fetch` — HTTP requests.
+- `time` — Time utilities.
 
-## 0.0.382 — 2026-01-14
+### Transport types
 
-- GPT-5.2-Codex model available
-- `--config-dir` flag to override default configuration directory location
+- `local` / `stdio` — Launch a local process with `command` and `args`.
+- `http` — Connect to a remote streamable HTTP server via `url`.
+- `sse` — Connect to a remote Server-Sent Events server via `url`.
 
-## 0.0.381 — 2026-01-13
+### Common fields
 
-- `--allow-all` and `--yolo` flags to enable all permissions at once
-- `/new` as alias for `/clear` command
-- Shell mode history filters by prefix — typing `!git` and pressing up arrow cycles only through previous git commands
+- Local servers: `command`, `args`, `tools`, `env`, `cwd`, `timeout`, `type`.
+- Remote servers: `type`, `url`, `tools`, `headers`, `oauthClientId`, `oauthPublicClient`, `timeout`.
+- `filterMapping` controls output filtering: `hidden_characters` (default), `markdown`, or `none`.
 
-## 0.0.380 — 2026-01-13
+### Trust model
 
-- `--agent` flag works in interactive mode
-- Inline feedback when rejecting tool permission requests so agents can continue
-- Send messages while Copilot is thinking to steer or queue
+- Built-in servers are high trust.
+- Repository, workspace, and dev-container configs are medium trust.
+- User config trust is your responsibility.
+- Remote servers are low trust and should always be reviewed.
 
-## 0.0.376 — 2026-01-08
+All MCP tool calls still require explicit permission, including read-only calls against external services.
 
-- Load remote sessions using GraphQL ID or session picker
-- Task tool subagents can process images
+## Skills and Custom Agents
 
-## 0.0.375 — 2026-01-07
+### Skills
 
-- Ctrl+T to toggle reasoning summaries for supported models
-- `--share` and `--share-gist` flags for session sharing in non-interactive mode
+Skills are Markdown packages that extend what Copilot CLI can do. Each skill lives in its own directory with a `SKILL.md` file.
 
-## 0.0.374 — 2026-01-02
+Common skill locations:
 
-- Auto-compaction at 95% token limit and `/compact` command
-- Built-in subagents for exploring and managing tasks
-- Built-in `web_fetch` tool for fetching web content
+- `.github/skills/`
+- `.agents/skills/`
+- `.claude/skills/`
+- Parent `.github/skills/` directories in monorepos
+- `~/.copilot/skills/`
+- `~/.claude/skills/`
+- Extra directories from `COPILOT_SKILLS_DIRS`
 
-## 0.0.373 — 2025-12-30
+Useful frontmatter fields:
 
-- Tab completion for path arguments in slash commands like `/cwd` and `/add-dir`
-- Copilot Spaces tools enabled in GitHub MCP Server
+- `name`
+- `description`
+- `allowed-tools`
+- `user-invocable`
+- `disable-model-invocation`
 
-## 0.0.372 — 2025-12-19
+### Custom agents
 
-- Enable disabled models directly in CLI when selecting or specifying them
-- `/context` command to visualize token usage
-- `--resume` flag to continue remote sessions locally
-- URL permission controls for shell commands that access the web
+Custom agents are Markdown-defined specialists that can be selected with `/agent` or `--agent=AGENT`.
 
-## 0.0.370 — 2025-12-18
+Built-in agents currently include:
 
-- STDIO type synonymous with Local for MCP servers in CLI configuration UI
-- Diff display uses your configured git pager (delta, diff-so-fancy)
-- `--available-tools` and `--excluded-tools` flags to filter which tools the model can use
+- `code-review`
+- `explore`
+- `general-purpose`
+- `research`
+- `task`
 
-## 0.0.369 — 2025-12-11
+Custom agent locations:
 
-- Add support for GPT-5.2
+- `.github/agents/` or `.claude/agents/`
+- `~/.copilot/agents/` or `~/.claude/agents/`
+- Plugin-provided agents
 
-## 0.0.368 — 2025-12-10
+Useful frontmatter fields:
 
-- Add grep tool for Codex models
+- `description`
+- `infer`
+- `model`
+- `tools`
+- `mcp-servers`
 
-## 0.0.367 — 2025-12-04
+## Environment Variables
 
-- GPT-5.1-Codex-Max is now available in GitHub Copilot CLI
+Useful environment variables include:
 
-## 0.0.366 — 2025-12-03
+- `COPILOT_MODEL` — Default model.
+- `COPILOT_ALLOW_ALL` — Equivalent to `--allow-all`.
+- `COPILOT_HOME` — Override the default Copilot home directory.
+- `COPILOT_EDITOR` — External editor command.
+- `COPILOT_CUSTOM_INSTRUCTIONS_DIRS` — Extra instruction directories.
+- `COPILOT_SKILLS_DIRS` — Extra skill directories.
+- `COPILOT_GITHUB_TOKEN`, `GH_TOKEN`, `GITHUB_TOKEN` — Authentication tokens.
+- `GH_HOST` — Alternate GitHub host.
+- `HTTP_PROXY`, `HTTPS_PROXY`, `NO_PROXY` — Network proxy settings.
+- `NO_COLOR` — Disable terminal color.
+- `USE_BUILTIN_RIPGREP` — Switch between bundled and system ripgrep.
+- `PLAIN_DIFF` — Disable rich diff rendering.
 
-- `infer` property to control custom agent tool visibility
-- CLI executables available in GitHub release artifacts
-- apply_patch toolchain for OpenAI Codex models
+## Observability
 
-## 0.0.365 — 2025-11-25
+Copilot CLI can export traces and metrics with OpenTelemetry.
 
-- `--silent` option to suppress stats output for scripting
+- OTel is off by default.
+- It turns on when `COPILOT_OTEL_ENABLED=true`, `OTEL_EXPORTER_OTLP_ENDPOINT` is set, or `COPILOT_OTEL_FILE_EXPORTER_PATH` is set.
+- `OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=true` captures full prompts, responses, and tool payloads.
+- Content capture can expose sensitive data and should only be enabled in trusted environments.
 
-## 0.0.364 — 2025-11-25
+## Recent Additions Worth Knowing
 
-- Add syntax highlighting for diffs
+Recent official releases added or improved several user-facing CLI features:
 
-## 0.0.363 — 2025-11-24
+- `/extensions` for viewing, enabling, and disabling CLI extensions.
+- `/pr` for PR creation, inspection, review feedback, merge-conflict work, and CI follow-up.
+- `/version` inside the interactive session.
+- `/changelog last <N>`, `/changelog since <version>`, and `/changelog summarize`.
+- `@` file mentions for absolute paths, home-directory paths, and parent-relative paths.
+- `--reasoning-effort` for setting reasoning depth from the command line.
+- `.devcontainer/devcontainer.json` as another MCP configuration source.
+- One-time path approval in permission dialogs.
+- OpenTelemetry instrumentation for sessions, model calls, and tool execution.
 
-- Opus 4.5, GPT-4.1, and GPT-5-Mini models available
-- GITHUB_ASKPASS environment variable supported for authentication
-- MCP servers work in `--prompt` mode
+## Sources
 
-## 0.0.362 — 2025-11-20
-
-- Paste image data from clipboard directly into the CLI
-
-## 0.0.361 — 2025-11-18
-
-- Gemini 3 Pro model available
-
-## 0.0.359 — 2025-11-17
-
-- Add images to context via drag & drop or pasting paths to image files
-- `/share` command to save session as markdown file or GitHub gist
-- `copilot -p` no longer interactively prompts for permission requests
-
-## 0.0.356 — 2025-11-13
-
-- GPT-5.1, GPT-5.1-Codex, and GPT-5.1-Codex-Mini models available
-
-## 0.0.355 — 2025-11-12
-
-- CLI agent can read its own `/help` and README to answer questions about its capabilities
-- Bundled `ripgrep` with `grep` and `glob` tools for faster codebase searching
-
-## 0.0.354 — 2025-11-03
-
-- `COPILOT_GITHUB_TOKEN` environment variable for authentication (takes precedence over `GH_TOKEN`)
-- MCP servers in GitHub Actions automatically use `GITHUB_WORKSPACE` as working directory
-
-## 0.0.353 — 2025-10-28
-
-- Custom agents: define in `~/.copilot/agents`, `.github/agents` in your repo, or your org's `.github` repo. Invoke with `/agent` slash command or `--agent <agent>` flag
-- `/delegate` command to delegate a task asynchronously to Copilot coding agent
-
-## 0.0.350 — 2025-10-23
-
-- `--enable-all-github-mcp-tools` to restore the full set of GitHub MCP server tools (default set reduced to conserve context)
-
-## 0.0.349 — 2025-10-22
-
-- Parallel tool calling — the model can call multiple tools at once. Disable with `--disable-parallel-tools-execution`
-- `/quit` as alias of `/exit`
-- Temp directory accessible to the model by default. Disable with `--disallow-temp-dir`
-
-## 0.0.348 — 2025-10-21
-
-- Token-by-token streaming output. Disable with `--stream off`
-
-## 0.0.344 — 2025-10-17
-
-- GitHub MCP server enabled in prompt mode
-- Detached process execution in the bash tool
-
-## 0.0.343 — 2025-10-16
-
-- Haiku 4.5 model available
-- `--additional-mcp-config` flag to augment MCP server configuration per session (inline JSON or from file, supports multiple passes)
-
-## 0.0.342 — 2025-10-15
-
-- Multi-line input via Shift+Ctrl on Kitty-protocol terminals; also via `/terminal-setup` in VSCode
-- Non-interactive GHE logins via `GH_HOST` environment variable
-- Persistent `log_level` option in `~/.copilot/config`
-
-## 0.0.341 — 2025-10-14
-
-- `/terminal-setup` command to set up multi-line input on terminals not implementing the Kitty protocol
-- Each model's premium request multiplier shown in `/model` list
-
-## 0.0.340 — 2025-10-13
-
-- `--allow-all-paths` argument to approve access to all paths in `-p` mode
-- MCP server env config now treats values as literals; use `${VAR}` syntax for environment variable references
-
-## 0.0.339 — 2025-10-10
-
-- `/mcp add` "Command" field accepts a full command as if running it in a shell
-
-## 0.0.337 — 2025-10-08
-
-- Multi-line input for terminals supporting the Kitty protocol
-- Ctrl+B and Ctrl+F for moving cursor back and forward
-
-## 0.0.336 — 2025-10-07
-
-- Proxy support via HTTPS_PROXY/HTTP_PROXY environment variables regardless of Node version
-- Persistent `--screen-reader` preference prompt
-
-## 0.0.335 — 2025-10-06
-
-- File diffs shown in timeline by default
-- Slash command input shows argument hints
-
-## 0.0.334 — 2025-10-03
-
-- Large pastes displayed as compact tokens like `[Paste #1 - 15 lines]`
-- Warning when conversation context approaches ≤20% remaining of model's limit
-
-## 0.0.333 — 2025-10-02
-
-- Image support via `@`-mention
-- Execute shell commands directly by prepending input with `!`
-- `/usage` command for premium request usage, session time, code changes, and per-model token stats
-- `--screen-reader` mode with informative labels replacing icons
-- `--continue` flag to resume the most recently closed session
-
-## 0.0.331 — 2025-10-01
-
-- `/model` list only shows models the user has access to
-- Scrollbar in the `@` file mentioning picker
-
-## 0.0.329 — 2025-09-29
-
-- Claude Sonnet 4.5 model available
-- `/model` command to change the model interactively or with `/model <model>`
-- Currently selected model shown above the input text box
-- Ctrl+R to expand only recent timeline items; Ctrl+E to expand all
-- Glob matching in shell rules for `--allow-tool` and `--deny-tool`
-
----
-
-Source: [github/copilot-cli/releases](https://github.com/github/copilot-cli/releases) · Last updated: March 2026 (1.0.4)
+- [GitHub Copilot CLI command reference](https://docs.github.com/en/copilot/reference/cli-command-reference)
+- [GitHub Copilot CLI releases](https://github.com/github/copilot-cli/releases)
+- [GitHub Copilot CLI plugin reference](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-plugin-reference)

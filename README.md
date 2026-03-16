@@ -6,28 +6,23 @@ Live site: [aosama.github.io/copilot-cli-handbook](https://aosama.github.io/copi
 
 ## What This Is
 
-This project exists to answer one question: **"What can I use in GitHub Copilot CLI, and when did it land?"**
+This project exists to answer one question: **"What can I use in GitHub Copilot CLI?"**
 
 It is a friendly handbook for the community, not a tutorial, installation guide, or marketing page. The goal is simple: keep a concise, accurate record of what people can actually use in Copilot CLI, backed by official sources.
 
-The site currently has two pages:
-
-| Page            | Route       | Purpose                                                                 |
-| --------------- | ----------- | ----------------------------------------------------------------------- |
-| Handbook        | `/`         | Instruction files, slash commands, CLI arguments, and MCP configuration |
-| Release Tracker | `/handbook` | User-facing Copilot CLI features grouped by release date, newest first  |
+The site has a single Handbook page at `/` providing instruction files, commands, flags, hooks, and MCP configuration.
 
 ## Source of Truth
 
-All content is derived from official GitHub sources:
+Handbook content should stay grounded in official GitHub sources:
 
 - [GitHub Copilot CLI releases](https://github.com/github/copilot-cli/releases)
-- [How-tos for GitHub Copilot](https://docs.github.com/en/copilot/how-tos)
-- [Copilot CLI Command Reference](https://docs.github.com/en/copilot/reference/cli-command-reference)
+- [GitHub Copilot how-tos](https://docs.github.com/en/copilot/how-tos)
+- [GitHub Copilot CLI command reference](https://docs.github.com/en/copilot/reference/cli-command-reference)
 
 ## Local Development
 
-Requires Node 18+.
+Requires the current Node LTS release. This repo is pinned to `24.14.0` in `.nvmrc`.
 
 ```bash
 npm install          # install dependencies
@@ -49,14 +44,12 @@ Formatting is enforced with Prettier, Husky, and lint-staged.
 ├── src/
 │   ├── content/
 │   │   └── handbook/
-│   │       ├── handbook.md        # Handbook page content (route /)
-│   │       └── index.md           # Release Tracker content (route /handbook)
+│   │       └── index.md           # Handbook page content (route /)
 │   ├── content.config.ts          # Astro content collection schema
 │   ├── layouts/
 │   │   └── BaseLayout.astro       # Shared layout and navigation
 │   ├── pages/
-│   │   ├── handbook.astro         # Renders index.md
-│   │   └── index.astro            # Renders handbook.md
+│   │   └── index.astro            # Renders index.md
 │   └── styles/
 │       └── global.css             # Global theme and layout styles
 ├── playwright-regression/
@@ -66,21 +59,20 @@ Formatting is enforced with Prettier, Husky, and lint-staged.
 └── .github/workflows/
     ├── deploy.yml
     ├── preview-deploy.yml
-    ├── regression.yml
-    └── update-release-tracker.md
+    └── regression.yml
 ```
 
 Astro pages stay thin on purpose; long-form content lives in Markdown under `src/content/handbook/`.
 
 ## Contributing
 
-Contributions are welcome. If you spot a missing feature, a stale release entry, or wording that could better help the Copilot CLI community:
+Contributions are welcome. If you spot a missing capability, outdated guidance, or wording that could better help the Copilot CLI community:
 
 1. Open an [issue](https://github.com/aosama/copilot-cli-handbook/issues)
 2. Send a pull request with the proposed fix
-3. Keep changes factual and grounded in the official sources listed above
+3. Keep changes factual and grounded in the official GitHub sources used by the handbook
 
-Pull requests are checked with formatting and Playwright regression tests.
+Run `npm run lint` locally before opening a pull request. CI runs the Playwright regression suite.
 
 ## License
 

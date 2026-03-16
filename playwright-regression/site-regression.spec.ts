@@ -1,14 +1,11 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Site Regression Tests', () => {
-  test('release tracker exposes quick jump navigation', async ({ page }) => {
-    await page.goto('/copilot-cli-handbook/handbook');
+  test('deleted release tracker route stays unavailable', async ({ page }) => {
+    const response = await page.goto('/copilot-cli-handbook/handbook');
 
-    const quickJump = page.locator('[data-page-nav]');
-    await expect(quickJump).toBeVisible();
-
-    const linkCount = await quickJump.locator('a').count();
-    expect(linkCount).toBeGreaterThan(5);
+    expect(response?.status()).toBe(404);
+    await expect(page.locator('h1')).toContainText('404');
   });
 
   test('crawls the site to verify all links work and pages produce content', async ({

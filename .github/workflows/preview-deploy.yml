@@ -23,11 +23,11 @@ jobs:
       PR_NUMBER: ${{ github.event.pull_request.number }}
       ASTRO_BASE: /copilot-cli-handbook/pull/${{ github.event.pull_request.number }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version-file: .nvmrc
           cache: npm
 
       - run: npm ci
@@ -73,7 +73,7 @@ jobs:
           git push -u origin gh-pages
 
       - name: Checkout gh-pages
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: gh-pages
           path: gh-pages
@@ -115,7 +115,7 @@ jobs:
           mkdir site
           rsync -a --delete --exclude .git gh-pages/ site/
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: site
 
@@ -124,7 +124,7 @@ jobs:
         uses: actions/deploy-pages@v4
 
       - name: Comment preview URL on pull request
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         env:
           PREVIEW_URL: https://aosama.github.io/copilot-cli-handbook/pull/${{ github.event.pull_request.number }}/
         with:
@@ -169,7 +169,7 @@ jobs:
     env:
       PR_NUMBER: ${{ github.event.pull_request.number }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Check gh-pages branch exists
         id: ghpages
@@ -183,7 +183,7 @@ jobs:
 
       - name: Checkout gh-pages
         if: ${{ steps.ghpages.outputs.exists == 'true' }}
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: gh-pages
           path: gh-pages
@@ -218,7 +218,7 @@ jobs:
           mkdir site
           rsync -a --delete --exclude .git gh-pages/ site/
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v4
         if: ${{ steps.ghpages.outputs.exists == 'true' }}
         with:
           path: site
