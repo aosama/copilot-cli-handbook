@@ -1,7 +1,10 @@
 {
   "name": "Copilot CLI Handbook",
-  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+  "image": "mcr.microsoft.com/devcontainers/base:trixie",
   "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "24.14.0"
+    },
     "ghcr.io/devcontainers/features/github-cli:1": {}
   },
   "postCreateCommand": "npm install && npm install -g @github/copilot@latest",
