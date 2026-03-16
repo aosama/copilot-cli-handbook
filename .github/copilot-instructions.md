@@ -4,6 +4,7 @@
 
 - Read `README.md`.
 - `AGENTS.md` is a symlink to this file. Update `.github/copilot-instructions.md` only; do not try to edit both paths separately.
+- Always follow all instructions under `.github/instructions` according to their `applyTo` wildcard.
 
 ## Linting
 
