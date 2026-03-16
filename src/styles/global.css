@@ -296,6 +296,29 @@ a:hover {
   border-left: 4px solid #2ab060;
 }
 
+@media print {
+  body {
+    background: #fff;
+  }
+
+  .page-intro > p,
+  .page-meta,
+  .handbook-content,
+  .handbook-content p,
+  .handbook-content ul,
+  .handbook-content ol,
+  .handbook-content li,
+  .handbook-content table,
+  .handbook-content th,
+  .handbook-content td,
+  .handbook-content section,
+  .handbook-content .info-box,
+  .handbook-content .troubleshoot-item,
+  .handbook-content .version-item {
+    color: #000;
+  }
+}
+
 @media (max-width: 780px) {
   .site-header {
     flex-direction: column;
