@@ -15,6 +15,11 @@ const { Content } = await render(handbook);
   <article class="handbook-content">
     <header class="page-intro">
       <h1>{handbook.data.title}</h1>
+      {
+        handbook.data.lastUpdated && (
+          <p class="page-meta">Last updated on {handbook.data.lastUpdated}</p>
+        )
+      }
       <p>{handbook.data.description}</p>
     </header>
     <Content />
