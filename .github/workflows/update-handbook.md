@@ -8,7 +8,12 @@ permissions:
   issues: read
   pull-requests: read
 
-engine: copilot
+engine:
+  id: copilot
+  model: gpt-5.4
+  args:
+    - --reasoning-effort
+    - xhigh
 
 tools:
   github:
