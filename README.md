@@ -59,10 +59,30 @@ Formatting is enforced with Prettier, Husky, and lint-staged.
 └── .github/workflows/
     ├── deploy.yml
     ├── preview-deploy.yml
-    └── regression.yml
+    ├── regression.yml
+    ├── update-handbook.md          # Agentic workflow source (edit this)
+    └── update-handbook.lock.yml   # Compiled workflow (do not edit directly)
 ```
 
 Astro pages stay thin on purpose; long-form content lives in Markdown under `src/content/handbook/`.
+
+## Automated handbook updates
+
+The handbook is kept current by a GitHub Agentic Workflow that runs on a daily schedule and can also be triggered manually.
+
+| File                                         | Purpose                                            |
+| -------------------------------------------- | -------------------------------------------------- |
+| `.github/workflows/update-handbook.md`       | Workflow source — edit this to change instructions |
+| `.github/workflows/update-handbook.lock.yml` | Compiled lock file — do not edit directly          |
+
+The workflow reads only official GitHub sources (Copilot CLI releases, GitHub Docs, GitHub Blog), edits only `src/content/handbook/index.md`, and opens a draft pull request when relevant changes are found. It creates no PR if the page is already current.
+
+To recompile after editing the source file:
+
+```bash
+gh extension install github/gh-aw  # one-time install
+gh aw compile update-handbook
+```
 
 ## Contributing
 
