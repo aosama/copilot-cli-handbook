@@ -75,7 +75,7 @@ The handbook is kept current by a GitHub Agentic Workflow that runs on a daily s
 | `.github/workflows/update-handbook.md`       | Workflow source — edit this to change instructions |
 | `.github/workflows/update-handbook.lock.yml` | Compiled lock file — do not edit directly          |
 
-The workflow reads only official GitHub sources (Copilot CLI releases, GitHub Docs, GitHub Blog), edits only `src/content/handbook/index.md`, and opens a draft pull request when relevant changes are found. It creates no PR if the page is already current.
+The workflow reads only official GitHub sources (Copilot CLI releases, GitHub Docs, GitHub Blog), edits only `src/content/handbook/index.md`, and opens a pull request that is ready for review when relevant changes are found. It creates no PR if the page is already current.
 
 To recompile after editing the source file:
 

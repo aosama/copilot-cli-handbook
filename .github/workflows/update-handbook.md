@@ -20,7 +20,7 @@ network:
 
 safe-outputs:
   create-pull-request:
-    draft: true
+    draft: false
     base-branch: main
 ---
 
@@ -104,7 +104,7 @@ Before producing output, verify:
 
 If relevant content changes were made:
 
-- Create one draft pull request.
+- Create one pull request that is ready for review.
 - Title: `[handbook] Update from official GitHub sources – <date>`
 - Body must include:
   - a short summary of what changed
