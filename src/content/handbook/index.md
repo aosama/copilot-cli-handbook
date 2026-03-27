@@ -1,7 +1,7 @@
 ---
 title: 'Copilot CLI Handbook'
 description: 'Custom instructions, commands, permissions, agents, hooks, configuration, and MCP for GitHub Copilot CLI'
-lastUpdated: 'March 27, 2026 at 7:16 PM EDT'
+lastUpdated: 'March 27, 2026 at 7:25 PM EDT'
 ---
 
 ## Instruction Files
@@ -26,7 +26,7 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 
 ### Session and navigation
 
-- `/clear` — Abandon the current session and clear history. `/new` — Start a fresh conversation (keeps the old session backgrounded). Both accept an optional prompt to begin the new session. [Docs: slash commands][slash-commands] [Release: v1.0.11][release-1-0-11] [Blog: slash commands][blog-slash-commands]
+- `/clear` — Abandon the current session and clear history while keeping configured MCP servers available in the new session. `/new` — Start a fresh conversation (keeps the old session backgrounded). Both accept an optional prompt to begin the new session. [Docs: slash commands][slash-commands] [Release: v1.0.11][release-1-0-11] [Release: v1.0.12][release-1-0-12] [Blog: slash commands][blog-slash-commands]
 - `/resume [SESSION-ID]` — Resume a previous session. [Docs: slash commands][slash-commands]
 - `/undo` — Undo the last turn and revert any file changes it made. [Release: v1.0.10][release-1-0-10]
 - `/session [checkpoints [n]|files|plan|rename NAME]` — Show session information and a workspace summary. [Docs: slash commands][slash-commands]
@@ -356,12 +356,12 @@ Recent official releases added or improved several user-facing CLI features. [Re
 - `--effort` as a shorthand alias for `--reasoning-effort`. [Release: v1.0.10][release-1-0-10]
 - `/allow-all` (`/yolo`) `on`, `off`, and `show` subcommands to control allow-all mode. [Release: v1.0.12][release-1-0-12]
 - `Ctrl + Y` in plan mode opens the most recent research report when no plan exists. [Release: v1.0.12][release-1-0-12]
+- `/session rename` can auto-generate a session name from conversation history when you omit the name argument. [Release: v1.0.12][release-1-0-12]
 - `.claude/settings.json` and `.claude/settings.local.json` as additional repo config sources. [Release: v1.0.12][release-1-0-12]
 - Plugin hooks receive `CLAUDE_PROJECT_DIR` and `CLAUDE_PLUGIN_DATA` env vars plus `{{project_dir}}` and `{{plugin_data_dir}}` template variables. [Release: v1.0.12][release-1-0-12]
 - `~/.agents/skills/` as a personal skill discovery directory. [Release: v1.0.11][release-1-0-11]
-- `/clear` and `/new` are now distinct: `/clear` abandons the current session, `/new` starts fresh (keeping the old session backgrounded). Both accept an optional initial prompt. [Release: v1.0.11][release-1-0-11]
+- `/clear` and `/new` are now distinct: `/clear` abandons the current session and keeps configured MCP servers available in the new session, `/new` starts fresh (keeping the old session backgrounded). Both accept an optional initial prompt. [Release: v1.0.11][release-1-0-11] [Release: v1.0.12][release-1-0-12]
 - Custom instructions, MCP servers, skills, and agents are discovered at every directory level from the working directory up to the git root (full monorepo support). [Release: v1.0.11][release-1-0-11]
-- Alt screen is now always enabled; `--alt-screen` flag and `alt_screen` setting have been removed. [Release: v1.0.12][release-1-0-12]
 - `/extensions` for viewing, enabling, and disabling CLI extensions. [Release: v1.0.5][release-1-0-5]
 - `/pr` for PR creation, inspection, review feedback, merge-conflict work, and CI follow-up. [Release: v1.0.5][release-1-0-5]
 - `/version` inside the interactive session. [Release: v1.0.5][release-1-0-5]
