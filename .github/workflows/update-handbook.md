@@ -46,9 +46,9 @@ The page must remain:
 Only use official GitHub sources directly relevant to GitHub Copilot CLI:
 
 1. GitHub Copilot CLI releases: `https://github.com/github/copilot-cli/releases`
-2. GitHub Docs pages for Copilot CLI how-tos: `https://docs.github.com/en/copilot/how-tos`
+2. GitHub Docs pages for specific Copilot CLI how-tos: use the exact Copilot CLI page URL, not the generic how-tos landing page, when citing a fact
 3. GitHub Docs CLI command reference: `https://docs.github.com/en/copilot/reference/cli-command-reference`
-4. GitHub Blog posts directly about Copilot CLI: `https://github.blog/`
+4. GitHub Blog posts directly about Copilot CLI: use the exact post URL, not a blog landing page, when citing a fact
 
 Do not use third-party blogs, social posts, forum threads, or unofficial summaries.
 
@@ -87,6 +87,8 @@ Exclude:
    - keep the `Last updated on` timestamp current if any content changed
 5. Confirm every change is supported by an official source fetched during this run.
 6. If the page is already current, do not make any edits.
+
+When a handbook bullet cites a how-to or blog post, link to the exact page used as evidence rather than a landing page.
 
 ## Quality bar
 
