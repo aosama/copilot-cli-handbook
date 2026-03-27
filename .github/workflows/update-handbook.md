@@ -19,6 +19,8 @@ network:
     - github
 
 safe-outputs:
+  noop:
+    report-as-issue: false
   create-pull-request:
     draft: false
     base-branch: main
