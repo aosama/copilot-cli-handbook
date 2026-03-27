@@ -1,7 +1,7 @@
 ---
 title: 'Copilot CLI Handbook'
 description: 'Custom instructions, commands, permissions, agents, hooks, configuration, and MCP for GitHub Copilot CLI'
-lastUpdated: 'March 27, 2026'
+lastUpdated: 'March 27, 2026 at 7:16 PM EDT'
 ---
 
 ## Instruction Files
@@ -355,7 +355,7 @@ Recent official releases added or improved several user-facing CLI features. [Re
 - `/undo` to undo the last turn and revert file changes. [Release: v1.0.10][release-1-0-10]
 - `--effort` as a shorthand alias for `--reasoning-effort`. [Release: v1.0.10][release-1-0-10]
 - `/allow-all` (`/yolo`) `on`, `off`, and `show` subcommands to control allow-all mode. [Release: v1.0.12][release-1-0-12]
-- `Ctrl+Y` in plan mode opens the most recent research report when no plan exists. [Release: v1.0.12][release-1-0-12]
+- `Ctrl + Y` in plan mode opens the most recent research report when no plan exists. [Release: v1.0.12][release-1-0-12]
 - `.claude/settings.json` and `.claude/settings.local.json` as additional repo config sources. [Release: v1.0.12][release-1-0-12]
 - Plugin hooks receive `CLAUDE_PROJECT_DIR` and `CLAUDE_PLUGIN_DATA` env vars plus `{{project_dir}}` and `{{plugin_data_dir}}` template variables. [Release: v1.0.12][release-1-0-12]
 - `~/.agents/skills/` as a personal skill discovery directory. [Release: v1.0.11][release-1-0-11]
