@@ -1,7 +1,7 @@
 ---
 title: 'Copilot CLI Handbook'
 description: 'Custom instructions, commands, permissions, agents, hooks, configuration, and MCP for GitHub Copilot CLI'
-lastUpdated: 'March 27, 2026 at 7:25 PM EDT'
+lastUpdated: 'March 28, 2026 at 5:58 AM EDT'
 ---
 
 ## Instruction Files
@@ -29,8 +29,8 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `/clear` — Abandon the current session and clear history while keeping configured MCP servers available in the new session. `/new` — Start a fresh conversation (keeps the old session backgrounded). Both accept an optional prompt to begin the new session. [Docs: slash commands][slash-commands] [Release: v1.0.11][release-1-0-11] [Release: v1.0.12][release-1-0-12] [Blog: slash commands][blog-slash-commands]
 - `/resume [SESSION-ID]` — Resume a previous session. [Docs: slash commands][slash-commands]
 - `/undo` — Undo the last turn and revert any file changes it made. [Release: v1.0.10][release-1-0-10]
-- `/session [checkpoints [n]|files|plan|rename NAME]` — Show session information and a workspace summary. [Docs: slash commands][slash-commands]
-- `/rename NAME` — Rename the current session. [Docs: slash commands][slash-commands]
+- `/session [checkpoints [n]|files|plan|rename [NAME]]` — Show session information and a workspace summary. Omitting `NAME` lets Copilot auto-generate one from the conversation history. [Docs: slash commands][slash-commands] [Release: v1.0.12][release-1-0-12]
+- `/rename [NAME]` — Rename the current session, or let Copilot auto-generate a name from the conversation history when you omit `NAME`. [Docs: slash commands][slash-commands] [Release: v1.0.12][release-1-0-12]
 - `/compact` — Summarize history to reduce context usage. [Docs: slash commands][slash-commands]
 - `/context` — Show context window usage. [Docs: slash commands][slash-commands]
 - `/cwd`, `/cd [PATH]` — Show or change the working directory. [Docs: slash commands][slash-commands] [Blog: slash commands][blog-slash-commands]
@@ -116,7 +116,9 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `--allow-all-tools`, `--allow-all-paths`, `--allow-all-urls` — Approve one permission category at a time. [Docs: CLI options][cli-options] [Blog: terminal workflows][blog-terminal-workflows]
 - `--allow-tool=TOOL`, `--deny-tool=TOOL` — Pre-allow or pre-deny tool patterns. [Docs: CLI options][cli-options]
 - `--allow-url=URL`, `--deny-url=URL` — Control URL access. [Docs: CLI options][cli-options]
+- `--add-dir=PATH` — Add a directory to the allowed file-access list before the session starts. Can be used multiple times. [Docs: CLI options][cli-options]
 - `--available-tools=TOOL`, `--excluded-tools=TOOL` — Reduce the tool surface available to the model. [Docs: CLI options][cli-options]
+- `--disable-parallel-tools-execution` — Execute tool calls sequentially even when the model makes parallel tool calls. [Docs: CLI options][cli-options]
 - `--disallow-temp-dir` — Block automatic access to the system temp directory. [Docs: CLI options][cli-options]
 
 ### UI, output, and logging
@@ -355,6 +357,7 @@ Recent official releases added or improved several user-facing CLI features. [Re
 - `/undo` to undo the last turn and revert file changes. [Release: v1.0.10][release-1-0-10]
 - `--effort` as a shorthand alias for `--reasoning-effort`. [Release: v1.0.10][release-1-0-10]
 - `/allow-all` (`/yolo`) `on`, `off`, and `show` subcommands to control allow-all mode. [Release: v1.0.12][release-1-0-12]
+- The model picker now opens in full-screen and lets you adjust reasoning effort inline with the left and right arrow keys. [Release: v1.0.12][release-1-0-12]
 - `Ctrl + Y` in plan mode opens the most recent research report when no plan exists. [Release: v1.0.12][release-1-0-12]
 - `/session rename` can auto-generate a session name from conversation history when you omit the name argument. [Release: v1.0.12][release-1-0-12]
 - `.claude/settings.json` and `.claude/settings.local.json` as additional repo config sources. [Release: v1.0.12][release-1-0-12]
@@ -374,7 +377,7 @@ Recent official releases added or improved several user-facing CLI features. [Re
 
 ## Sources
 
-- [GitHub Copilot CLI command reference](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference)
+- [GitHub Copilot CLI command reference](https://docs.github.com/en/copilot/reference/cli-command-reference)
 - [Adding custom instructions for GitHub Copilot CLI](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-custom-instructions)
 - [Overview of customizing GitHub Copilot CLI](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/overview)
 - [Running GitHub Copilot CLI programmatically](https://docs.github.com/en/copilot/how-tos/copilot-cli/automate-copilot-cli/run-cli-programmatically)
@@ -402,40 +405,40 @@ Recent official releases added or improved several user-facing CLI features. [Re
 [blog-slash-commands]: https://github.blog/ai-and-ml/github-copilot/a-cheat-sheet-to-slash-commands-in-github-copilot-cli/
 [blog-terminal-workflows]: https://github.blog/ai-and-ml/github-copilot/power-agentic-workflows-in-your-terminal-with-github-copilot-cli/
 [blog-idea-to-pr]: https://github.blog/ai-and-ml/github-copilot/from-idea-to-pull-request-a-practical-guide-to-building-with-github-copilot-cli/
-[shortcuts]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#global-shortcuts-in-the-interactive-interface
-[timeline-shortcuts]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#timeline-shortcuts-in-the-interactive-interface
-[navigation-shortcuts]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#navigation-shortcuts-in-the-interactive-interface
-[cli-commands]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-commands
-[slash-commands]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
-[cli-options]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
-[tool-rules]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#tool-permission-patterns
-[permission-approvals]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#permission-approval-responses
-[env-vars]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#environment-variables
-[config-settings]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#configuration-file-settings
-[user-settings]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#user-settings-copilotconfigjson
-[repo-settings]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#repository-settings-githubcopilotsettingsjson
-[hooks]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#hooks-reference
-[hook-events]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#hook-events
-[hook-command]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-hooks
-[hook-prompt]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#prompt-hooks
-[hook-pretool]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#pretooluse-decision-control
-[hook-agentstop]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#agentstop--subagentstop-decision-control
-[mcp]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#mcp-server-configuration
-[mcp-transport]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#transport-types
-[mcp-local]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#local-server-configuration-fields
-[mcp-remote]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#remote-server-configuration-fields
-[mcp-filter]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#filter-mapping
-[mcp-builtin]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#built-in-mcp-servers
-[mcp-trust]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#mcp-server-trust-levels
-[skills]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#skills-reference
-[skill-locations]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#skill-locations
-[skill-frontmatter]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#skill-frontmatter-fields
-[custom-agents]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#custom-agents-reference
-[agent-builtins]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#built-in-agents
-[agent-frontmatter]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#custom-agent-frontmatter-fields
-[agent-locations]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#custom-agent-locations
-[otel]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#opentelemetry-monitoring
-[otel-content]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#content-capture
+[shortcuts]: https://docs.github.com/en/copilot/reference/cli-command-reference#global-shortcuts-in-the-interactive-interface
+[timeline-shortcuts]: https://docs.github.com/en/copilot/reference/cli-command-reference#timeline-shortcuts-in-the-interactive-interface
+[navigation-shortcuts]: https://docs.github.com/en/copilot/reference/cli-command-reference#navigation-shortcuts-in-the-interactive-interface
+[cli-commands]: https://docs.github.com/en/copilot/reference/cli-command-reference#command-line-commands
+[slash-commands]: https://docs.github.com/en/copilot/reference/cli-command-reference#slash-commands-in-the-interactive-interface
+[cli-options]: https://docs.github.com/en/copilot/reference/cli-command-reference#command-line-options
+[tool-rules]: https://docs.github.com/en/copilot/reference/cli-command-reference#tool-permission-patterns
+[permission-approvals]: https://docs.github.com/en/copilot/reference/cli-command-reference#permission-approval-responses
+[env-vars]: https://docs.github.com/en/copilot/reference/cli-command-reference#environment-variables
+[config-settings]: https://docs.github.com/en/copilot/reference/cli-command-reference#configuration-file-settings
+[user-settings]: https://docs.github.com/en/copilot/reference/cli-command-reference#user-settings-copilotconfigjson
+[repo-settings]: https://docs.github.com/en/copilot/reference/cli-command-reference#repository-settings-githubcopilotsettingsjson
+[hooks]: https://docs.github.com/en/copilot/reference/cli-command-reference#hooks-reference
+[hook-events]: https://docs.github.com/en/copilot/reference/cli-command-reference#hook-events
+[hook-command]: https://docs.github.com/en/copilot/reference/cli-command-reference#command-hooks
+[hook-prompt]: https://docs.github.com/en/copilot/reference/cli-command-reference#prompt-hooks
+[hook-pretool]: https://docs.github.com/en/copilot/reference/cli-command-reference#pretooluse-decision-control
+[hook-agentstop]: https://docs.github.com/en/copilot/reference/cli-command-reference#agentstop--subagentstop-decision-control
+[mcp]: https://docs.github.com/en/copilot/reference/cli-command-reference#mcp-server-configuration
+[mcp-transport]: https://docs.github.com/en/copilot/reference/cli-command-reference#transport-types
+[mcp-local]: https://docs.github.com/en/copilot/reference/cli-command-reference#local-server-configuration-fields
+[mcp-remote]: https://docs.github.com/en/copilot/reference/cli-command-reference#remote-server-configuration-fields
+[mcp-filter]: https://docs.github.com/en/copilot/reference/cli-command-reference#filter-mapping
+[mcp-builtin]: https://docs.github.com/en/copilot/reference/cli-command-reference#built-in-mcp-servers
+[mcp-trust]: https://docs.github.com/en/copilot/reference/cli-command-reference#mcp-server-trust-levels
+[skills]: https://docs.github.com/en/copilot/reference/cli-command-reference#skills-reference
+[skill-locations]: https://docs.github.com/en/copilot/reference/cli-command-reference#skill-locations
+[skill-frontmatter]: https://docs.github.com/en/copilot/reference/cli-command-reference#skill-frontmatter-fields
+[custom-agents]: https://docs.github.com/en/copilot/reference/cli-command-reference#custom-agents-reference
+[agent-builtins]: https://docs.github.com/en/copilot/reference/cli-command-reference#built-in-agents
+[agent-frontmatter]: https://docs.github.com/en/copilot/reference/cli-command-reference#custom-agent-frontmatter-fields
+[agent-locations]: https://docs.github.com/en/copilot/reference/cli-command-reference#custom-agent-locations
+[otel]: https://docs.github.com/en/copilot/reference/cli-command-reference#opentelemetry-monitoring
+[otel-content]: https://docs.github.com/en/copilot/reference/cli-command-reference#content-capture
 [release-1-0-12]: https://github.com/github/copilot-cli/releases/tag/v1.0.12
 [release-1-0-11]: https://github.com/github/copilot-cli/releases/tag/v1.0.11
 [release-1-0-10]: https://github.com/github/copilot-cli/releases/tag/v1.0.10
