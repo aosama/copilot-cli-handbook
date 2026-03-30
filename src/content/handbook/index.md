@@ -1,7 +1,7 @@
 ---
 title: 'Copilot CLI Handbook'
 description: 'Custom instructions, commands, permissions, agents, hooks, configuration, and MCP for GitHub Copilot CLI'
-lastUpdated: 'March 27, 2026 at 7:25 PM EDT'
+lastUpdated: 'March 30, 2026 at 6:13 AM EDT'
 ---
 
 ## Instruction Files
@@ -11,6 +11,7 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 ### Common instruction locations
 
 - `AGENTS.md` in the repository root, the current working directory, or directories listed in `COPILOT_CUSTOM_INSTRUCTIONS_DIRS`. [How-to: custom instructions][custom-instructions]
+- `CLAUDE.md` or `GEMINI.md` at the repository root as alternative root agent instruction files. [How-to: custom instructions][custom-instructions]
 - `.github/copilot-instructions.md` for repository-wide instructions. [How-to: custom instructions][custom-instructions]
 - `.github/instructions/**/*.instructions.md` for path-specific instructions. [How-to: custom instructions][custom-instructions]
 - `$HOME/.copilot/copilot-instructions.md` for local personal instructions. [How-to: custom instructions][custom-instructions]
@@ -68,7 +69,7 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `/terminal-setup` — Configure multiline terminal input support. [Docs: slash commands][slash-commands]
 - `/login`, `/logout` — Sign in or out. [Docs: slash commands][slash-commands]
 - `/user [show|list|switch]` — Manage the current GitHub account. [Docs: slash commands][slash-commands] [Blog: slash commands][blog-slash-commands]
-- `/help`, `/feedback`, `/usage`, `/update`, `/theme`, `/experimental` — Session help, reporting, usage, updates, UI, and feature toggles. [Docs: slash commands][slash-commands] [Blog: slash commands][blog-slash-commands]
+- `/help`, `/feedback`, `/usage`, `/theme`, `/experimental` — Session help, reporting, usage, UI, and feature toggles. [Docs: slash commands][slash-commands] [Blog: slash commands][blog-slash-commands]
 - `/version` — Display the CLI version and check for updates from inside the session. [Release: v1.0.5][release-1-0-5]
 
 ### Keyboard shortcuts
@@ -226,7 +227,6 @@ Hook configuration files live in `.github/hooks/*.json` in the current working d
 
 ### Useful recent hook updates
 
-- `preCompact` hooks can run before context compaction starts. [Release: v1.0.5][release-1-0-5]
 - Hooks can ask for confirmation before a tool runs. [Docs: pre-tool hooks][hook-pretool]
 - Hook configuration files can omit the `version` field. [Release: v1.0.5][release-1-0-5]
 - Plugin hooks receive `CLAUDE_PROJECT_DIR` and `CLAUDE_PLUGIN_DATA` environment variables, and support `{{project_dir}}` and `{{plugin_data_dir}}` template variables in hook configurations. [Release: v1.0.12][release-1-0-12]
@@ -276,6 +276,8 @@ All MCP tool calls still require explicit permission, including read-only calls 
 ### Skills
 
 Skills are Markdown files that extend what Copilot CLI can do. Each skill lives in its own directory with a `SKILL.md` file. [Docs: skills][skills]
+
+- Use `/SKILL-NAME` to invoke a user-invocable skill explicitly, or let Copilot invoke it automatically when the task fits. [Docs: skills][skills]
 
 Common skill locations:
 
@@ -357,6 +359,7 @@ Recent official releases added or improved several user-facing CLI features. [Re
 - `/allow-all` (`/yolo`) `on`, `off`, and `show` subcommands to control allow-all mode. [Release: v1.0.12][release-1-0-12]
 - `Ctrl + Y` in plan mode opens the most recent research report when no plan exists. [Release: v1.0.12][release-1-0-12]
 - `/session rename` can auto-generate a session name from conversation history when you omit the name argument. [Release: v1.0.12][release-1-0-12]
+- The full-screen model picker supports inline reasoning effort adjustment with the `←` and `→` arrow keys. [Release: v1.0.12][release-1-0-12]
 - `.claude/settings.json` and `.claude/settings.local.json` as additional repo config sources. [Release: v1.0.12][release-1-0-12]
 - Plugin hooks receive `CLAUDE_PROJECT_DIR` and `CLAUDE_PLUGIN_DATA` env vars plus `{{project_dir}}` and `{{plugin_data_dir}}` template variables. [Release: v1.0.12][release-1-0-12]
 - `~/.agents/skills/` as a personal skill discovery directory. [Release: v1.0.11][release-1-0-11]
