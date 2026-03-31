@@ -1,7 +1,7 @@
 ---
 title: 'Copilot CLI Handbook'
 description: 'Custom instructions, commands, permissions, agents, hooks, configuration, and MCP for GitHub Copilot CLI'
-lastUpdated: 'March 27, 2026 at 7:25 PM EDT'
+lastUpdated: 'March 31, 2026 at 6:10 AM EDT'
 ---
 
 ## Instruction Files
@@ -29,6 +29,7 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `/clear` — Abandon the current session and clear history while keeping configured MCP servers available in the new session. `/new` — Start a fresh conversation (keeps the old session backgrounded). Both accept an optional prompt to begin the new session. [Docs: slash commands][slash-commands] [Release: v1.0.11][release-1-0-11] [Release: v1.0.12][release-1-0-12] [Blog: slash commands][blog-slash-commands]
 - `/resume [SESSION-ID]` — Resume a previous session. [Docs: slash commands][slash-commands]
 - `/undo` — Undo the last turn and revert any file changes it made. [Release: v1.0.10][release-1-0-10]
+- `/rewind` — Open a timeline picker to roll back to any point in conversation history. [Release: v1.0.13][release-1-0-13]
 - `/session [checkpoints [n]|files|plan|rename NAME]` — Show session information and a workspace summary. [Docs: slash commands][slash-commands]
 - `/rename NAME` — Rename the current session. [Docs: slash commands][slash-commands]
 - `/compact` — Summarize history to reduce context usage. [Docs: slash commands][slash-commands]
@@ -74,8 +75,10 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 ### Keyboard shortcuts
 
 - `@ FILENAME` — Include file contents in the prompt context. [Docs: shortcuts][shortcuts]
+- `Esc` — Cancel the current operation. Press `Esc` twice to open the timeline picker and rewind to any point in conversation history. [Docs: shortcuts][shortcuts] [Release: v1.0.13][release-1-0-13]
 - `! COMMAND` — Run a shell command directly. [Docs: shortcuts][shortcuts]
 - `Ctrl + X` then `/` — Run a slash command after you already started typing. [Docs: shortcuts][shortcuts]
+- `Shift + Enter` — Insert a newline in terminals with Kitty keyboard protocol support. [Release: v1.0.14][release-1-0-14]
 - `Shift + Tab` — Cycle between standard, plan, and autopilot mode. [Docs: shortcuts][shortcuts]
 - `Ctrl + O`, `Ctrl + E`, `Ctrl + T` — Expand recent timeline items, expand all, or toggle reasoning display. [Docs: timeline shortcuts][timeline-shortcuts]
 - `Ctrl + G` — Edit the prompt in an external editor. [Docs: navigation shortcuts][navigation-shortcuts]
@@ -151,6 +154,8 @@ When Copilot CLI asks for permission, these one-key responses are available. [Do
 - `!` — Allow similar requests for the rest of the session. [Docs: permission approvals][permission-approvals]
 - `#` — Deny similar requests for the rest of the session. [Docs: permission approvals][permission-approvals]
 - `?` — Show more detail about the request. [Docs: permission approvals][permission-approvals]
+
+MCP servers can request LLM inference ("sampling"), and Copilot CLI shows a review prompt before allowing it. [Release: v1.0.13][release-1-0-13]
 
 Tool rules use the `Kind(argument)` pattern. Deny rules always override allow rules. [Docs: tool rules][tool-rules]
 
@@ -350,8 +355,11 @@ Copilot CLI can export traces and metrics with OpenTelemetry. [Docs: OTel][otel]
 
 ## Recent Additions Worth Knowing
 
-Recent official releases added or improved several user-facing CLI features. [Release: v1.0.12][release-1-0-12]
+Recent official releases added or improved several user-facing CLI features. [Release: v1.0.14][release-1-0-14] [Release: v1.0.13][release-1-0-13]
 
+- `Shift + Enter` inserts a newline in terminals with Kitty keyboard protocol support. [Release: v1.0.14][release-1-0-14]
+- `/rewind` and double-`Esc` open a timeline picker that can roll back to any point in conversation history. [Release: v1.0.13][release-1-0-13]
+- MCP servers can request LLM inference (sampling) with a user approval prompt. [Release: v1.0.13][release-1-0-13]
 - `/undo` to undo the last turn and revert file changes. [Release: v1.0.10][release-1-0-10]
 - `--effort` as a shorthand alias for `--reasoning-effort`. [Release: v1.0.10][release-1-0-10]
 - `/allow-all` (`/yolo`) `on`, `off`, and `show` subcommands to control allow-all mode. [Release: v1.0.12][release-1-0-12]
@@ -386,6 +394,8 @@ Recent official releases added or improved several user-facing CLI features. [Re
 - [A cheat sheet to slash commands in GitHub Copilot CLI](https://github.blog/ai-and-ml/github-copilot/a-cheat-sheet-to-slash-commands-in-github-copilot-cli/)
 - [Power agentic workflows in your terminal with GitHub Copilot CLI](https://github.blog/ai-and-ml/github-copilot/power-agentic-workflows-in-your-terminal-with-github-copilot-cli/)
 - [From idea to pull request: A practical guide to building with GitHub Copilot CLI](https://github.blog/ai-and-ml/github-copilot/from-idea-to-pull-request-a-practical-guide-to-building-with-github-copilot-cli/)
+- [GitHub Copilot CLI releases: v1.0.14](https://github.com/github/copilot-cli/releases/tag/v1.0.14)
+- [GitHub Copilot CLI releases: v1.0.13](https://github.com/github/copilot-cli/releases/tag/v1.0.13)
 - [GitHub Copilot CLI releases: v1.0.12](https://github.com/github/copilot-cli/releases/tag/v1.0.12)
 - [GitHub Copilot CLI releases: v1.0.11](https://github.com/github/copilot-cli/releases/tag/v1.0.11)
 - [GitHub Copilot CLI releases: v1.0.10](https://github.com/github/copilot-cli/releases/tag/v1.0.10)
@@ -436,6 +446,8 @@ Recent official releases added or improved several user-facing CLI features. [Re
 [agent-locations]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#custom-agent-locations
 [otel]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#opentelemetry-monitoring
 [otel-content]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#content-capture
+[release-1-0-14]: https://github.com/github/copilot-cli/releases/tag/v1.0.14
+[release-1-0-13]: https://github.com/github/copilot-cli/releases/tag/v1.0.13
 [release-1-0-12]: https://github.com/github/copilot-cli/releases/tag/v1.0.12
 [release-1-0-11]: https://github.com/github/copilot-cli/releases/tag/v1.0.11
 [release-1-0-10]: https://github.com/github/copilot-cli/releases/tag/v1.0.10
