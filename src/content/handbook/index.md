@@ -1,7 +1,7 @@
 ---
 title: 'Copilot CLI Handbook'
 description: 'Custom instructions, commands, permissions, agents, hooks, configuration, and MCP for GitHub Copilot CLI'
-lastUpdated: 'April 3, 2026 at 4:30 PM EDT'
+lastUpdated: 'April 4, 2026 at 5:59 AM EDT'
 ---
 
 ## Instruction Files
@@ -218,12 +218,13 @@ Hook configuration files live in `.github/hooks/*.json` in the current working d
 - `agentStop`, `subagentStop` [Docs: hook events][hook-events]
 - `errorOccurred` [Docs: hook events][hook-events]
 - `PermissionRequest` — Allow scripts to programmatically approve or deny tool permission requests. [Release: v1.0.16][release-1-0-16]
+- `notification` — Fires asynchronously for shell completion, permission prompts, elicitation dialogs, and agent completion. [Release: v1.0.18][release-1-0-18]
 
 ### Hook formats
 
 - Command hooks support `bash`, `powershell`, `cwd`, `env`, and `timeoutSec`. [Docs: command hooks][hook-command]
 - Prompt hooks support a `prompt` string and can submit either plain text or a slash command. [Docs: prompt hooks][hook-prompt]
-- `preToolUse` can return `allow`, `deny`, or `ask`, and can also replace tool arguments with `modifiedArgs`. [Docs: pre-tool hooks][hook-pretool]
+- `preToolUse` can return `allow`, `deny`, or `ask`, and can also replace tool arguments with `modifiedArgs`; returning `permissionDecision: "allow"` suppresses the approval prompt. [Docs: pre-tool hooks][hook-pretool] [Release: v1.0.18][release-1-0-18]
 - `agentStop` and `subagentStop` can return `allow` or `block`. [Docs: agent-stop hooks][hook-agentstop]
 
 ### Useful recent hook updates
@@ -356,6 +357,11 @@ Copilot CLI can export traces and metrics with OpenTelemetry. [Docs: OTel][otel]
 
 Recent official releases added or improved several user-facing CLI features.
 
+### v1.0.18
+
+- `preToolUse` can suppress the approval prompt when it returns `permissionDecision: "allow"`. [Release: v1.0.18][release-1-0-18]
+- `notification` hook event fires asynchronously for shell completion, permission prompts, elicitation dialogs, and agent completion. [Release: v1.0.18][release-1-0-18]
+
 ### v1.0.17
 
 - Built-in skills are now included with the CLI, starting with a guide for customizing Copilot cloud agent's environment. [Release: v1.0.17][release-1-0-17]
@@ -430,6 +436,7 @@ Recent official releases added or improved several user-facing CLI features.
 - [Power agentic workflows in your terminal with GitHub Copilot CLI](https://github.blog/ai-and-ml/github-copilot/power-agentic-workflows-in-your-terminal-with-github-copilot-cli/)
 - [From idea to pull request: A practical guide to building with GitHub Copilot CLI](https://github.blog/ai-and-ml/github-copilot/from-idea-to-pull-request-a-practical-guide-to-building-with-github-copilot-cli/)
 - [Run multiple agents at once with /fleet in Copilot CLI](https://github.blog/ai-and-ml/github-copilot/run-multiple-agents-at-once-with-fleet-in-copilot-cli/)
+- [GitHub Copilot CLI releases: v1.0.18](https://github.com/github/copilot-cli/releases/tag/v1.0.18)
 - [GitHub Copilot CLI releases: v1.0.17](https://github.com/github/copilot-cli/releases/tag/v1.0.17)
 - [GitHub Copilot CLI releases: v1.0.16](https://github.com/github/copilot-cli/releases/tag/v1.0.16)
 - [GitHub Copilot CLI releases: v1.0.15](https://github.com/github/copilot-cli/releases/tag/v1.0.15)
@@ -484,6 +491,7 @@ Recent official releases added or improved several user-facing CLI features.
 [agent-locations]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#custom-agent-locations
 [otel]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#opentelemetry-monitoring
 [otel-content]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#content-capture
+[release-1-0-18]: https://github.com/github/copilot-cli/releases/tag/v1.0.18
 [release-1-0-17]: https://github.com/github/copilot-cli/releases/tag/v1.0.17
 [release-1-0-16]: https://github.com/github/copilot-cli/releases/tag/v1.0.16
 [release-1-0-15]: https://github.com/github/copilot-cli/releases/tag/v1.0.15
