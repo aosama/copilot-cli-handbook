@@ -1,7 +1,7 @@
 ---
 title: 'Copilot CLI Handbook'
 description: 'Custom instructions, commands, permissions, agents, hooks, configuration, and MCP for GitHub Copilot CLI'
-lastUpdated: 'March 27, 2026 at 7:25 PM EDT'
+lastUpdated: 'April 3, 2026 at 4:30 PM EDT'
 ---
 
 ## Instruction Files
@@ -29,6 +29,7 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `/clear` — Abandon the current session and clear history while keeping configured MCP servers available in the new session. `/new` — Start a fresh conversation (keeps the old session backgrounded). Both accept an optional prompt to begin the new session. [Docs: slash commands][slash-commands] [Release: v1.0.11][release-1-0-11] [Release: v1.0.12][release-1-0-12] [Blog: slash commands][blog-slash-commands]
 - `/resume [SESSION-ID]` — Resume a previous session. [Docs: slash commands][slash-commands]
 - `/undo` — Undo the last turn and revert any file changes it made. [Release: v1.0.10][release-1-0-10]
+- `/rewind` — Open a timeline picker to roll back to any point in conversation history (also double-Esc). [Release: v1.0.13][release-1-0-13]
 - `/session [checkpoints [n]|files|plan|rename NAME]` — Show session information and a workspace summary. [Docs: slash commands][slash-commands]
 - `/rename NAME` — Rename the current session. [Docs: slash commands][slash-commands]
 - `/compact` — Summarize history to reduce context usage. [Docs: slash commands][slash-commands]
@@ -44,7 +45,7 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `/review [PROMPT]` — Run the code review agent against your changes. [Docs: slash commands][slash-commands]
 - `/plan [PROMPT]` — Draft an implementation plan before editing. [Docs: slash commands][slash-commands]
 - `/delegate [PROMPT]` — Delegate work to a remote repository with an AI-generated pull request. [Docs: slash commands][slash-commands] [How-to: CLI agents][cli-agents-howto] [Blog: slash commands][blog-slash-commands] [Blog: terminal workflows][blog-terminal-workflows]
-- `/share [file|gist] [PATH]` — Export the session to Markdown or a secret gist. [Docs: slash commands][slash-commands] [Blog: slash commands][blog-slash-commands]
+- `/share [file|gist|html] [PATH]` — Export the session to Markdown, a secret gist, or a self-contained interactive HTML file. [Docs: slash commands][slash-commands] [Release: v1.0.15][release-1-0-15] [Blog: slash commands][blog-slash-commands]
 - `/changelog` — Browse release notes from inside the CLI. [Release: v1.0.5][release-1-0-5]
 - `/pr` — Create or inspect pull requests, fix CI failures, address review feedback, and resolve merge conflicts. [Release: v1.0.5][release-1-0-5]
 
@@ -62,7 +63,7 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 
 - `/allow-all`, `/yolo` — Enable all permissions for tools, paths, and URLs. Supports `on`, `off`, and `show` subcommands to enable, disable, or check allow-all mode. [Docs: slash commands][slash-commands] [Release: v1.0.12][release-1-0-12]
 - `/reset-allowed-tools` — Clear previously granted tool approvals. [Release: v1.0.3][release-1-0-3] [Blog: slash commands][blog-slash-commands]
-- `/mcp [show|add|edit|delete|disable|enable] [SERVER-NAME]` — Manage MCP servers. [Docs: slash commands][slash-commands] [Blog: slash commands][blog-slash-commands]
+- `/mcp [show|add|edit|delete|disable|enable|auth] [SERVER-NAME]` — Manage MCP servers; `/mcp auth` re-authenticates OAuth servers with account switching. [Docs: slash commands][slash-commands] [Release: v1.0.15][release-1-0-15] [Blog: slash commands][blog-slash-commands]
 - `/lsp [show|test|reload|help] [SERVER-NAME]` — Manage language server configuration. [Docs: slash commands][slash-commands]
 - `/ide` — Connect to an IDE workspace. [Docs: slash commands][slash-commands]
 - `/terminal-setup` — Configure multiline terminal input support. [Docs: slash commands][slash-commands]
@@ -213,9 +214,10 @@ Hook configuration files live in `.github/hooks/*.json` in the current working d
 
 - `sessionStart`, `sessionEnd` [Docs: hook events][hook-events]
 - `userPromptSubmitted` [Docs: hook events][hook-events]
-- `preToolUse`, `postToolUse` [Docs: hook events][hook-events]
+- `preToolUse`, `postToolUse`, `postToolUseFailure` [Docs: hook events][hook-events] [Release: v1.0.15][release-1-0-15]
 - `agentStop`, `subagentStop` [Docs: hook events][hook-events]
 - `errorOccurred` [Docs: hook events][hook-events]
+- `PermissionRequest` — Allow scripts to programmatically approve or deny tool permission requests. [Release: v1.0.16][release-1-0-16]
 
 ### Hook formats
 
@@ -276,6 +278,8 @@ All MCP tool calls still require explicit permission, including read-only calls 
 ### Skills
 
 Skills are Markdown files that extend what Copilot CLI can do. Each skill lives in its own directory with a `SKILL.md` file. [Docs: skills][skills]
+
+**Built-in skills** are now included with the CLI, starting with guides for common tasks. [Release: v1.0.17][release-1-0-17]
 
 Common skill locations:
 
@@ -350,7 +354,46 @@ Copilot CLI can export traces and metrics with OpenTelemetry. [Docs: OTel][otel]
 
 ## Recent Additions Worth Knowing
 
-Recent official releases added or improved several user-facing CLI features. [Release: v1.0.12][release-1-0-12]
+Recent official releases added or improved several user-facing CLI features.
+
+### v1.0.17
+
+- Built-in skills are now included with the CLI, starting with a guide for customizing Copilot cloud agent's environment. [Release: v1.0.17][release-1-0-17]
+- `/resume` session picker loads significantly faster, especially with large session histories. [Release: v1.0.17][release-1-0-17]
+- MCP OAuth flows now support HTTPS redirect URIs via self-signed certificate fallback for providers like Slack. [Release: v1.0.17][release-1-0-17]
+
+### v1.0.16
+
+- `PermissionRequest` hook allows scripts to programmatically approve or deny tool permission requests. [Release: v1.0.16][release-1-0-16]
+- `postToolUse` now runs only after successful tool calls; use `postToolUseFailure` for tool errors. [Release: v1.0.16][release-1-0-16]
+- SQL prompt tags no longer appear when the `sql` tool is excluded via `--excluded-tools` or `--available-tools`. [Release: v1.0.16][release-1-0-16]
+- MCP tool calls display tool name and parameter summary in the timeline. [Release: v1.0.16][release-1-0-16]
+- Deprecated `marketplaces` repository setting removed; use `extraKnownMarketplaces` instead. [Release: v1.0.16][release-1-0-16]
+
+### v1.0.15
+
+- `/share html` exports sessions and research reports as self-contained interactive HTML files. [Release: v1.0.15][release-1-0-15]
+- `/mcp auth` command for re-authenticating MCP OAuth servers with account switching. [Release: v1.0.15][release-1-0-15]
+- `postToolUseFailure` hook event for handling tool errors separately from successful tool calls. [Release: v1.0.15][release-1-0-15]
+- Device code flow (RFC 8628) as a fallback for MCP OAuth in headless and CI environments. [Release: v1.0.15][release-1-0-15]
+- Home/End and Page Up/Page Down navigation in the diff viewer. [Release: v1.0.15][release-1-0-15]
+- Config settings now prefer camelCase names (`askUser`, `autoUpdate`, `storeTokenPlaintext`, `logLevel`, `skillDirectories`, `disabledSkills`); snake_case still works. [Release: v1.0.15][release-1-0-15]
+- Removed support for `gpt-5.1-codex`, `gpt-5.1-codex-mini`, and `gpt-5.1-codex-max` models. [Release: v1.0.15][release-1-0-15]
+
+### v1.0.14
+
+- Shift+Enter inserts a newline in terminals with Kitty keyboard protocol support. [Release: v1.0.14][release-1-0-14]
+- CLI starts faster with parallel terminal detection, auth, and git operations. [Release: v1.0.14][release-1-0-14]
+- V8 compile cache reduces parse and compile time on repeated invocations. [Release: v1.0.14][release-1-0-14]
+- Reduced CPU usage during streaming by optimizing spinner rendering and task polling. [Release: v1.0.14][release-1-0-14]
+- Removed support for `gemini-3-pro-preview` model. [Release: v1.0.14][release-1-0-14]
+
+### v1.0.13
+
+- `/rewind` and double-Esc open a timeline picker to roll back to any point in conversation history. [Release: v1.0.13][release-1-0-13]
+- MCP servers can request LLM inference (sampling) with user approval via a new review prompt. [Release: v1.0.13][release-1-0-13]
+
+### Earlier releases
 
 - `/undo` to undo the last turn and revert file changes. [Release: v1.0.10][release-1-0-10]
 - `--effort` as a shorthand alias for `--reasoning-effort`. [Release: v1.0.10][release-1-0-10]
@@ -386,7 +429,12 @@ Recent official releases added or improved several user-facing CLI features. [Re
 - [A cheat sheet to slash commands in GitHub Copilot CLI](https://github.blog/ai-and-ml/github-copilot/a-cheat-sheet-to-slash-commands-in-github-copilot-cli/)
 - [Power agentic workflows in your terminal with GitHub Copilot CLI](https://github.blog/ai-and-ml/github-copilot/power-agentic-workflows-in-your-terminal-with-github-copilot-cli/)
 - [From idea to pull request: A practical guide to building with GitHub Copilot CLI](https://github.blog/ai-and-ml/github-copilot/from-idea-to-pull-request-a-practical-guide-to-building-with-github-copilot-cli/)
-- [GitHub Copilot CLI releases: v1.0.12](https://github.com/github/copilot-cli/releases/tag/v1.0.12)
+- [Run multiple agents at once with /fleet in Copilot CLI](https://github.blog/ai-and-ml/github-copilot/run-multiple-agents-at-once-with-fleet-in-copilot-cli/)
+- [GitHub Copilot CLI releases: v1.0.17](https://github.com/github/copilot-cli/releases/tag/v1.0.17)
+- [GitHub Copilot CLI releases: v1.0.16](https://github.com/github/copilot-cli/releases/tag/v1.0.16)
+- [GitHub Copilot CLI releases: v1.0.15](https://github.com/github/copilot-cli/releases/tag/v1.0.15)
+- [GitHub Copilot CLI releases: v1.0.14](https://github.com/github/copilot-cli/releases/tag/v1.0.14)
+- [GitHub Copilot CLI releases: v1.0.13](https://github.com/github/copilot-cli/releases/tag/v1.0.13)
 - [GitHub Copilot CLI releases: v1.0.11](https://github.com/github/copilot-cli/releases/tag/v1.0.11)
 - [GitHub Copilot CLI releases: v1.0.10](https://github.com/github/copilot-cli/releases/tag/v1.0.10)
 - [GitHub Copilot CLI releases: v1.0.5](https://github.com/github/copilot-cli/releases/tag/v1.0.5)
@@ -436,6 +484,11 @@ Recent official releases added or improved several user-facing CLI features. [Re
 [agent-locations]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#custom-agent-locations
 [otel]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#opentelemetry-monitoring
 [otel-content]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#content-capture
+[release-1-0-17]: https://github.com/github/copilot-cli/releases/tag/v1.0.17
+[release-1-0-16]: https://github.com/github/copilot-cli/releases/tag/v1.0.16
+[release-1-0-15]: https://github.com/github/copilot-cli/releases/tag/v1.0.15
+[release-1-0-14]: https://github.com/github/copilot-cli/releases/tag/v1.0.14
+[release-1-0-13]: https://github.com/github/copilot-cli/releases/tag/v1.0.13
 [release-1-0-12]: https://github.com/github/copilot-cli/releases/tag/v1.0.12
 [release-1-0-11]: https://github.com/github/copilot-cli/releases/tag/v1.0.11
 [release-1-0-10]: https://github.com/github/copilot-cli/releases/tag/v1.0.10
