@@ -1,7 +1,7 @@
 ---
 title: 'Copilot CLI Handbook'
 description: 'Custom instructions, commands, permissions, agents, hooks, configuration, and MCP for GitHub Copilot CLI'
-lastUpdated: 'April 3, 2026 at 4:30 PM EDT'
+lastUpdated: 'April 9, 2026 at 6:12 AM EDT'
 ---
 
 ## Instruction Files
@@ -45,11 +45,11 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `/review [PROMPT]` — Run the code review agent against your changes. [Docs: slash commands][slash-commands]
 - `/plan [PROMPT]` — Draft an implementation plan before editing. [Docs: slash commands][slash-commands]
 - `/delegate [PROMPT]` — Delegate work to a remote repository with an AI-generated pull request. [Docs: slash commands][slash-commands] [How-to: CLI agents][cli-agents-howto] [Blog: slash commands][blog-slash-commands] [Blog: terminal workflows][blog-terminal-workflows]
-- `/share [file|gist|html] [PATH]` — Export the session to Markdown, a secret gist, or a self-contained interactive HTML file. [Docs: slash commands][slash-commands] [Release: v1.0.15][release-1-0-15] [Blog: slash commands][blog-slash-commands]
-- `/changelog` — Browse release notes from inside the CLI. [Release: v1.0.5][release-1-0-5]
+- `/share [file|gist] [session|research] [PATH]` — Export the current session or research report to Markdown or a secret gist. [Docs: slash commands][slash-commands]
+- `/changelog [SUMMARIZE] [VERSION]` — Display the CLI changelog with an optional AI-generated summary. [Docs: slash commands][slash-commands] [Release: v1.0.5][release-1-0-5]
 - `/pr` — Create or inspect pull requests, fix CI failures, address review feedback, and resolve merge conflicts. [Release: v1.0.5][release-1-0-5]
 
-### Agents, models, skills, and extensions
+### Agents, models, skills, and plugins
 
 - `/agent` — Choose from available agents. [Docs: slash commands][slash-commands] [How-to: custom agents][custom-agents-howto]
 - `/fleet [PROMPT]` — Run parts of a task in parallel with subagents. [Docs: slash commands][slash-commands] [How-to: /fleet][fleet-howto]
@@ -57,20 +57,18 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `/model`, `/models [MODEL]` — View or change the active model. [Docs: slash commands][slash-commands] [Blog: slash commands][blog-slash-commands]
 - `/skills [list|info|add|remove|reload] [ARGS...]` — Manage skills. [Docs: slash commands][slash-commands]
 - `/plugin [marketplace|install|uninstall|update|list] [ARGS...]` — Manage plugins and plugin marketplaces. [Docs: slash commands][slash-commands]
-- `/extensions` — View, enable, and disable CLI extensions. [Release: v1.0.5][release-1-0-5]
 
 ### Tools, account, and setup
 
-- `/allow-all`, `/yolo` — Enable all permissions for tools, paths, and URLs. Supports `on`, `off`, and `show` subcommands to enable, disable, or check allow-all mode. [Docs: slash commands][slash-commands] [Release: v1.0.12][release-1-0-12]
+- `/allow-all`, `/yolo` — Enable all permissions for tools, paths, and URLs. Supports `on`, `off`, and `show` subcommands to enable, disable, or check allow-all mode. `/yolo` now behaves the same as `--yolo`, and its state persists across `/restart`. [Docs: slash commands][slash-commands] [Release: v1.0.12][release-1-0-12] [Release: v1.0.20][release-1-0-20]
 - `/reset-allowed-tools` — Clear previously granted tool approvals. [Release: v1.0.3][release-1-0-3] [Blog: slash commands][blog-slash-commands]
-- `/mcp [show|add|edit|delete|disable|enable|auth] [SERVER-NAME]` — Manage MCP servers; `/mcp auth` re-authenticates OAuth servers with account switching. [Docs: slash commands][slash-commands] [Release: v1.0.15][release-1-0-15] [Blog: slash commands][blog-slash-commands]
+- `/mcp [show|add|edit|delete|disable|enable|auth|reload] [SERVER-NAME]` — Manage MCP servers; `/mcp auth` re-authenticates OAuth servers with account switching. [Docs: slash commands][slash-commands] [Release: v1.0.15][release-1-0-15] [Blog: slash commands][blog-slash-commands]
 - `/lsp [show|test|reload|help] [SERVER-NAME]` — Manage language server configuration. [Docs: slash commands][slash-commands]
 - `/ide` — Connect to an IDE workspace. [Docs: slash commands][slash-commands]
 - `/terminal-setup` — Configure multiline terminal input support. [Docs: slash commands][slash-commands]
 - `/login`, `/logout` — Sign in or out. [Docs: slash commands][slash-commands]
 - `/user [show|list|switch]` — Manage the current GitHub account. [Docs: slash commands][slash-commands] [Blog: slash commands][blog-slash-commands]
-- `/help`, `/feedback`, `/usage`, `/update`, `/theme`, `/experimental` — Session help, reporting, usage, updates, UI, and feature toggles. [Docs: slash commands][slash-commands] [Blog: slash commands][blog-slash-commands]
-- `/version` — Display the CLI version and check for updates from inside the session. [Release: v1.0.5][release-1-0-5]
+- `/help`, `/feedback`, `/usage`, `/theme`, `/experimental` — Session help, reporting, usage, UI, and feature toggles. [Docs: slash commands][slash-commands] [Blog: slash commands][blog-slash-commands]
 
 ### Keyboard shortcuts
 
@@ -88,11 +86,12 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 ### Core commands
 
 - `copilot` — Launch the interactive interface. [Docs: CLI commands][cli-commands]
-- `copilot help [topic]` — Show help for config, commands, environment, logging, or permissions. [Docs: CLI commands][cli-commands]
+- `copilot help [topic]` — Show help for config, commands, environment, logging, monitoring, permissions, or providers. [Docs: CLI commands][cli-commands] [Release: v1.0.20][release-1-0-20]
 - `copilot init` — Initialize custom instructions for the current repository. [Docs: CLI commands][cli-commands]
 - `copilot update` — Download and install the latest version. [Docs: CLI commands][cli-commands]
 - `copilot version` — Show version information and check for updates. [Docs: CLI commands][cli-commands]
 - `copilot login`, `copilot logout` — Authenticate or remove credentials. [Docs: CLI commands][cli-commands]
+- `copilot mcp` — Manage MCP servers outside the interactive session. [Release: v1.0.21][release-1-0-21]
 - `copilot plugin` — Manage plugins and plugin marketplaces outside the interactive session. [Docs: CLI commands][cli-commands]
 
 ### Automation and session control
@@ -105,7 +104,7 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `--agent=AGENT` — Pick a custom agent up front. [Docs: CLI options][cli-options]
 - `--autopilot` — Let Copilot continue autonomously in prompt mode. [Docs: CLI options][cli-options]
 - `--max-autopilot-continues=COUNT` — Cap autonomous follow-up turns. [Docs: CLI options][cli-options]
-- `--reasoning-effort=LEVEL`, `--effort=LEVEL` — Set reasoning depth (`low`, `medium`, `high`, `xhigh`). [Docs: CLI options][cli-options]
+- `--reasoning-effort=LEVEL`, `--effort=LEVEL` — Set reasoning depth (`low`, `medium`, `high`). [Docs: CLI options][cli-options]
 - `--output-format=text|json` — Return plain text or JSONL output. [Docs: CLI options][cli-options]
 - `--share=PATH`, `--share-gist` — Export a programmatic session after it finishes. [Docs: CLI options][cli-options]
 - `-s, --silent` — Suppress usage statistics and print only the answer. [Docs: CLI options][cli-options] [How-to: programmatic use][programmatic-howto]
@@ -182,14 +181,14 @@ Settings cascade from broader scopes to narrower scopes. Command-line flags and 
 
 - `model` — Default model selection. [Docs: user settings][user-settings]
 - `theme` — `auto`, `dark`, or `light`. [Docs: user settings][user-settings]
-- `reasoning_effort` — `low`, `medium`, `high`, or `xhigh`. [Docs: user settings][user-settings]
+- `effortLevel` — `low`, `medium`, `high`, or `xhigh`. [Docs: user settings][user-settings]
 - `experimental` — Enable experimental features by default. [Docs: user settings][user-settings]
 - `trusted_folders` — Pre-granted file access. [Docs: user settings][user-settings]
 - `allowed_urls`, `denied_urls` — URL allowlists and blocklists. [Docs: user settings][user-settings]
-- `screen_reader` — Screen-reader mode. [Docs: user settings][user-settings]
+- `screenReader` — Screen-reader mode. [Docs: user settings][user-settings]
 - `stream` — Streaming responses. [Docs: user settings][user-settings]
-- `auto_update` — Automatic updates. [Docs: user settings][user-settings]
-- `bash_env` — `BASH_ENV` support. [Docs: user settings][user-settings]
+- `autoUpdate` — Automatic updates. [Docs: user settings][user-settings]
+- `bashEnv` — `BASH_ENV` support. [Docs: user settings][user-settings]
 
 ### Repository-level settings
 
@@ -201,7 +200,7 @@ Repository settings support shared plugin behavior and startup messaging. [Docs:
 
 ## Hooks
 
-Hook configuration files live in `.github/hooks/*.json` in the current working directory. [Docs: hooks reference][hooks] [How-to: hooks][hooks-howto]
+Hook configuration files live in `.github/hooks/*.json` in the current working directory. User-level hook scripts can also live in `~/.copilot/hooks/`, and `~/.copilot/config.json` supports inline user-level hook definitions. [Docs: hooks reference][hooks] [How-to: hooks][hooks-howto] [Docs: config dir][config-dir]
 
 ### What hooks can do
 
@@ -215,9 +214,11 @@ Hook configuration files live in `.github/hooks/*.json` in the current working d
 - `sessionStart`, `sessionEnd` [Docs: hook events][hook-events]
 - `userPromptSubmitted` [Docs: hook events][hook-events]
 - `preToolUse`, `postToolUse`, `postToolUseFailure` [Docs: hook events][hook-events] [Release: v1.0.15][release-1-0-15]
-- `agentStop`, `subagentStop` [Docs: hook events][hook-events]
+- `agentStop`, `subagentStart`, `subagentStop` [Docs: hook events][hook-events]
+- `preCompact` [Docs: hook events][hook-events]
+- `permissionRequest` — Allow scripts to programmatically approve or deny tool permission requests. [Docs: hook events][hook-events] [Docs: permission hook][hook-permission]
+- `notification` — React to shell completion, agent completion or idle, permission prompts, and elicitation dialogs without blocking the session. [Docs: notification hook][hook-notification]
 - `errorOccurred` [Docs: hook events][hook-events]
-- `PermissionRequest` — Allow scripts to programmatically approve or deny tool permission requests. [Release: v1.0.16][release-1-0-16]
 
 ### Hook formats
 
@@ -230,7 +231,7 @@ Hook configuration files live in `.github/hooks/*.json` in the current working d
 
 - `preCompact` hooks can run before context compaction starts. [Release: v1.0.5][release-1-0-5]
 - Hooks can ask for confirmation before a tool runs. [Docs: pre-tool hooks][hook-pretool]
-- Hook configuration files can omit the `version` field. [Release: v1.0.5][release-1-0-5]
+- Hooks configured with PascalCase event names now receive VS Code-compatible snake_case payloads with `hook_event_name`, `session_id`, and ISO 8601 timestamps. [Release: v1.0.21][release-1-0-21]
 - Plugin hooks receive `CLAUDE_PROJECT_DIR` and `CLAUDE_PLUGIN_DATA` environment variables, and support `{{project_dir}}` and `{{plugin_data_dir}}` template variables in hook configurations. [Release: v1.0.12][release-1-0-12]
 
 ## MCP Servers
@@ -333,6 +334,7 @@ Useful environment variables include:
 - `COPILOT_MODEL` — Default model. [Docs: env vars][env-vars]
 - `COPILOT_ALLOW_ALL` — Equivalent to `--allow-all`. [Docs: env vars][env-vars]
 - `COPILOT_HOME` — Override the default Copilot home directory. [Docs: env vars][env-vars]
+- `COPILOT_CACHE_HOME` — Override the cache directory separately from `COPILOT_HOME`. [Docs: env vars][env-vars] [Docs: config dir][config-dir]
 - `COPILOT_EDITOR` — External editor command. [Docs: env vars][env-vars]
 - `COPILOT_CUSTOM_INSTRUCTIONS_DIRS` — Extra instruction directories. [Docs: env vars][env-vars]
 - `COPILOT_SKILLS_DIRS` — Extra skill directories. [Docs: env vars][env-vars]
@@ -347,6 +349,7 @@ Useful environment variables include:
 
 Copilot CLI can export traces and metrics with OpenTelemetry. [Docs: OTel][otel]
 
+- `copilot help monitoring` — Open monitoring help with OpenTelemetry configuration details and examples. [Release: v1.0.20][release-1-0-20]
 - OTel is off by default. [Docs: OTel][otel]
 - It turns on when `COPILOT_OTEL_ENABLED=true`, `OTEL_EXPORTER_OTLP_ENDPOINT` is set, or `COPILOT_OTEL_FILE_EXPORTER_PATH` is set. [Docs: OTel][otel]
 - `OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=true` captures full prompts, responses, and tool payloads. [Docs: OTel content][otel-content]
@@ -356,6 +359,16 @@ Copilot CLI can export traces and metrics with OpenTelemetry. [Docs: OTel][otel]
 
 Recent official releases added or improved several user-facing CLI features.
 
+### v1.0.21
+
+- `copilot mcp` command for managing MCP servers outside the interactive session. [Release: v1.0.21][release-1-0-21]
+- Hooks configured with PascalCase event names now receive VS Code-compatible snake_case payloads with `hook_event_name`, `session_id`, and ISO 8601 timestamps. [Release: v1.0.21][release-1-0-21]
+
+### v1.0.20
+
+- `copilot help monitoring` topic with OpenTelemetry configuration details and examples. [Release: v1.0.20][release-1-0-20]
+- `/yolo` and `--yolo` now behave identically, and `/yolo` state persists across `/restart`. [Release: v1.0.20][release-1-0-20]
+
 ### v1.0.17
 
 - Built-in skills are now included with the CLI, starting with a guide for customizing Copilot cloud agent's environment. [Release: v1.0.17][release-1-0-17]
@@ -364,7 +377,7 @@ Recent official releases added or improved several user-facing CLI features.
 
 ### v1.0.16
 
-- `PermissionRequest` hook allows scripts to programmatically approve or deny tool permission requests. [Release: v1.0.16][release-1-0-16]
+- `permissionRequest` hook allows scripts to programmatically approve or deny tool permission requests. [Release: v1.0.16][release-1-0-16]
 - `postToolUse` now runs only after successful tool calls; use `postToolUseFailure` for tool errors. [Release: v1.0.16][release-1-0-16]
 - SQL prompt tags no longer appear when the `sql` tool is excluded via `--excluded-tools` or `--available-tools`. [Release: v1.0.16][release-1-0-16]
 - MCP tool calls display tool name and parameter summary in the timeline. [Release: v1.0.16][release-1-0-16]
@@ -372,7 +385,6 @@ Recent official releases added or improved several user-facing CLI features.
 
 ### v1.0.15
 
-- `/share html` exports sessions and research reports as self-contained interactive HTML files. [Release: v1.0.15][release-1-0-15]
 - `/mcp auth` command for re-authenticating MCP OAuth servers with account switching. [Release: v1.0.15][release-1-0-15]
 - `postToolUseFailure` hook event for handling tool errors separately from successful tool calls. [Release: v1.0.15][release-1-0-15]
 - Device code flow (RFC 8628) as a fallback for MCP OAuth in headless and CI environments. [Release: v1.0.15][release-1-0-15]
@@ -405,10 +417,8 @@ Recent official releases added or improved several user-facing CLI features.
 - `~/.agents/skills/` as a personal skill discovery directory. [Release: v1.0.11][release-1-0-11]
 - `/clear` and `/new` are now distinct: `/clear` abandons the current session and keeps configured MCP servers available in the new session, `/new` starts fresh (keeping the old session backgrounded). Both accept an optional initial prompt. [Release: v1.0.11][release-1-0-11] [Release: v1.0.12][release-1-0-12]
 - Custom instructions, MCP servers, skills, and agents are discovered at every directory level from the working directory up to the git root (full monorepo support). [Release: v1.0.11][release-1-0-11]
-- `/extensions` for viewing, enabling, and disabling CLI extensions. [Release: v1.0.5][release-1-0-5]
 - `/pr` for PR creation, inspection, review feedback, merge-conflict work, and CI follow-up. [Release: v1.0.5][release-1-0-5]
-- `/version` inside the interactive session. [Release: v1.0.5][release-1-0-5]
-- `/changelog last <N>`, `/changelog since <version>`, and `/changelog summarize`. [Release: v1.0.5][release-1-0-5]
+- `/changelog` in the interactive session, with optional summary and version arguments in the current docs. [Docs: slash commands][slash-commands] [Release: v1.0.5][release-1-0-5]
 - `@` file mentions for absolute paths, home-directory paths, and parent-relative paths. [Release: v1.0.5][release-1-0-5]
 - `--reasoning-effort` for setting reasoning depth from the command line. [Release: v1.0.4][release-1-0-4]
 - `.devcontainer/devcontainer.json` as another MCP configuration source. [Release: v1.0.3][release-1-0-3]
@@ -418,6 +428,7 @@ Recent official releases added or improved several user-facing CLI features.
 ## Sources
 
 - [GitHub Copilot CLI command reference](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference)
+- [GitHub Copilot CLI configuration directory](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-config-dir-reference)
 - [Adding custom instructions for GitHub Copilot CLI](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-custom-instructions)
 - [Overview of customizing GitHub Copilot CLI](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/overview)
 - [Running GitHub Copilot CLI programmatically](https://docs.github.com/en/copilot/how-tos/copilot-cli/automate-copilot-cli/run-cli-programmatically)
@@ -430,6 +441,8 @@ Recent official releases added or improved several user-facing CLI features.
 - [Power agentic workflows in your terminal with GitHub Copilot CLI](https://github.blog/ai-and-ml/github-copilot/power-agentic-workflows-in-your-terminal-with-github-copilot-cli/)
 - [From idea to pull request: A practical guide to building with GitHub Copilot CLI](https://github.blog/ai-and-ml/github-copilot/from-idea-to-pull-request-a-practical-guide-to-building-with-github-copilot-cli/)
 - [Run multiple agents at once with /fleet in Copilot CLI](https://github.blog/ai-and-ml/github-copilot/run-multiple-agents-at-once-with-fleet-in-copilot-cli/)
+- [GitHub Copilot CLI releases: v1.0.21](https://github.com/github/copilot-cli/releases/tag/v1.0.21)
+- [GitHub Copilot CLI releases: v1.0.20](https://github.com/github/copilot-cli/releases/tag/v1.0.20)
 - [GitHub Copilot CLI releases: v1.0.17](https://github.com/github/copilot-cli/releases/tag/v1.0.17)
 - [GitHub Copilot CLI releases: v1.0.16](https://github.com/github/copilot-cli/releases/tag/v1.0.16)
 - [GitHub Copilot CLI releases: v1.0.15](https://github.com/github/copilot-cli/releases/tag/v1.0.15)
@@ -442,6 +455,7 @@ Recent official releases added or improved several user-facing CLI features.
 - [GitHub Copilot CLI releases: v1.0.3](https://github.com/github/copilot-cli/releases/tag/v1.0.3)
 
 [custom-instructions]: https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-custom-instructions
+[config-dir]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-config-dir-reference
 [programmatic-howto]: https://docs.github.com/en/copilot/how-tos/copilot-cli/automate-copilot-cli/run-cli-programmatically
 [hooks-howto]: https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/use-hooks
 [fleet-howto]: https://docs.github.com/en/copilot/how-tos/copilot-cli/speeding-up-task-completion
@@ -468,6 +482,8 @@ Recent official releases added or improved several user-facing CLI features.
 [hook-prompt]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#prompt-hooks
 [hook-pretool]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#pretooluse-decision-control
 [hook-agentstop]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#agentstop--subagentstop-decision-control
+[hook-permission]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#permissionrequest-decision-control
+[hook-notification]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#notification-hook
 [mcp]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#mcp-server-configuration
 [mcp-transport]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#transport-types
 [mcp-local]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#local-server-configuration-fields
@@ -484,6 +500,8 @@ Recent official releases added or improved several user-facing CLI features.
 [agent-locations]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#custom-agent-locations
 [otel]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#opentelemetry-monitoring
 [otel-content]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#content-capture
+[release-1-0-21]: https://github.com/github/copilot-cli/releases/tag/v1.0.21
+[release-1-0-20]: https://github.com/github/copilot-cli/releases/tag/v1.0.20
 [release-1-0-17]: https://github.com/github/copilot-cli/releases/tag/v1.0.17
 [release-1-0-16]: https://github.com/github/copilot-cli/releases/tag/v1.0.16
 [release-1-0-15]: https://github.com/github/copilot-cli/releases/tag/v1.0.15
