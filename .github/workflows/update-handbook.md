@@ -1,4 +1,6 @@
 ---
+strict: false
+
 on:
   schedule: daily
   workflow_dispatch:
@@ -10,10 +12,20 @@ permissions:
 
 engine:
   id: copilot
-  model: gpt-5.4
+  model: glm-5.1
   args:
     - --reasoning-effort
-    - xhigh
+    - high
+  env:
+    COPILOT_PROVIDER_BASE_URL: https://ollama.com/v1
+    COPILOT_PROVIDER_TYPE: openai
+    COPILOT_PROVIDER_WIRE_API: completions
+    COPILOT_PROVIDER_MAX_PROMPT_TOKENS: '158000'
+    COPILOT_PROVIDER_MAX_OUTPUT_TOKENS: '39000'
+    COPILOT_PROVIDER_API_KEY: ${{ secrets.COPILOT_PROVIDER_API_KEY }}
+
+features:
+  byok-copilot: true
 
 tools:
   github:
@@ -22,6 +34,7 @@ tools:
 network:
   allowed:
     - github
+    - ollama.com
 
 safe-outputs:
   noop:
