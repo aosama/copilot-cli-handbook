@@ -1,0 +1,2782 @@
+- generic [active] [ref=e1]:
+    - banner [ref=e2]:
+        - navigation [ref=e3]:
+            - link "Copilot CLI Handbook" [ref=e4]:
+                - /url: /copilot-cli-handbook/
+            - link "View on GitHub" [ref=e5]:
+                - /url: https://github.com/aosama/copilot-cli-handbook
+                - img [ref=e6]
+            - button "Switch to light mode" [ref=e8] [cursor=pointer]:
+                - img [ref=e9]
+    - main [ref=e11]:
+        - article [ref=e12]:
+            - generic [ref=e13]:
+                - heading "Copilot CLI Handbook" [level=1] [ref=e14]
+                - paragraph [ref=e15]: Last updated on April 25, 2026 at 4:00 PM EDT
+                - paragraph [ref=e16]: Custom instructions, commands, permissions, agents, hooks, configuration, and MCP for GitHub Copilot CLI
+            - heading "Instruction Files" [level=2] [ref=e17]
+            - paragraph [ref=e18]:
+                - text: Copilot CLI can load repository, path-specific, agent, and local instructions from several official file locations.
+                - 'link "How-to: custom instructions" [ref=e19]':
+                    - /url: https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-custom-instructions
+            - heading "Common instruction locations" [level=3] [ref=e20]
+            - list [ref=e21]:
+                - listitem [ref=e22]:
+                    - code [ref=e23]: AGENTS.md
+                    - text: in the repository root, the current working directory, or directories listed in
+                    - code [ref=e24]: COPILOT_CUSTOM_INSTRUCTIONS_DIRS
+                    - text: .
+                    - 'link "How-to: custom instructions" [ref=e25]':
+                        - /url: https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-custom-instructions
+                - listitem [ref=e26]:
+                    - code [ref=e27]: .github/copilot-instructions.md
+                    - text: for repository-wide instructions.
+                    - 'link "How-to: custom instructions" [ref=e28]':
+                        - /url: https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-custom-instructions
+                - listitem [ref=e29]:
+                    - code [ref=e30]: .github/instructions/**/*.instructions.md
+                    - text: for path-specific instructions.
+                    - 'link "How-to: custom instructions" [ref=e31]':
+                        - /url: https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-custom-instructions
+                - listitem [ref=e32]:
+                    - code [ref=e33]: $HOME/.copilot/copilot-instructions.md
+                    - text: for local personal instructions.
+                    - 'link "How-to: custom instructions" [ref=e34]':
+                        - /url: https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-custom-instructions
+                - listitem [ref=e35]:
+                    - code [ref=e36]: COPILOT_CUSTOM_INSTRUCTIONS_DIRS
+                    - text: to add extra directories where Copilot CLI looks for
+                    - code [ref=e37]: AGENTS.md
+                    - text: and
+                    - code [ref=e38]: .github/instructions/**/*.instructions.md
+                    - text: .
+                    - 'link "How-to: custom instructions" [ref=e39]':
+                        - /url: https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-custom-instructions
+                - listitem [ref=e40]:
+                    - text: Custom instruction files in
+                    - code [ref=e41]: .gitignored
+                    - text: directories (for example,
+                    - code [ref=e42]: .github/instructions/
+                    - text: ) now load correctly.
+                    - 'link "Release: v1.0.36" [ref=e43]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.36
+            - heading "Useful commands and flags" [level=3] [ref=e44]
+            - list [ref=e45]:
+                - listitem [ref=e46]:
+                    - code [ref=e47]: /init
+                    - text: — Initialize Copilot custom instructions and agentic features for the repository.
+                    - 'link "Docs: slash commands" [ref=e48]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                - listitem [ref=e49]:
+                    - code [ref=e50]: copilot init
+                    - text: — Initialize Copilot custom instructions for the current repository.
+                    - 'link "Docs: CLI commands" [ref=e51]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-commands
+                - listitem [ref=e52]:
+                    - code [ref=e53]: '--no-custom-instructions'
+                    - text: — Start without loading
+                    - code [ref=e54]: AGENTS.md
+                    - text: and related instruction files.
+                    - 'link "Docs: CLI options" [ref=e55]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+            - heading "Interactive Commands" [level=2] [ref=e56]
+            - list [ref=e57]:
+                - listitem [ref=e58]:
+                    - text: Slash commands support tab-completion for arguments and subcommands.
+                    - 'link "Release: v1.0.35" [ref=e59]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+            - heading "Session and navigation" [level=3] [ref=e60]
+            - list [ref=e61]:
+                - listitem [ref=e62]:
+                    - code [ref=e63]: /clear [PROMPT]
+                    - text: ','
+                    - code [ref=e64]: /new [PROMPT]
+                    - text: — Start a new conversation.
+                    - code [ref=e65]: /clear
+                    - text: keeps configured MCP servers in the new session;
+                    - code [ref=e66]: /new
+                    - text: backgrounds the old session. Both accept an optional initial prompt.
+                    - 'link "Docs: slash commands" [ref=e67]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                    - 'link "Release: v1.0.11" [ref=e68]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.11
+                    - 'link "Release: v1.0.12" [ref=e69]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.12
+                    - 'link "Blog: slash commands" [ref=e70]':
+                        - /url: https://github.blog/ai-and-ml/github-copilot/a-cheat-sheet-to-slash-commands-in-github-copilot-cli/
+                - listitem [ref=e71]:
+                    - code [ref=e72]: /resume [SESSION-ID|NAME]
+                    - text: — Resume a previous session. Accepts short session ID prefixes (7+ hex characters) or session names. The session selector shows branch names, idle/in-use status, and supports cursor-based search.
+                    - 'link "Docs: slash commands" [ref=e73]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                    - 'link "Release: v1.0.32" [ref=e74]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.32
+                    - 'link "Release: v1.0.35" [ref=e75]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+                - listitem [ref=e76]:
+                    - code [ref=e77]: /undo
+                    - text: ','
+                    - code [ref=e78]: /rewind
+                    - text: — Undo the last turn and revert file changes, or open a timeline picker to roll back to any point in conversation history (also double-Esc). Double-Esc is required to cancel in-flight work, preventing accidental interruptions.
+                    - 'link "Docs: slash commands" [ref=e79]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                    - 'link "Release: v1.0.10" [ref=e80]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.10
+                    - 'link "Release: v1.0.13" [ref=e81]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.13
+                    - 'link "Release: v1.0.36" [ref=e82]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.36
+                - listitem [ref=e83]:
+                    - code [ref=e84]: /session [info|checkpoints [n]|files|plan|rename [NAME]|cleanup|prune|delete [ID]|delete-all]
+                    - text: — Show session information and manage sessions. The session picker supports x-to-delete.
+                    - 'link "Docs: slash commands" [ref=e85]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                    - 'link "Release: v1.0.35" [ref=e86]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+                - listitem [ref=e87]:
+                    - code [ref=e88]: /rename [NAME]
+                    - text: — Rename the current session (auto-generates a name if omitted).
+                    - 'link "Docs: slash commands" [ref=e89]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                - listitem [ref=e90]:
+                    - code [ref=e91]: /compact
+                    - text: — Summarize history to reduce context usage.
+                    - 'link "Docs: slash commands" [ref=e92]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                - listitem [ref=e93]:
+                    - code [ref=e94]: /context
+                    - text: — Show context window usage.
+                    - 'link "Docs: slash commands" [ref=e95]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                - listitem [ref=e96]:
+                    - code [ref=e97]: /cwd
+                    - text: ','
+                    - code [ref=e98]: /cd [PATH]
+                    - text: — Show or change the working directory.
+                    - 'link "Docs: slash commands" [ref=e99]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                    - 'link "Blog: slash commands" [ref=e100]':
+                        - /url: https://github.blog/ai-and-ml/github-copilot/a-cheat-sheet-to-slash-commands-in-github-copilot-cli/
+                - listitem [ref=e101]:
+                    - code [ref=e102]: /add-dir PATH
+                    - text: — Add a directory to the allowed file-access list. Accepts relative paths (e.g.
+                    - code [ref=e103]: ./src
+                    - text: ','
+                    - code [ref=e104]: ../sibling
+                    - text: ).
+                    - 'link "Docs: slash commands" [ref=e105]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                    - 'link "Blog: slash commands" [ref=e106]':
+                        - /url: https://github.blog/ai-and-ml/github-copilot/a-cheat-sheet-to-slash-commands-in-github-copilot-cli/
+                    - 'link "Release: v1.0.25" [ref=e107]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.25
+                - listitem [ref=e108]:
+                    - code [ref=e109]: /list-dirs
+                    - text: — Show directories that already have file access.
+                    - 'link "Docs: slash commands" [ref=e110]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                    - 'link "Blog: slash commands" [ref=e111]':
+                        - /url: https://github.blog/ai-and-ml/github-copilot/a-cheat-sheet-to-slash-commands-in-github-copilot-cli/
+                - listitem [ref=e112]:
+                    - code [ref=e113]: /ask
+                    - text: — Ask a quick question without affecting conversation history.
+                    - 'link "Release: v1.0.27" [ref=e114]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.27
+                - listitem [ref=e115]:
+                    - code [ref=e116]: /env
+                    - text: '— Show loaded environment details: instructions, MCP servers, skills, agents, plugins.'
+                    - 'link "Release: v1.0.25" [ref=e117]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.25
+                - listitem [ref=e118]:
+                    - code [ref=e119]: /remote [on|off]
+                    - text: — Enable remote access to this session from GitHub.com and GitHub Mobile, or show current status.
+                    - 'link "How-to: remote steering" [ref=e120]':
+                        - /url: https://docs.github.com/en/copilot/how-tos/copilot-cli/steer-remotely
+                    - 'link "Release: v1.0.25" [ref=e121]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.25
+                    - 'link "Release: v1.0.36" [ref=e122]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.36
+                - listitem [ref=e123]:
+                    - code [ref=e124]: /keep-alive [on|busy|NUMBERm|NUMBERh]
+                    - text: — Prevent the machine from sleeping while the session is active, while the agent is busy, or for a defined length of time. Now available without experimental mode.
+                    - 'link "Docs: slash commands" [ref=e125]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                    - 'link "Release: v1.0.36" [ref=e126]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.36
+                - listitem [ref=e127]:
+                    - code [ref=e128]: /copy
+                    - text: — Copy the last response to the clipboard.
+                    - 'link "Docs: slash commands" [ref=e129]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                - listitem [ref=e130]:
+                    - code [ref=e131]: /on-air
+                    - text: ','
+                    - code [ref=e132]: /streamer-mode
+                    - text: — Toggle streamer mode (hides preview model names and quota details).
+                    - 'link "Docs: slash commands" [ref=e133]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                - listitem [ref=e134]:
+                    - code [ref=e135]: /restart
+                    - text: — Restart the CLI, preserving the current session.
+                    - 'link "Docs: slash commands" [ref=e136]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                - listitem [ref=e137]:
+                    - code [ref=e138]: /exit
+                    - text: ','
+                    - code [ref=e139]: /quit
+                    - text: — Exit the CLI.
+                    - 'link "Docs: slash commands" [ref=e140]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+            - heading "Planning, review, and collaboration" [level=3] [ref=e141]
+            - list [ref=e142]:
+                - listitem [ref=e143]:
+                    - code [ref=e144]: /diff
+                    - text: — Review changes in the current directory. Also works while the agent is running.
+                    - 'link "Docs: slash commands" [ref=e145]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                    - 'link "Release: v1.0.23" [ref=e146]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.23
+                - listitem [ref=e147]:
+                    - code [ref=e148]: /review [PROMPT]
+                    - text: — Run the code review agent against your changes.
+                    - 'link "Docs: slash commands" [ref=e149]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                - listitem [ref=e150]:
+                    - code [ref=e151]: /plan [PROMPT]
+                    - text: — Draft an implementation plan before editing.
+                    - 'link "Docs: slash commands" [ref=e152]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                - listitem [ref=e153]:
+                    - code [ref=e154]: /delegate [PROMPT]
+                    - text: — Delegate work to a remote repository with an AI-generated pull request.
+                    - 'link "Docs: slash commands" [ref=e155]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                    - 'link "How-to: CLI agents" [ref=e156]':
+                        - /url: https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli-agents
+                    - 'link "Blog: slash commands" [ref=e157]':
+                        - /url: https://github.blog/ai-and-ml/github-copilot/a-cheat-sheet-to-slash-commands-in-github-copilot-cli/
+                    - 'link "Blog: terminal workflows" [ref=e158]':
+                        - /url: https://github.blog/ai-and-ml/github-copilot/power-agentic-workflows-in-your-terminal-with-github-copilot-cli/
+                - listitem [ref=e159]:
+                    - code [ref=e160]: /share [file|gist|html] [session|research] [PATH]
+                    - text: — Export the current session or research report to Markdown, a secret gist, or a self-contained interactive HTML file.
+                    - 'link "Docs: slash commands" [ref=e161]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                    - 'link "Release: v1.0.15" [ref=e162]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.15
+                    - 'link "Release: v1.0.25" [ref=e163]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.25
+                - listitem [ref=e164]:
+                    - code [ref=e165]: /research TOPIC
+                    - text: — Run a deep research investigation using GitHub search and web sources.
+                    - 'link "Docs: research" [ref=e166]':
+                        - /url: https://docs.github.com/en/copilot/concepts/agents/copilot-cli/research
+                - listitem [ref=e167]:
+                    - code [ref=e168]: /changelog [SUMMARIZE] [VERSION]
+                    - text: — Display the CLI changelog with an optional AI-generated summary.
+                    - 'link "Docs: slash commands" [ref=e169]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                    - 'link "Release: v1.0.5" [ref=e170]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.5
+                - listitem [ref=e171]:
+                    - code [ref=e172]: /pr [view|create|fix|auto]
+                    - text: — Operate on pull requests for the current branch.
+                    - 'link "Docs: slash commands" [ref=e173]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                    - 'link "Release: v1.0.5" [ref=e174]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.5
+            - heading "Agents, models, skills, and plugins" [level=3] [ref=e175]
+            - list [ref=e176]:
+                - listitem [ref=e177]:
+                    - code [ref=e178]: /agent
+                    - text: — Choose from available agents. Also works while the agent is running.
+                    - 'link "Docs: slash commands" [ref=e179]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                    - 'link "How-to: custom agents" [ref=e180]':
+                        - /url: https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/create-custom-agents-for-cli
+                    - 'link "Release: v1.0.23" [ref=e181]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.23
+                - listitem [ref=e182]:
+                    - code [ref=e183]: /fleet [PROMPT]
+                    - text: — Run parts of a task in parallel with subagents.
+                    - 'link "Docs: slash commands" [ref=e184]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                    - 'link "How-to: /fleet" [ref=e185]':
+                        - /url: https://docs.github.com/en/copilot/how-tos/copilot-cli/speeding-up-task-completion
+                - listitem [ref=e186]:
+                    - code [ref=e187]: /tasks
+                    - text: — Inspect background tasks and subagent work created in the current session.
+                    - 'link "How-to: /fleet" [ref=e188]':
+                        - /url: https://docs.github.com/en/copilot/how-tos/copilot-cli/speeding-up-task-completion
+                - listitem [ref=e189]:
+                    - code [ref=e190]: /model
+                    - text: ','
+                    - code [ref=e191]: /models [MODEL]
+                    - text: — View or change the active model. Use
+                    - code [ref=e192]: auto
+                    - text: to let Copilot pick the best available model for each session.
+                    - 'link "Docs: slash commands" [ref=e193]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                    - 'link "Blog: slash commands" [ref=e194]':
+                        - /url: https://github.blog/ai-and-ml/github-copilot/a-cheat-sheet-to-slash-commands-in-github-copilot-cli/
+                    - 'link "Release: v1.0.32" [ref=e195]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.32
+                - listitem [ref=e196]:
+                    - code [ref=e197]: /skills [list|info|add|remove|reload] [ARGS...]
+                    - text: — Manage skills.
+                    - 'link "Docs: slash commands" [ref=e198]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                - listitem [ref=e199]:
+                    - code [ref=e200]: /instructions
+                    - text: — View and toggle custom instruction files.
+                    - 'link "Docs: slash commands" [ref=e201]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                - listitem [ref=e202]:
+                    - code [ref=e203]: /plugin [marketplace|install|uninstall|update|list] [ARGS...]
+                    - text: — Manage plugins and plugin marketplaces.
+                    - 'link "Docs: slash commands" [ref=e204]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+            - heading "Tools, account, and setup" [level=3] [ref=e205]
+            - list [ref=e206]:
+                - listitem [ref=e207]:
+                    - code [ref=e208]: /allow-all
+                    - text: ','
+                    - code [ref=e209]: /yolo
+                    - text: — Enable all permissions for tools, paths, and URLs. Supports
+                    - code [ref=e210]: 'on'
+                    - text: ','
+                    - code [ref=e211]: 'off'
+                    - text: ', and'
+                    - code [ref=e212]: show
+                    - text: subcommands to enable, disable, or check allow-all mode.
+                    - code [ref=e213]: /yolo
+                    - text: now behaves the same as
+                    - code [ref=e214]: '--yolo'
+                    - text: ', and its state persists across'
+                    - code [ref=e215]: /restart
+                    - text: .
+                    - 'link "Docs: slash commands" [ref=e216]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                    - 'link "Release: v1.0.12" [ref=e217]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.12
+                    - 'link "Release: v1.0.20" [ref=e218]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.20
+                - listitem [ref=e219]:
+                    - code [ref=e220]: /reset-allowed-tools
+                    - text: — Clear previously granted tool approvals.
+                    - 'link "Release: v1.0.3" [ref=e221]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.3
+                    - 'link "Blog: slash commands" [ref=e222]':
+                        - /url: https://github.blog/ai-and-ml/github-copilot/a-cheat-sheet-to-slash-commands-in-github-copilot-cli/
+                - listitem [ref=e223]:
+                    - code [ref=e224]: /mcp [show|add|edit|delete|disable|enable|auth|reload] [SERVER-NAME]
+                    - text: — Manage MCP servers;
+                    - code [ref=e225]: /mcp auth
+                    - text: re-authenticates OAuth servers with account switching. MCP servers can also be installed from the registry with guided configuration.
+                    - 'link "Docs: slash commands" [ref=e226]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                    - 'link "Release: v1.0.15" [ref=e227]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.15
+                    - 'link "Release: v1.0.25" [ref=e228]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.25
+                    - 'link "Blog: slash commands" [ref=e229]':
+                        - /url: https://github.blog/ai-and-ml/github-copilot/a-cheat-sheet-to-slash-commands-in-github-copilot-cli/
+                - listitem [ref=e230]:
+                    - code [ref=e231]: /lsp [show|test|reload|help] [SERVER-NAME]
+                    - text: — Manage language server configuration.
+                    - 'link "Docs: slash commands" [ref=e232]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                - listitem [ref=e233]:
+                    - code [ref=e234]: /statusline
+                    - text: '— Customize which items appear in the status bar (directory, branch, effort, context window, quota, custom agent name, changes). The “changes” toggle shows added/removed line counts. Alias:'
+                    - code [ref=e235]: /footer
+                    - text: .
+                    - 'link "Release: v1.0.30" [ref=e236]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.30
+                    - 'link "Release: v1.0.35" [ref=e237]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+                    - 'link "Release: v1.0.36" [ref=e238]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.36
+                - listitem [ref=e239]:
+                    - code [ref=e240]: /ide
+                    - text: — Connect to an IDE workspace. Also works while the agent is running.
+                    - 'link "Docs: slash commands" [ref=e241]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                    - 'link "Release: v1.0.23" [ref=e242]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.23
+                - listitem [ref=e243]:
+                    - code [ref=e244]: /terminal-setup
+                    - text: — Configure multiline terminal input support.
+                    - 'link "Docs: slash commands" [ref=e245]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                - listitem [ref=e246]:
+                    - code [ref=e247]: /login
+                    - text: ','
+                    - code [ref=e248]: /logout
+                    - text: — Sign in or out.
+                    - code [ref=e249]: /logout
+                    - text: warns when signed in via
+                    - code [ref=e250]: gh
+                    - text: CLI, PAT, API key, or environment variable (only manages OAuth sessions).
+                    - 'link "Docs: slash commands" [ref=e251]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                    - 'link "Release: v1.0.25" [ref=e252]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.25
+                - listitem [ref=e253]:
+                    - code [ref=e254]: /user [show|list|switch]
+                    - text: — Manage the current GitHub account.
+                    - 'link "Docs: slash commands" [ref=e255]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                    - 'link "Blog: slash commands" [ref=e256]':
+                        - /url: https://github.blog/ai-and-ml/github-copilot/a-cheat-sheet-to-slash-commands-in-github-copilot-cli/
+                - listitem [ref=e257]:
+                    - code [ref=e258]: /update
+                    - text: ','
+                    - code [ref=e259]: /version
+                    - text: — Check for updates and show version information, honoring your configured update channel.
+                    - 'link "Release: v1.0.35" [ref=e260]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+                - listitem [ref=e261]:
+                    - code [ref=e262]: /help
+                    - text: ','
+                    - code [ref=e263]: /feedback
+                    - text: ','
+                    - code [ref=e264]: /usage
+                    - text: ','
+                    - code [ref=e265]: /theme
+                    - text: ','
+                    - code [ref=e266]: /experimental
+                    - text: — Session help, reporting, usage, UI, and feature toggles.
+                    - code [ref=e267]: /feedback
+                    - text: and
+                    - code [ref=e268]: /experimental
+                    - text: also work while the agent is running.
+                    - 'link "Docs: slash commands" [ref=e269]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                    - 'link "Blog: slash commands" [ref=e270]':
+                        - /url: https://github.blog/ai-and-ml/github-copilot/a-cheat-sheet-to-slash-commands-in-github-copilot-cli/
+                    - 'link "Release: v1.0.23" [ref=e271]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.23
+            - heading "Keyboard shortcuts" [level=3] [ref=e272]
+            - list [ref=e273]:
+                - listitem [ref=e274]:
+                    - code [ref=e275]: '@ FILENAME'
+                    - text: — Include file contents in the prompt context. Also supports attaching document files for the agent to read and reason about.
+                    - 'link "Docs: shortcuts" [ref=e276]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#global-shortcuts-in-the-interactive-interface
+                    - 'link "Release: v1.0.32" [ref=e277]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.32
+                - listitem [ref=e278]:
+                    - code [ref=e279]: '# NUMBER'
+                    - text: — Include a GitHub issue or pull request in the context.
+                    - 'link "Release: v1.0.35" [ref=e280]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+                - listitem [ref=e281]:
+                    - code [ref=e282]: '! COMMAND'
+                    - text: — Run a shell command directly. Uses your
+                    - code [ref=e283]: $SHELL
+                    - text: when set, instead of always invoking
+                    - code [ref=e284]: /bin/sh
+                    - text: .
+                    - 'link "Docs: shortcuts" [ref=e285]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#global-shortcuts-in-the-interactive-interface
+                    - 'link "Release: v1.0.35" [ref=e286]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+                - listitem [ref=e287]:
+                    - code [ref=e288]: Ctrl + X
+                    - text: then
+                    - code [ref=e289]: /
+                    - text: — Run a slash command after you already started typing.
+                    - 'link "Docs: shortcuts" [ref=e290]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#global-shortcuts-in-the-interactive-interface
+                - listitem [ref=e291]:
+                    - code [ref=e292]: Shift + Tab
+                    - text: — Cycle between standard, plan, and autopilot mode.
+                    - 'link "Docs: shortcuts" [ref=e293]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#global-shortcuts-in-the-interactive-interface
+                - listitem [ref=e294]:
+                    - code [ref=e295]: Ctrl + O
+                    - text: ','
+                    - code [ref=e296]: Ctrl + E
+                    - text: ','
+                    - code [ref=e297]: Ctrl + T
+                    - text: — Expand recent timeline items, expand all, or toggle reasoning display.
+                    - code [ref=e298]: Ctrl + O
+                    - text: expands all items (same as
+                    - code [ref=e299]: Ctrl + E
+                    - text: ).
+                    - 'link "Docs: timeline shortcuts" [ref=e300]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#timeline-shortcuts-in-the-interactive-interface
+                    - 'link "Release: v1.0.26" [ref=e301]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.26
+                - listitem [ref=e302]:
+                    - code [ref=e303]: Ctrl + G
+                    - text: — Edit the prompt in an external editor.
+                    - 'link "Docs: navigation shortcuts" [ref=e304]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#navigation-shortcuts-in-the-interactive-interface
+                - listitem [ref=e305]:
+                    - code [ref=e306]: Ctrl + Y
+                    - text: — Accept the highlighted option in completion popups (in addition to Tab).
+                    - 'link "Release: v1.0.35" [ref=e307]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+                - listitem [ref=e308]:
+                    - code [ref=e309]: Ctrl + Y
+                    - text: — In plan mode, open the most recent research report when no plan exists yet.
+                    - 'link "Release: v1.0.12" [ref=e310]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.12
+                - listitem [ref=e311]:
+                    - code [ref=e312]: Ctrl + L
+                    - text: ','
+                    - code [ref=e313]: Ctrl + C
+                    - text: ','
+                    - code [ref=e314]: Ctrl + D
+                    - text: — Clear the screen, cancel the current operation, or shut down.
+                    - 'link "Docs: shortcuts" [ref=e315]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#global-shortcuts-in-the-interactive-interface
+                - listitem [ref=e316]:
+                    - code [ref=e317]: Ctrl + V
+                    - text: ','
+                    - code [ref=e318]: Meta + V
+                    - text: — Paste image from clipboard on all platforms.
+                    - 'link "Release: v1.0.30" [ref=e319]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.30
+                - listitem [ref=e320]:
+                    - code [ref=e321]: Alt + D
+                    - text: — Delete the word in front of the cursor.
+                    - 'link "Release: v1.0.25" [ref=e322]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.25
+                - listitem [ref=e323]:
+                    - code [ref=e324]: Ctrl + A
+                    - text: ','
+                    - code [ref=e325]: Ctrl + E
+                    - text: ','
+                    - code [ref=e326]: Home
+                    - text: ','
+                    - code [ref=e327]: End
+                    - text: — Navigate to the start or end of a line or word in input.
+                    - 'link "Release: v1.0.35" [ref=e328]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+            - heading "Command-Line Commands and Flags" [level=2] [ref=e329]
+            - heading "Core commands" [level=3] [ref=e330]
+            - list [ref=e331]:
+                - listitem [ref=e332]:
+                    - code [ref=e333]: copilot
+                    - text: — Launch the interactive interface.
+                    - 'link "Docs: CLI commands" [ref=e334]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-commands
+                - listitem [ref=e335]:
+                    - code [ref=e336]: copilot help [topic]
+                    - text: — Show help for config, commands, environment, logging, monitoring, permissions, or providers.
+                    - 'link "Docs: CLI commands" [ref=e337]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-commands
+                    - 'link "Release: v1.0.20" [ref=e338]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.20
+                - listitem [ref=e339]:
+                    - code [ref=e340]: copilot init
+                    - text: — Initialize custom instructions for the current repository.
+                    - 'link "Docs: CLI commands" [ref=e341]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-commands
+                - listitem [ref=e342]:
+                    - code [ref=e343]: copilot update
+                    - text: — Download and install the latest version.
+                    - 'link "Docs: CLI commands" [ref=e344]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-commands
+                - listitem [ref=e345]:
+                    - code [ref=e346]: copilot version
+                    - text: — Show version information and check for updates.
+                    - 'link "Docs: CLI commands" [ref=e347]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-commands
+                - listitem [ref=e348]:
+                    - code [ref=e349]: copilot login
+                    - text: ','
+                    - code [ref=e350]: copilot logout
+                    - text: — Authenticate or remove credentials.
+                    - code [ref=e351]: copilot login
+                    - text: accepts
+                    - code [ref=e352]: '--host HOST'
+                    - text: for GitHub Enterprise.
+                    - 'link "Docs: CLI commands" [ref=e353]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-commands
+                    - 'link "Release: v1.0.32" [ref=e354]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.32
+                - listitem [ref=e355]:
+                    - code [ref=e356]: copilot mcp
+                    - text: — Manage MCP servers outside the interactive session.
+                    - 'link "Release: v1.0.21" [ref=e357]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.21
+                - listitem [ref=e358]:
+                    - code [ref=e359]: copilot plugin
+                    - text: — Manage plugins and plugin marketplaces outside the interactive session.
+                    - 'link "Docs: CLI commands" [ref=e360]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-commands
+            - heading "Automation and session control" [level=3] [ref=e361]
+            - list [ref=e362]:
+                - listitem [ref=e363]:
+                    - code [ref=e364]: echo "PROMPT" | copilot
+                    - text: — Pipe a prompt into Copilot CLI for scripting and automation.
+                    - 'link "How-to: programmatic use" [ref=e365]':
+                        - /url: https://docs.github.com/en/copilot/how-tos/copilot-cli/automate-copilot-cli/run-cli-programmatically
+                - listitem [ref=e366]:
+                    - code [ref=e367]: '-p, --prompt=PROMPT'
+                    - text: — Run a prompt programmatically and exit after completion.
+                    - 'link "Docs: CLI options" [ref=e368]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                    - 'link "Blog: terminal workflows" [ref=e369]':
+                        - /url: https://github.blog/ai-and-ml/github-copilot/power-agentic-workflows-in-your-terminal-with-github-copilot-cli/
+                    - 'link "Blog: idea to PR" [ref=e370]':
+                        - /url: https://github.blog/ai-and-ml/github-copilot/from-idea-to-pull-request-a-practical-guide-to-building-with-github-copilot-cli/
+                - listitem [ref=e371]:
+                    - code [ref=e372]: '-i, --interactive=PROMPT'
+                    - text: — Start an interactive session and run an initial prompt.
+                    - 'link "Docs: CLI options" [ref=e373]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                - listitem [ref=e374]:
+                    - code [ref=e375]: '--continue'
+                    - text: — Resume the most recent session, preferring sessions from the current working directory.
+                    - 'link "Docs: CLI options" [ref=e376]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                    - 'link "Release: v1.0.35" [ref=e377]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+                - listitem [ref=e378]:
+                    - code [ref=e379]: '--name=NAME'
+                    - text: — Set a session name on startup.
+                    - 'link "Release: v1.0.35" [ref=e380]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+                - listitem [ref=e381]:
+                    - code [ref=e382]: '--resume=SESSION-ID|NAME'
+                    - text: — Resume a specific session by ID or name. Accepts short session ID prefixes (7+ hex characters).
+                    - 'link "Docs: CLI options" [ref=e383]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                    - 'link "Release: v1.0.32" [ref=e384]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.32
+                    - 'link "Release: v1.0.35" [ref=e385]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+                - listitem [ref=e386]:
+                    - code [ref=e387]: '--mode=MODE'
+                    - text: — Set the initial agent mode (
+                    - code [ref=e388]: interactive
+                    - text: ','
+                    - code [ref=e389]: plan
+                    - text: ', or'
+                    - code [ref=e390]: autopilot
+                    - text: ). Cannot be combined with
+                    - code [ref=e391]: '--autopilot'
+                    - text: or
+                    - code [ref=e392]: '--plan'
+                    - text: .
+                    - 'link "Docs: CLI options" [ref=e393]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                    - 'link "Release: v1.0.23" [ref=e394]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.23
+                - listitem [ref=e395]:
+                    - code [ref=e396]: '--agent=AGENT'
+                    - text: — Pick a custom agent up front.
+                    - 'link "Docs: CLI options" [ref=e397]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                - listitem [ref=e398]:
+                    - code [ref=e399]: '--autopilot'
+                    - text: — Let Copilot continue autonomously in prompt mode.
+                    - 'link "Docs: CLI options" [ref=e400]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                - listitem [ref=e401]:
+                    - code [ref=e402]: '--plan'
+                    - text: — Start in plan mode. Shorthand for
+                    - code [ref=e403]: '--mode plan'
+                    - text: . Cannot be combined with
+                    - code [ref=e404]: '--mode'
+                    - text: or
+                    - code [ref=e405]: '--autopilot'
+                    - text: .
+                    - 'link "Docs: CLI options" [ref=e406]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                    - 'link "Release: v1.0.23" [ref=e407]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.23
+                - listitem [ref=e408]:
+                    - code [ref=e409]: '--max-autopilot-continues=COUNT'
+                    - text: — Cap autonomous follow-up turns.
+                    - 'link "Docs: CLI options" [ref=e410]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                - listitem [ref=e411]:
+                    - code [ref=e412]: '--reasoning-effort=LEVEL'
+                    - text: ','
+                    - code [ref=e413]: '--effort=LEVEL'
+                    - text: — Set reasoning depth (
+                    - code [ref=e414]: low
+                    - text: ','
+                    - code [ref=e415]: medium
+                    - text: ','
+                    - code [ref=e416]: high
+                    - text: ).
+                    - 'link "Docs: CLI options" [ref=e417]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                - listitem [ref=e418]:
+                    - code [ref=e419]: '--enable-reasoning-summaries'
+                    - text: — Request reasoning summaries for OpenAI models that support it.
+                    - 'link "Docs: CLI options" [ref=e420]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                - listitem [ref=e421]:
+                    - code [ref=e422]: '--output-format=text|json'
+                    - text: — Return plain text or JSONL output.
+                    - 'link "Docs: CLI options" [ref=e423]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                - listitem [ref=e424]:
+                    - code [ref=e425]: '--share=PATH'
+                    - text: ','
+                    - code [ref=e426]: '--share-gist'
+                    - text: — Export a programmatic session after it finishes.
+                    - 'link "Docs: CLI options" [ref=e427]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                - listitem [ref=e428]:
+                    - code [ref=e429]: '-s, --silent'
+                    - text: — Suppress usage statistics and print only the answer.
+                    - 'link "Docs: CLI options" [ref=e430]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                    - 'link "How-to: programmatic use" [ref=e431]':
+                        - /url: https://docs.github.com/en/copilot/how-tos/copilot-cli/automate-copilot-cli/run-cli-programmatically
+                - listitem [ref=e432]:
+                    - code [ref=e433]: '--no-ask-user'
+                    - text: — Disable the ask-user tool for fully autonomous runs.
+                    - 'link "Docs: CLI options" [ref=e434]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                    - 'link "How-to: programmatic use" [ref=e435]':
+                        - /url: https://docs.github.com/en/copilot/how-tos/copilot-cli/automate-copilot-cli/run-cli-programmatically
+            - heading "Permissions and safety" [level=3] [ref=e436]
+            - list [ref=e437]:
+                - listitem [ref=e438]:
+                    - code [ref=e439]: '--allow-all'
+                    - text: ','
+                    - code [ref=e440]: '--yolo'
+                    - text: — Approve all tools, paths, and URLs.
+                    - 'link "Docs: CLI options" [ref=e441]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                - listitem [ref=e442]:
+                    - code [ref=e443]: '--allow-all-tools'
+                    - text: ','
+                    - code [ref=e444]: '--allow-all-paths'
+                    - text: ','
+                    - code [ref=e445]: '--allow-all-urls'
+                    - text: — Approve one permission category at a time.
+                    - 'link "Docs: CLI options" [ref=e446]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                    - 'link "Blog: terminal workflows" [ref=e447]':
+                        - /url: https://github.blog/ai-and-ml/github-copilot/power-agentic-workflows-in-your-terminal-with-github-copilot-cli/
+                - listitem [ref=e448]:
+                    - code [ref=e449]: '--allow-tool=TOOL'
+                    - text: ','
+                    - code [ref=e450]: '--deny-tool=TOOL'
+                    - text: — Pre-allow or pre-deny tool patterns.
+                    - 'link "Docs: CLI options" [ref=e451]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                - listitem [ref=e452]:
+                    - code [ref=e453]: '--allow-url=URL'
+                    - text: ','
+                    - code [ref=e454]: '--deny-url=URL'
+                    - text: — Control URL access.
+                    - 'link "Docs: CLI options" [ref=e455]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                - listitem [ref=e456]:
+                    - code [ref=e457]: '--available-tools=TOOL'
+                    - text: ','
+                    - code [ref=e458]: '--excluded-tools=TOOL'
+                    - text: — Reduce the tool surface available to the model.
+                    - 'link "Docs: CLI options" [ref=e459]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                - listitem [ref=e460]:
+                    - code [ref=e461]: '--disallow-temp-dir'
+                    - text: — Block automatic access to the system temp directory.
+                    - 'link "Docs: CLI options" [ref=e462]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                - listitem [ref=e463]:
+                    - code [ref=e464]: '--disable-parallel-tools-execution'
+                    - text: — Execute tools sequentially even when the model makes parallel calls.
+                    - 'link "Docs: CLI options" [ref=e465]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+            - heading "UI, output, and logging" [level=3] [ref=e466]
+            - list [ref=e467]:
+                - listitem [ref=e468]:
+                    - code [ref=e469]: '--model=MODEL'
+                    - text: — Select the model. Use
+                    - code [ref=e470]: auto
+                    - text: to let Copilot pick the best available model.
+                    - 'link "Docs: CLI options" [ref=e471]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                    - 'link "Release: v1.0.32" [ref=e472]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.32
+                - listitem [ref=e473]:
+                    - code [ref=e474]: '--banner'
+                    - text: — Show the startup banner.
+                    - 'link "Docs: CLI options" [ref=e475]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                - listitem [ref=e476]:
+                    - code [ref=e477]: '--plain-diff'
+                    - text: — Disable rich diff rendering.
+                    - 'link "Docs: CLI options" [ref=e478]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                - listitem [ref=e479]:
+                    - code [ref=e480]: '--screen-reader'
+                    - text: — Enable screen-reader optimizations.
+                    - 'link "Docs: CLI options" [ref=e481]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                - listitem [ref=e482]:
+                    - code [ref=e483]: '--stream=on|off'
+                    - text: — Turn streaming output on or off.
+                    - 'link "Docs: CLI options" [ref=e484]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                - listitem [ref=e485]:
+                    - code [ref=e486]: '--secret-env-vars=VAR'
+                    - text: — Redact extra environment variables in output.
+                    - 'link "Docs: CLI options" [ref=e487]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                - listitem [ref=e488]:
+                    - code [ref=e489]: '--config-dir=PATH'
+                    - text: — Override the config directory.
+                    - 'link "Docs: CLI options" [ref=e490]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                - listitem [ref=e491]:
+                    - code [ref=e492]: '--bash-env'
+                    - text: ','
+                    - code [ref=e493]: '--no-bash-env'
+                    - text: — Control
+                    - code [ref=e494]: BASH_ENV
+                    - text: sourcing.
+                    - 'link "Docs: CLI options" [ref=e495]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                - listitem [ref=e496]:
+                    - code [ref=e497]: '--experimental'
+                    - text: ','
+                    - code [ref=e498]: '--no-experimental'
+                    - text: — Toggle experimental features.
+                    - 'link "Docs: CLI options" [ref=e499]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                - listitem [ref=e500]:
+                    - code [ref=e501]: '--log-dir=DIRECTORY'
+                    - text: ','
+                    - code [ref=e502]: '--log-level=LEVEL'
+                    - text: — Control CLI logging.
+                    - 'link "Docs: CLI options" [ref=e503]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                - listitem [ref=e504]:
+                    - code [ref=e505]: '--no-auto-update'
+                    - text: — Disable automatic updates.
+                    - 'link "Docs: CLI options" [ref=e506]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                - listitem [ref=e507]:
+                    - code [ref=e508]: '--remote'
+                    - text: ','
+                    - code [ref=e509]: '--no-remote'
+                    - text: — Enable or disable remote access to this session from GitHub.com and GitHub Mobile.
+                    - 'link "How-to: remote steering" [ref=e510]':
+                        - /url: https://docs.github.com/en/copilot/how-tos/copilot-cli/steer-remotely
+                    - 'link "Release: v1.0.25" [ref=e511]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.25
+                - listitem [ref=e512]:
+                    - code [ref=e513]: '--connect'
+                    - text: — Directly connect to a remote session by ID.
+                    - 'link "Release: v1.0.32" [ref=e514]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.32
+                - listitem [ref=e515]:
+                    - code [ref=e516]: '--print-debug-info'
+                    - text: — Display version, terminal capabilities, and environment variables for debugging.
+                    - 'link "Release: v1.0.32" [ref=e517]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.32
+                - listitem [ref=e518]:
+                    - code [ref=e519]: '--session-idle-timeout'
+                    - text: — Configure session idle timeout; disabled by default.
+                    - 'link "Release: v1.0.32" [ref=e520]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.32
+                - listitem [ref=e521]:
+                    - code [ref=e522]: '--mouse[=VALUE]'
+                    - text: ','
+                    - code [ref=e523]: '--no-mouse'
+                    - text: — Enable or disable mouse support in alt screen mode.
+                    - 'link "Docs: CLI options" [ref=e524]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                - listitem [ref=e525]:
+                    - code [ref=e526]: '--plugin-dir=DIRECTORY'
+                    - text: — Load a plugin from a local directory (can be used multiple times).
+                    - 'link "Docs: CLI options" [ref=e527]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+            - heading "MCP and tooling flags" [level=3] [ref=e528]
+            - list [ref=e529]:
+                - listitem [ref=e530]:
+                    - code [ref=e531]: '--acp'
+                    - text: — Start an Agent Client Protocol server.
+                    - 'link "Docs: CLI options" [ref=e532]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                - listitem [ref=e533]:
+                    - code [ref=e534]: '--additional-mcp-config=JSON|@path'
+                    - text: — Add MCP servers for the current session only.
+                    - 'link "Docs: CLI options" [ref=e535]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                - listitem [ref=e536]:
+                    - code [ref=e537]: '--disable-builtin-mcps'
+                    - text: — Disable built-in MCP servers.
+                    - 'link "Docs: CLI options" [ref=e538]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                - listitem [ref=e539]:
+                    - code [ref=e540]: '--disable-mcp-server=SERVER-NAME'
+                    - text: — Disable a specific MCP server.
+                    - 'link "Docs: CLI options" [ref=e541]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                - listitem [ref=e542]:
+                    - code [ref=e543]: '--enable-all-github-mcp-tools'
+                    - text: — Enable the full GitHub MCP tool surface.
+                    - 'link "Docs: CLI options" [ref=e544]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+                - listitem [ref=e545]:
+                    - code [ref=e546]: '--add-github-mcp-toolset=TOOLSET'
+                    - text: ','
+                    - code [ref=e547]: '--add-github-mcp-tool=TOOL'
+                    - text: — Expand the GitHub MCP subset.
+                    - 'link "Docs: CLI options" [ref=e548]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+            - heading "Permission Prompts and Tool Rules" [level=2] [ref=e549]
+            - paragraph [ref=e550]:
+                - text: When Copilot CLI asks for permission, these one-key responses are available.
+                - 'link "Docs: permission approvals" [ref=e551]':
+                    - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#permission-approval-responses
+            - list [ref=e552]:
+                - listitem [ref=e553]:
+                    - code [ref=e554]: 'y'
+                    - text: — Allow once.
+                    - 'link "Docs: permission approvals" [ref=e555]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#permission-approval-responses
+                - listitem [ref=e556]:
+                    - code [ref=e557]: 'n'
+                    - text: — Deny once.
+                    - 'link "Docs: permission approvals" [ref=e558]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#permission-approval-responses
+                - listitem [ref=e559]:
+                    - code [ref=e560]: '!'
+                    - text: — Allow similar requests for the rest of the session.
+                    - 'link "Docs: permission approvals" [ref=e561]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#permission-approval-responses
+                - listitem [ref=e562]:
+                    - code [ref=e563]: '#'
+                    - text: — Deny similar requests for the rest of the session.
+                    - 'link "Docs: permission approvals" [ref=e564]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#permission-approval-responses
+                - listitem [ref=e565]:
+                    - code [ref=e566]: '?'
+                    - text: — Show more detail about the request.
+                    - 'link "Docs: permission approvals" [ref=e567]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#permission-approval-responses
+            - paragraph [ref=e568]:
+                - text: Tool rules use the
+                - code [ref=e569]: Kind(argument)
+                - text: pattern. Deny rules always override allow rules.
+                - 'link "Docs: tool rules" [ref=e570]':
+                    - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#tool-permission-patterns
+            - code [ref=e572]:
+                - generic [ref=e573]: '# Allow all git commands except git push'
+                - generic [ref=e574]: copilot --allow-tool='shell(git:*)' --deny-tool='shell(git push)'
+                - generic [ref=e575]: '# Allow one MCP tool'
+                - generic [ref=e576]: copilot --allow-tool='MyMCP(create_issue)'
+                - generic [ref=e577]: '# Allow all tools from one MCP server'
+                - generic [ref=e578]: copilot --allow-tool='MyMCP'
+            - paragraph [ref=e579]:
+                - text: Examples adapted from the command reference.
+                - 'link "Docs: tool rules" [ref=e580]':
+                    - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#tool-permission-patterns
+            - heading "Configuration Files" [level=2] [ref=e581]
+            - paragraph [ref=e582]:
+                - text: Settings cascade from broader scopes to narrower scopes. Command-line flags and environment variables always win.
+                - 'link "Docs: config settings" [ref=e583]':
+                    - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#configuration-file-settings
+            - list [ref=e584]:
+                - listitem [ref=e585]:
+                    - code [ref=e586]: ~/.copilot/config.json
+                    - text: — User-wide defaults.
+                    - 'link "Docs: config settings" [ref=e587]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#configuration-file-settings
+                - listitem [ref=e588]:
+                    - code [ref=e589]: ~/.copilot/settings.json
+                    - text: — User settings stored separately from internal state.
+                    - 'link "Release: v1.0.35" [ref=e590]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+                - listitem [ref=e591]:
+                    - code [ref=e592]: .github/copilot/settings.json
+                    - text: — Repository-wide shared settings.
+                    - 'link "Docs: config settings" [ref=e593]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#configuration-file-settings
+                - listitem [ref=e594]:
+                    - code [ref=e595]: .github/copilot/settings.local.json
+                    - text: — Local personal overrides that should not be committed.
+                    - 'link "Docs: config settings" [ref=e596]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#configuration-file-settings
+                - listitem [ref=e597]:
+                    - code [ref=e598]: .claude/settings.json
+                    - text: — Additional repository config source (loaded alongside
+                    - code [ref=e599]: .github/copilot/settings.json
+                    - text: ).
+                    - 'link "Release: v1.0.12" [ref=e600]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.12
+                - listitem [ref=e601]:
+                    - code [ref=e602]: .claude/settings.local.json
+                    - text: — Additional local config source (loaded alongside
+                    - code [ref=e603]: .github/copilot/settings.local.json
+                    - text: ).
+                    - 'link "Release: v1.0.12" [ref=e604]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.12
+            - heading "Common user settings" [level=3] [ref=e605]
+            - list [ref=e606]:
+                - listitem [ref=e607]:
+                    - code [ref=e608]: model
+                    - text: — Default model selection. Use
+                    - code [ref=e609]: auto
+                    - text: to let Copilot pick the best available model.
+                    - 'link "Docs: user settings" [ref=e610]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#user-settings-copilotconfigjson
+                    - 'link "Release: v1.0.32" [ref=e611]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.32
+                - listitem [ref=e612]:
+                    - code [ref=e613]: theme
+                    - text: —
+                    - code [ref=e614]: auto
+                    - text: ','
+                    - code [ref=e615]: dark
+                    - text: ', or'
+                    - code [ref=e616]: light
+                    - text: .
+                    - 'link "Docs: user settings" [ref=e617]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#user-settings-copilotconfigjson
+                - listitem [ref=e618]:
+                    - code [ref=e619]: effortLevel
+                    - text: —
+                    - code [ref=e620]: low
+                    - text: ','
+                    - code [ref=e621]: medium
+                    - text: ','
+                    - code [ref=e622]: high
+                    - text: ', or'
+                    - code [ref=e623]: xhigh
+                    - text: .
+                    - 'link "Docs: user settings" [ref=e624]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#user-settings-copilotconfigjson
+                - listitem [ref=e625]:
+                    - code [ref=e626]: experimental
+                    - text: — Enable experimental features by default.
+                    - 'link "Docs: user settings" [ref=e627]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#user-settings-copilotconfigjson
+                - listitem [ref=e628]:
+                    - code [ref=e629]: trusted_folders
+                    - text: — Pre-granted file access.
+                    - 'link "Docs: user settings" [ref=e630]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#user-settings-copilotconfigjson
+                - listitem [ref=e631]:
+                    - code [ref=e632]: allowed_urls
+                    - text: ','
+                    - code [ref=e633]: denied_urls
+                    - text: — URL allowlists and blocklists.
+                    - 'link "Docs: user settings" [ref=e634]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#user-settings-copilotconfigjson
+                - listitem [ref=e635]:
+                    - code [ref=e636]: screenReader
+                    - text: — Screen-reader mode.
+                    - 'link "Docs: user settings" [ref=e637]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#user-settings-copilotconfigjson
+                - listitem [ref=e638]:
+                    - code [ref=e639]: stream
+                    - text: — Streaming responses.
+                    - 'link "Docs: user settings" [ref=e640]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#user-settings-copilotconfigjson
+                - listitem [ref=e641]:
+                    - code [ref=e642]: autoUpdate
+                    - text: — Automatic updates.
+                    - 'link "Docs: user settings" [ref=e643]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#user-settings-copilotconfigjson
+                - listitem [ref=e644]:
+                    - code [ref=e645]: bashEnv
+                    - text: —
+                    - code [ref=e646]: BASH_ENV
+                    - text: support.
+                    - 'link "Docs: user settings" [ref=e647]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#user-settings-copilotconfigjson
+                - listitem [ref=e648]:
+                    - code [ref=e649]: banner
+                    - text: '— Startup banner frequency:'
+                    - code [ref=e650]: always
+                    - text: ','
+                    - code [ref=e651]: once
+                    - text: ', or'
+                    - code [ref=e652]: never
+                    - text: .
+                    - 'link "Docs: user settings" [ref=e653]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#user-settings-copilotconfigjson
+                - listitem [ref=e654]:
+                    - code [ref=e655]: beep
+                    - text: — Play an audible beep when attention is required.
+                    - 'link "Docs: user settings" [ref=e656]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#user-settings-copilotconfigjson
+                - listitem [ref=e657]:
+                    - code [ref=e658]: compactPaste
+                    - text: — Collapse large pastes into compact tokens.
+                    - 'link "Docs: user settings" [ref=e659]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#user-settings-copilotconfigjson
+                - listitem [ref=e660]:
+                    - code [ref=e661]: includeCoAuthoredBy
+                    - text: — Add a
+                    - code [ref=e662]: Co-authored-by
+                    - text: trailer to git commits made by the agent.
+                    - 'link "Docs: user settings" [ref=e663]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#user-settings-copilotconfigjson
+                - listitem [ref=e664]:
+                    - code [ref=e665]: logLevel
+                    - text: — Logging verbosity (
+                    - code [ref=e666]: none
+                    - text: ','
+                    - code [ref=e667]: error
+                    - text: ','
+                    - code [ref=e668]: warning
+                    - text: ','
+                    - code [ref=e669]: info
+                    - text: ','
+                    - code [ref=e670]: debug
+                    - text: ','
+                    - code [ref=e671]: all
+                    - text: ','
+                    - code [ref=e672]: default
+                    - text: ).
+                    - 'link "Docs: user settings" [ref=e673]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#user-settings-copilotconfigjson
+                - listitem [ref=e674]:
+                    - code [ref=e675]: mouse
+                    - text: — Enable mouse support in alt screen mode.
+                    - 'link "Docs: user settings" [ref=e676]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#user-settings-copilotconfigjson
+                - listitem [ref=e677]:
+                    - code [ref=e678]: renderMarkdown
+                    - text: — Render Markdown in terminal output.
+                    - 'link "Docs: user settings" [ref=e679]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#user-settings-copilotconfigjson
+                - listitem [ref=e680]:
+                    - code [ref=e681]: respectGitignore
+                    - text: — Exclude gitignored files from the
+                    - code [ref=e682]: '@'
+                    - text: file picker.
+                    - 'link "Docs: user settings" [ref=e683]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#user-settings-copilotconfigjson
+                - listitem [ref=e684]:
+                    - code [ref=e685]: disableAllHooks
+                    - text: — Disable all hooks.
+                    - 'link "Docs: user settings" [ref=e686]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#user-settings-copilotconfigjson
+                - listitem [ref=e687]:
+                    - code [ref=e688]: hooks
+                    - text: — Inline user-level hook definitions.
+                    - 'link "Docs: user settings" [ref=e689]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#user-settings-copilotconfigjson
+                - listitem [ref=e690]:
+                    - code [ref=e691]: updateTerminalTitle
+                    - text: — Show the current intent in the terminal title.
+                    - 'link "Docs: user settings" [ref=e692]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#user-settings-copilotconfigjson
+                - listitem [ref=e693]:
+                    - code [ref=e694]: streamerMode
+                    - text: — Hide preview model names and quota details.
+                    - 'link "Docs: user settings" [ref=e695]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#user-settings-copilotconfigjson
+                - listitem [ref=e696]:
+                    - code [ref=e697]: storeTokenPlaintext
+                    - text: — Store authentication tokens in plaintext when no system keychain is available.
+                    - 'link "Docs: user settings" [ref=e698]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#user-settings-copilotconfigjson
+                - listitem [ref=e699]:
+                    - code [ref=e700]: companyAnnouncements
+                    - text: — Custom messages shown randomly on startup.
+                    - 'link "Docs: user settings" [ref=e701]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#user-settings-copilotconfigjson
+                - listitem [ref=e702]:
+                    - code [ref=e703]: custom_agents.default_local_only
+                    - text: — Only use local custom agents.
+                    - 'link "Docs: user settings" [ref=e704]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#user-settings-copilotconfigjson
+                - listitem [ref=e705]:
+                    - code [ref=e706]: continueOnAutoMode
+                    - text: — Automatically switch to the
+                    - code [ref=e707]: auto
+                    - text: model when rate-limited.
+                    - 'link "Release: v1.0.35" [ref=e708]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+                - listitem [ref=e709]:
+                    - code [ref=e710]: enabledFeatureFlags
+                    - text: — Enable or disable individual feature flags by name.
+                    - 'link "Docs: user settings" [ref=e711]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#user-settings-copilotconfigjson
+            - heading "Repository-level settings" [level=3] [ref=e712]
+            - paragraph [ref=e713]:
+                - text: Repository settings support shared plugin behavior and startup messaging.
+                - 'link "Docs: repo settings" [ref=e714]':
+                    - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#repository-settings-githubcopilotsettingsjson
+            - list [ref=e715]:
+                - listitem [ref=e716]:
+                    - code [ref=e717]: enabledPlugins
+                    - text: — Declarative plugin auto-install for the repository.
+                    - 'link "Docs: repo settings" [ref=e718]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#repository-settings-githubcopilotsettingsjson
+                - listitem [ref=e719]:
+                    - code [ref=e720]: extraKnownMarketplaces
+                    - text: — Additional plugin marketplaces available in the repository.
+                    - 'link "Docs: repo settings" [ref=e721]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#repository-settings-githubcopilotsettingsjson
+                - listitem [ref=e722]:
+                    - code [ref=e723]: companyAnnouncements
+                    - text: — Shared startup messages for repository users.
+                    - 'link "Docs: repo settings" [ref=e724]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#repository-settings-githubcopilotsettingsjson
+            - heading "Hooks" [level=2] [ref=e725]
+            - paragraph [ref=e726]:
+                - text: Hook configuration files live in
+                - code [ref=e727]: .github/hooks/*.json
+                - text: in the current working directory. User-level hook scripts can also live in
+                - code [ref=e728]: ~/.copilot/hooks/
+                - text: ', and'
+                - code [ref=e729]: ~/.copilot/config.json
+                - text: supports inline user-level hook definitions.
+                - 'link "Docs: hooks reference" [ref=e730]':
+                    - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#hooks-reference
+                - 'link "How-to: hooks" [ref=e731]':
+                    - /url: https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/use-hooks
+                - 'link "Docs: config dir" [ref=e732]':
+                    - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-config-dir-reference
+            - heading "What hooks can do" [level=3] [ref=e733]
+            - list [ref=e734]:
+                - listitem [ref=e735]:
+                    - text: Run shell commands before or after tool use.
+                    - 'link "Docs: hooks reference" [ref=e736]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#hooks-reference
+                - listitem [ref=e737]:
+                    - text: Auto-submit a prompt or slash command when a session starts.
+                    - 'link "Docs: prompt hooks" [ref=e738]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#prompt-hooks
+                - listitem [ref=e739]:
+                    - text: Allow, deny, ask for confirmation, or modify tool calls before they execute.
+                    - 'link "Docs: pre-tool hooks" [ref=e740]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#pretooluse-decision-control
+                - listitem [ref=e741]:
+                    - text: Block an agent or subagent from finishing and force another turn.
+                    - 'link "Docs: agent-stop hooks" [ref=e742]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#agentstop--subagentstop-decision-control
+                - listitem [ref=e743]:
+                    - text: POST JSON payloads to a URL instead of running a command (HTTP hooks).
+                    - 'link "Release: v1.0.35" [ref=e744]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+            - heading "Main hook events" [level=3] [ref=e745]
+            - list [ref=e746]:
+                - listitem [ref=e747]:
+                    - code [ref=e748]: sessionStart
+                    - text: ','
+                    - code [ref=e749]: sessionEnd
+                    - text: — Fire once per session in interactive mode (not once per prompt).
+                    - 'link "Docs: hook events" [ref=e750]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#hook-events
+                    - 'link "Release: v1.0.22" [ref=e751]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.22
+                - listitem [ref=e752]:
+                    - code [ref=e753]: userPromptSubmitted
+                    - 'link "Docs: hook events" [ref=e754]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#hook-events
+                - listitem [ref=e755]:
+                    - code [ref=e756]: preToolUse
+                    - text: ','
+                    - code [ref=e757]: postToolUse
+                    - text: ','
+                    - code [ref=e758]: postToolUseFailure
+                    - text: —
+                    - code [ref=e759]: preToolUse
+                    - text: respects
+                    - code [ref=e760]: modifiedArgs
+                    - text: /
+                    - code [ref=e761]: updatedInput
+                    - text: and
+                    - code [ref=e762]: additionalContext
+                    - text: .
+                    - code [ref=e763]: postToolUseFailure
+                    - text: can provide recovery guidance via
+                    - code [ref=e764]: additionalContext
+                    - text: .
+                    - 'link "Docs: hook events" [ref=e765]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#hook-events
+                    - 'link "Release: v1.0.15" [ref=e766]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.15
+                    - 'link "Release: v1.0.24" [ref=e767]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.24
+                - listitem [ref=e768]:
+                    - code [ref=e769]: agentStop
+                    - text: ','
+                    - code [ref=e770]: subagentStart
+                    - text: ','
+                    - code [ref=e771]: subagentStop
+                    - text: —
+                    - code [ref=e772]: subagentStart
+                    - text: returns
+                    - code [ref=e773]: additionalContext
+                    - text: prepended to the subagent’s prompt and supports
+                    - code [ref=e774]: matcher
+                    - text: to filter by agent name.
+                    - 'link "Docs: hook events" [ref=e775]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#hook-events
+                - listitem [ref=e776]:
+                    - code [ref=e777]: preCompact
+                    - text: — Supports
+                    - code [ref=e778]: matcher
+                    - text: to filter by trigger (
+                    - code [ref=e779]: '"manual"'
+                    - text: or
+                    - code [ref=e780]: '"auto"'
+                    - text: ).
+                    - 'link "Docs: hook events" [ref=e781]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#hook-events
+                - listitem [ref=e782]:
+                    - code [ref=e783]: permissionRequest
+                    - text: — Allow scripts to programmatically approve or deny tool permission requests. Supports
+                    - code [ref=e784]: matcher
+                    - text: regex on
+                    - code [ref=e785]: toolName
+                    - text: .
+                    - 'link "Docs: hook events" [ref=e786]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#hook-events
+                    - 'link "Docs: permission hook" [ref=e787]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#permissionrequest-decision-control
+                - listitem [ref=e788]:
+                    - code [ref=e789]: notification
+                    - text: — React to shell completion, agent completion or idle, permission prompts, and elicitation dialogs without blocking the session. Supports
+                    - code [ref=e790]: matcher
+                    - text: regex on
+                    - code [ref=e791]: notification_type
+                    - text: .
+                    - 'link "Docs: notification hook" [ref=e792]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#notification-hook
+                - listitem [ref=e793]:
+                    - code [ref=e794]: errorOccurred
+                    - 'link "Docs: hook events" [ref=e795]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#hook-events
+            - heading "Hook formats" [level=3] [ref=e796]
+            - list [ref=e797]:
+                - listitem [ref=e798]:
+                    - text: Command hooks support
+                    - code [ref=e799]: bash
+                    - text: ','
+                    - code [ref=e800]: powershell
+                    - text: ','
+                    - code [ref=e801]: cwd
+                    - text: ','
+                    - code [ref=e802]: env
+                    - text: ', and'
+                    - code [ref=e803]: timeoutSec
+                    - text: .
+                    - 'link "Docs: command hooks" [ref=e804]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-hooks
+                - listitem [ref=e805]:
+                    - text: Prompt hooks support a
+                    - code [ref=e806]: prompt
+                    - text: string and can submit either plain text or a slash command.
+                    - 'link "Docs: prompt hooks" [ref=e807]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#prompt-hooks
+                - listitem [ref=e808]:
+                    - code [ref=e809]: preToolUse
+                    - text: can return
+                    - code [ref=e810]: allow
+                    - text: ','
+                    - code [ref=e811]: deny
+                    - text: ', or'
+                    - code [ref=e812]: ask
+                    - text: ', and can also replace tool arguments with'
+                    - code [ref=e813]: modifiedArgs
+                    - text: .
+                    - 'link "Docs: pre-tool hooks" [ref=e814]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#pretooluse-decision-control
+                - listitem [ref=e815]:
+                    - code [ref=e816]: agentStop
+                    - text: and
+                    - code [ref=e817]: subagentStop
+                    - text: can return
+                    - code [ref=e818]: allow
+                    - text: or
+                    - code [ref=e819]: block
+                    - text: .
+                    - 'link "Docs: agent-stop hooks" [ref=e820]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#agentstop--subagentstop-decision-control
+            - heading "Useful recent hook updates" [level=3] [ref=e821]
+            - list [ref=e822]:
+                - listitem [ref=e823]:
+                    - code [ref=e824]: preCompact
+                    - text: hooks can run before context compaction starts.
+                    - 'link "Release: v1.0.5" [ref=e825]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.5
+                - listitem [ref=e826]:
+                    - text: Hooks can ask for confirmation before a tool runs.
+                    - 'link "Docs: pre-tool hooks" [ref=e827]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#pretooluse-decision-control
+                - listitem [ref=e828]:
+                    - text: Hooks configured with PascalCase event names now receive VS Code-compatible snake_case payloads with
+                    - code [ref=e829]: hook_event_name
+                    - text: ','
+                    - code [ref=e830]: session_id
+                    - text: ', and ISO 8601 timestamps.'
+                    - 'link "Release: v1.0.21" [ref=e831]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.21
+                - listitem [ref=e832]:
+                    - text: Plugin hooks receive
+                    - code [ref=e833]: CLAUDE_PROJECT_DIR
+                    - text: and
+                    - code [ref=e834]: CLAUDE_PLUGIN_DATA
+                    - text: environment variables, and support
+                    - code [ref=e835]: '{{project_dir}}'
+                    - text: and
+                    - code [ref=e836]: '{{plugin_data_dir}}'
+                    - text: template variables in hook configurations.
+                    - 'link "Release: v1.0.12" [ref=e837]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.12
+                - listitem [ref=e838]:
+                    - text: Plugin hooks also receive
+                    - code [ref=e839]: PLUGIN_ROOT
+                    - text: ','
+                    - code [ref=e840]: COPILOT_PLUGIN_ROOT
+                    - text: ', and'
+                    - code [ref=e841]: CLAUDE_PLUGIN_ROOT
+                    - text: with the plugin’s installation directory.
+                    - 'link "Release: v1.0.26" [ref=e842]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.26
+                - listitem [ref=e843]:
+                    - code [ref=e844]: sessionStart
+                    - text: and
+                    - code [ref=e845]: sessionEnd
+                    - text: hooks fire once per session in interactive mode instead of once per prompt.
+                    - 'link "Release: v1.0.22" [ref=e846]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.22
+                - listitem [ref=e847]:
+                    - code [ref=e848]: preToolUse
+                    - text: respects
+                    - code [ref=e849]: modifiedArgs
+                    - text: /
+                    - code [ref=e850]: updatedInput
+                    - text: and
+                    - code [ref=e851]: additionalContext
+                    - text: return fields.
+                    - 'link "Release: v1.0.24" [ref=e852]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.24
+                - listitem [ref=e853]:
+                    - text: Permission prompt notification hooks only fire when a prompt is actually shown to the user.
+                    - 'link "Release: v1.0.26" [ref=e854]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.26
+                - listitem [ref=e855]:
+                    - text: Installing plugins from repos, URLs, or local paths shows a deprecation warning.
+                    - 'link "Release: v1.0.26" [ref=e856]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.26
+            - heading "MCP Servers" [level=2] [ref=e857]
+            - paragraph [ref=e858]:
+                - text: Copilot CLI can load MCP servers from several places.
+                - 'link "Docs: MCP config" [ref=e859]':
+                    - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#mcp-server-configuration
+            - heading "Configuration sources" [level=3] [ref=e860]
+            - list [ref=e861]:
+                - listitem [ref=e862]:
+                    - code [ref=e863]: ~/.copilot/mcp-config.json
+                    - 'link "Docs: MCP config" [ref=e864]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#mcp-server-configuration
+                - listitem [ref=e865]:
+                    - code [ref=e866]: .github/mcp.json
+                    - 'link "Docs: MCP trust" [ref=e867]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#mcp-server-trust-levels
+                - listitem [ref=e868]:
+                    - code [ref=e869]: .mcp.json
+                    - 'link "Docs: MCP trust" [ref=e870]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#mcp-server-trust-levels
+            - paragraph [ref=e871]:
+                - text: CLI only reads
+                - code [ref=e872]: .mcp.json
+                - text: for project-level MCP config. If a
+                - code [ref=e873]: .vscode/mcp.json
+                - text: is detected without a
+                - code [ref=e874]: .mcp.json
+                - text: ', a migration hint appears with a'
+                - code [ref=e875]: jq
+                - text: command to convert.
+                - 'link "Release: v1.0.22" [ref=e876]':
+                    - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.22
+            - heading "Built-in MCP servers" [level=3] [ref=e877]
+            - list [ref=e878]:
+                - listitem [ref=e879]:
+                    - code [ref=e880]: github-mcp-server
+                    - text: — GitHub API actions such as issues, pull requests, commits, code search, and GitHub Actions.
+                    - 'link "Docs: built-in MCP" [ref=e881]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#built-in-mcp-servers
+                - listitem [ref=e882]:
+                    - code [ref=e883]: playwright
+                    - text: — Browser automation.
+                    - 'link "Docs: built-in MCP" [ref=e884]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#built-in-mcp-servers
+                - listitem [ref=e885]:
+                    - code [ref=e886]: fetch
+                    - text: — HTTP requests.
+                    - 'link "Docs: built-in MCP" [ref=e887]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#built-in-mcp-servers
+                - listitem [ref=e888]:
+                    - code [ref=e889]: time
+                    - text: — Time utilities.
+                    - 'link "Docs: built-in MCP" [ref=e890]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#built-in-mcp-servers
+            - heading "Transport types" [level=3] [ref=e891]
+            - list [ref=e892]:
+                - listitem [ref=e893]:
+                    - code [ref=e894]: local
+                    - text: /
+                    - code [ref=e895]: stdio
+                    - text: — Launch a local process with
+                    - code [ref=e896]: command
+                    - text: and
+                    - code [ref=e897]: args
+                    - text: .
+                    - 'link "Docs: MCP transport" [ref=e898]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#transport-types
+                - listitem [ref=e899]:
+                    - code [ref=e900]: http
+                    - text: — Connect to a remote streamable HTTP server via
+                    - code [ref=e901]: url
+                    - text: .
+                    - 'link "Docs: MCP transport" [ref=e902]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#transport-types
+                - listitem [ref=e903]:
+                    - code [ref=e904]: sse
+                    - text: — Connect to a remote Server-Sent Events server via
+                    - code [ref=e905]: url
+                    - text: .
+                    - 'link "Docs: MCP transport" [ref=e906]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#transport-types
+            - heading "Common fields" [level=3] [ref=e907]
+            - list [ref=e908]:
+                - listitem [ref=e909]:
+                    - text: 'Local servers:'
+                    - code [ref=e910]: command
+                    - text: ','
+                    - code [ref=e911]: args
+                    - text: ','
+                    - code [ref=e912]: tools
+                    - text: ','
+                    - code [ref=e913]: env
+                    - text: ','
+                    - code [ref=e914]: cwd
+                    - text: ','
+                    - code [ref=e915]: timeout
+                    - text: ','
+                    - code [ref=e916]: type
+                    - text: .
+                    - 'link "Docs: MCP local config" [ref=e917]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#local-server-configuration-fields
+                - listitem [ref=e918]:
+                    - text: 'Remote servers:'
+                    - code [ref=e919]: type
+                    - text: ','
+                    - code [ref=e920]: url
+                    - text: ','
+                    - code [ref=e921]: tools
+                    - text: ','
+                    - code [ref=e922]: headers
+                    - text: ','
+                    - code [ref=e923]: oauthClientId
+                    - text: ','
+                    - code [ref=e924]: oauthPublicClient
+                    - text: ','
+                    - code [ref=e925]: timeout
+                    - text: . The
+                    - code [ref=e926]: type
+                    - text: field can be omitted and defaults to
+                    - code [ref=e927]: http
+                    - text: .
+                    - 'link "Docs: MCP remote config" [ref=e928]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#remote-server-configuration-fields
+                    - 'link "Release: v1.0.29" [ref=e929]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.29
+                - listitem [ref=e930]:
+                    - code [ref=e931]: filterMapping
+                    - text: 'controls output filtering:'
+                    - code [ref=e932]: hidden_characters
+                    - text: (default),
+                    - code [ref=e933]: markdown
+                    - text: ', or'
+                    - code [ref=e934]: none
+                    - text: .
+                    - 'link "Docs: MCP filter" [ref=e935]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#filter-mapping
+            - heading "MCP server registry" [level=3] [ref=e936]
+            - paragraph [ref=e937]:
+                - text: MCP servers can be installed from the registry with guided configuration directly in the CLI.
+                - 'link "Release: v1.0.25" [ref=e938]':
+                    - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.25
+            - heading "Trust model" [level=3] [ref=e939]
+            - list [ref=e940]:
+                - listitem [ref=e941]:
+                    - text: Built-in servers are high trust.
+                    - 'link "Docs: MCP trust" [ref=e942]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#mcp-server-trust-levels
+                - listitem [ref=e943]:
+                    - text: Repository, workspace, and dev-container configs are medium trust.
+                    - 'link "Docs: MCP trust" [ref=e944]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#mcp-server-trust-levels
+                - listitem [ref=e945]:
+                    - text: User config trust is your responsibility.
+                    - 'link "Docs: MCP trust" [ref=e946]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#mcp-server-trust-levels
+                - listitem [ref=e947]:
+                    - text: Remote servers are low trust and should always be reviewed.
+                    - 'link "Docs: MCP trust" [ref=e948]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#mcp-server-trust-levels
+            - paragraph [ref=e949]:
+                - text: All MCP tool calls still require explicit permission, including read-only calls against external services.
+                - 'link "Docs: MCP trust" [ref=e950]':
+                    - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#mcp-server-trust-levels
+            - heading "Skills and Custom Agents" [level=2] [ref=e951]
+            - heading "Skills" [level=3] [ref=e952]
+            - paragraph [ref=e953]:
+                - text: Skills are Markdown files that extend what Copilot CLI can do. Each skill lives in its own directory with a
+                - code [ref=e954]: SKILL.md
+                - text: file.
+                - 'link "Docs: skills" [ref=e955]':
+                    - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#skills-reference
+            - paragraph [ref=e956]:
+                - strong [ref=e957]: Built-in skills
+                - text: are now included with the CLI, starting with guides for common tasks.
+                - 'link "Release: v1.0.17" [ref=e958]':
+                    - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.17
+            - paragraph [ref=e959]: 'Common skill locations:'
+            - list [ref=e960]:
+                - listitem [ref=e961]:
+                    - code [ref=e962]: .github/skills/
+                    - 'link "Docs: skill locations" [ref=e963]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#skill-locations
+                - listitem [ref=e964]:
+                    - code [ref=e965]: .agents/skills/
+                    - 'link "Docs: skill locations" [ref=e966]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#skill-locations
+                - listitem [ref=e967]:
+                    - code [ref=e968]: .claude/skills/
+                    - 'link "Docs: skill locations" [ref=e969]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#skill-locations
+                - listitem [ref=e970]:
+                    - text: Parent
+                    - code [ref=e971]: .github/skills/
+                    - text: directories in monorepos
+                    - 'link "Docs: skill locations" [ref=e972]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#skill-locations
+                - listitem [ref=e973]:
+                    - code [ref=e974]: ~/.copilot/skills/
+                    - 'link "Docs: skill locations" [ref=e975]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#skill-locations
+                - listitem [ref=e976]:
+                    - code [ref=e977]: ~/.agents/skills/
+                    - text: — Personal skill directory, aligned with VS Code Copilot extension default.
+                    - 'link "Release: v1.0.11" [ref=e978]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.11
+                - listitem [ref=e979]:
+                    - code [ref=e980]: ~/.claude/skills/
+                    - 'link "Docs: skill locations" [ref=e981]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#skill-locations
+                - listitem [ref=e982]:
+                    - text: Extra directories from
+                    - code [ref=e983]: COPILOT_SKILLS_DIRS
+                    - 'link "Docs: skill locations" [ref=e984]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#skill-locations
+            - paragraph [ref=e985]: 'Useful frontmatter fields:'
+            - list [ref=e986]:
+                - listitem [ref=e987]:
+                    - code [ref=e988]: name
+                    - 'link "Docs: skill frontmatter" [ref=e989]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#skill-frontmatter-fields
+                - listitem [ref=e990]:
+                    - code [ref=e991]: description
+                    - 'link "Docs: skill frontmatter" [ref=e992]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#skill-frontmatter-fields
+                - listitem [ref=e993]:
+                    - code [ref=e994]: allowed-tools
+                    - 'link "Docs: skill frontmatter" [ref=e995]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#skill-frontmatter-fields
+                - listitem [ref=e996]:
+                    - code [ref=e997]: user-invocable
+                    - 'link "Docs: skill frontmatter" [ref=e998]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#skill-frontmatter-fields
+                - listitem [ref=e999]:
+                    - code [ref=e1000]: disable-model-invocation
+                    - 'link "Docs: skill frontmatter" [ref=e1001]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#skill-frontmatter-fields
+            - paragraph [ref=e1002]:
+                - text: Skill instructions persist correctly across conversation turns.
+                - 'link "Release: v1.0.25" [ref=e1003]':
+                    - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.25
+            - paragraph [ref=e1004]:
+                - text: Custom instructions and skills refresh from disk after
+                - code [ref=e1005]: /clear
+                - text: or
+                - code [ref=e1006]: /new
+                - text: .
+                - 'link "Release: v1.0.28" [ref=e1007]':
+                    - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.28
+            - paragraph [ref=e1008]:
+                - text: Skills that exceed the token limit are still discoverable and invocable by name.
+                - 'link "Release: v1.0.32" [ref=e1009]':
+                    - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.32
+            - heading "Custom agents" [level=3] [ref=e1010]
+            - paragraph [ref=e1011]:
+                - text: Custom agents are specialized AI agents defined in Markdown files. You can browse them with
+                - code [ref=e1012]: /agent
+                - text: or select one up front with
+                - code [ref=e1013]: '--agent=AGENT'
+                - text: .
+                - 'link "Docs: custom agents" [ref=e1014]':
+                    - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#custom-agents-reference
+                - 'link "Docs: slash commands" [ref=e1015]':
+                    - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                - 'link "Docs: CLI options" [ref=e1016]':
+                    - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
+            - paragraph [ref=e1017]: 'Built-in agents currently include:'
+            - list [ref=e1018]:
+                - listitem [ref=e1019]:
+                    - code [ref=e1020]: code-review
+                    - 'link "Docs: built-in agents" [ref=e1021]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#built-in-agents
+                - listitem [ref=e1022]:
+                    - code [ref=e1023]: explore
+                    - 'link "Docs: built-in agents" [ref=e1024]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#built-in-agents
+                - listitem [ref=e1025]:
+                    - code [ref=e1026]: general-purpose
+                    - 'link "Docs: built-in agents" [ref=e1027]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#built-in-agents
+                - listitem [ref=e1028]:
+                    - code [ref=e1029]: research
+                    - 'link "Docs: built-in agents" [ref=e1030]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#built-in-agents
+                - listitem [ref=e1031]:
+                    - code [ref=e1032]: task
+                    - 'link "Docs: built-in agents" [ref=e1033]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#built-in-agents
+            - paragraph [ref=e1034]: 'Custom agent locations:'
+            - list [ref=e1035]:
+                - listitem [ref=e1036]:
+                    - code [ref=e1037]: .github/agents/
+                    - text: or
+                    - code [ref=e1038]: .claude/agents/
+                    - 'link "Docs: agent locations" [ref=e1039]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#custom-agent-locations
+                - listitem [ref=e1040]:
+                    - code [ref=e1041]: ~/.copilot/agents/
+                    - text: or
+                    - code [ref=e1042]: ~/.claude/agents/
+                    - 'link "Docs: agent locations" [ref=e1043]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#custom-agent-locations
+                - listitem [ref=e1044]:
+                    - text: Plugin-provided agents
+                    - 'link "Docs: agent locations" [ref=e1045]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#custom-agent-locations
+            - paragraph [ref=e1046]: 'Useful frontmatter fields:'
+            - list [ref=e1047]:
+                - listitem [ref=e1048]:
+                    - code [ref=e1049]: description
+                    - 'link "Docs: agent frontmatter" [ref=e1050]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#custom-agent-frontmatter-fields
+                - listitem [ref=e1051]:
+                    - code [ref=e1052]: infer
+                    - 'link "Docs: agent frontmatter" [ref=e1053]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#custom-agent-frontmatter-fields
+                - listitem [ref=e1054]:
+                    - code [ref=e1055]: model
+                    - text: — Accepts display names and vendor suffixes from VS Code (e.g. “Claude Sonnet 4.5”, “GPT-5.4 (copilot)”).
+                    - 'link "Docs: agent frontmatter" [ref=e1056]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#custom-agent-frontmatter-fields
+                    - 'link "Release: v1.0.24" [ref=e1057]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.24
+                - listitem [ref=e1058]:
+                    - code [ref=e1059]: tools
+                    - 'link "Docs: agent frontmatter" [ref=e1060]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#custom-agent-frontmatter-fields
+                - listitem [ref=e1061]:
+                    - code [ref=e1062]: mcp-servers
+                    - 'link "Docs: agent frontmatter" [ref=e1063]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#custom-agent-frontmatter-fields
+                - listitem [ref=e1064]:
+                    - code [ref=e1065]: skills
+                    - text: — Eagerly load skill content into agent context at startup.
+                    - 'link "Docs: agent frontmatter" [ref=e1066]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#custom-agent-frontmatter-fields
+                    - 'link "Release: v1.0.22" [ref=e1067]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.22
+            - heading "Environment Variables" [level=2] [ref=e1068]
+            - paragraph [ref=e1069]: 'Useful environment variables include:'
+            - list [ref=e1070]:
+                - listitem [ref=e1071]:
+                    - code [ref=e1072]: COPILOT_MODEL
+                    - text: — Default model.
+                    - 'link "Docs: env vars" [ref=e1073]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#environment-variables
+                - listitem [ref=e1074]:
+                    - code [ref=e1075]: COPILOT_ALLOW_ALL
+                    - text: — Equivalent to
+                    - code [ref=e1076]: '--allow-all'
+                    - text: .
+                    - 'link "Docs: env vars" [ref=e1077]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#environment-variables
+                - listitem [ref=e1078]:
+                    - code [ref=e1079]: COPILOT_HOME
+                    - text: — Override the default Copilot home directory.
+                    - 'link "Docs: env vars" [ref=e1080]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#environment-variables
+                - listitem [ref=e1081]:
+                    - code [ref=e1082]: COPILOT_CACHE_HOME
+                    - text: — Override the cache directory separately from
+                    - code [ref=e1083]: COPILOT_HOME
+                    - text: .
+                    - 'link "Docs: env vars" [ref=e1084]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#environment-variables
+                    - 'link "Docs: config dir" [ref=e1085]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-config-dir-reference
+                - listitem [ref=e1086]:
+                    - code [ref=e1087]: COPILOT_EDITOR
+                    - text: — External editor command.
+                    - 'link "Docs: env vars" [ref=e1088]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#environment-variables
+                - listitem [ref=e1089]:
+                    - code [ref=e1090]: COPILOT_CUSTOM_INSTRUCTIONS_DIRS
+                    - text: — Extra instruction directories.
+                    - 'link "Docs: env vars" [ref=e1091]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#environment-variables
+                - listitem [ref=e1092]:
+                    - code [ref=e1093]: COPILOT_SKILLS_DIRS
+                    - text: — Extra skill directories.
+                    - 'link "Docs: env vars" [ref=e1094]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#environment-variables
+                - listitem [ref=e1095]:
+                    - code [ref=e1096]: COPILOT_GITHUB_TOKEN
+                    - text: ','
+                    - code [ref=e1097]: GH_TOKEN
+                    - text: ','
+                    - code [ref=e1098]: GITHUB_TOKEN
+                    - text: — Authentication tokens.
+                    - 'link "Docs: env vars" [ref=e1099]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#environment-variables
+                - listitem [ref=e1100]:
+                    - code [ref=e1101]: COPILOT_GH_HOST
+                    - text: — GitHub hostname. Takes precedence over
+                    - code [ref=e1102]: GH_HOST
+                    - text: .
+                    - 'link "Release: v1.0.35" [ref=e1103]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+                - listitem [ref=e1104]:
+                    - code [ref=e1105]: GH_HOST
+                    - text: — Alternate GitHub host.
+                    - 'link "Release: v1.0.3" [ref=e1106]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.3
+                - listitem [ref=e1107]:
+                    - code [ref=e1108]: COPILOT_DISABLE_TERMINAL_TITLE
+                    - text: — Opt out of terminal title updates.
+                    - 'link "Release: v1.0.28" [ref=e1109]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.28
+                - listitem [ref=e1110]:
+                    - code [ref=e1111]: COPILOT_AGENT_SESSION_ID
+                    - text: — Set as an environment variable on shell commands and MCP servers.
+                    - 'link "Release: v1.0.29" [ref=e1112]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.29
+                - listitem [ref=e1113]:
+                    - code [ref=e1114]: COPILOT_SUBAGENT_MAX_DEPTH
+                    - text: — Maximum subagent nesting depth (default
+                    - code [ref=e1115]: '6'
+                    - text: ', range 1–256).'
+                    - 'link "Docs: env vars" [ref=e1116]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#environment-variables
+                - listitem [ref=e1117]:
+                    - code [ref=e1118]: COPILOT_SUBAGENT_MAX_CONCURRENT
+                    - text: — Maximum concurrent subagents (default
+                    - code [ref=e1119]: '32'
+                    - text: ', range 1–256).'
+                    - 'link "Docs: env vars" [ref=e1120]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#environment-variables
+                - listitem [ref=e1121]:
+                    - code [ref=e1122]: COPILOT_CLI_ENABLED_FEATURE_FLAGS
+                    - text: — Comma-separated list of feature flags to enable.
+                    - 'link "Docs: env vars" [ref=e1123]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#environment-variables
+                - listitem [ref=e1124]:
+                    - code [ref=e1125]: COLORFGBG
+                    - text: — Fallback for dark/light terminal background detection.
+                    - 'link "Docs: env vars" [ref=e1126]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#environment-variables
+                - listitem [ref=e1127]:
+                    - code [ref=e1128]: HTTP_PROXY
+                    - text: ','
+                    - code [ref=e1129]: HTTPS_PROXY
+                    - text: ','
+                    - code [ref=e1130]: NO_PROXY
+                    - text: — Network proxy settings.
+                    - 'link "Release: v1.0.3" [ref=e1131]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.3
+                - listitem [ref=e1132]:
+                    - code [ref=e1133]: NO_COLOR
+                    - text: — Disable terminal color.
+                    - 'link "Release: v1.0.3" [ref=e1134]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.3
+                - listitem [ref=e1135]:
+                    - code [ref=e1136]: USE_BUILTIN_RIPGREP
+                    - text: — Switch between bundled and system ripgrep.
+                    - 'link "Docs: env vars" [ref=e1137]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#environment-variables
+                - listitem [ref=e1138]:
+                    - code [ref=e1139]: PLAIN_DIFF
+                    - text: — Disable rich diff rendering.
+                    - 'link "Docs: env vars" [ref=e1140]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#environment-variables
+            - heading "Observability" [level=2] [ref=e1141]
+            - paragraph [ref=e1142]:
+                - text: Copilot CLI can export traces and metrics with OpenTelemetry.
+                - 'link "Docs: OTel" [ref=e1143]':
+                    - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#opentelemetry-monitoring
+            - list [ref=e1144]:
+                - listitem [ref=e1145]:
+                    - code [ref=e1146]: copilot help monitoring
+                    - text: — Open monitoring help with OpenTelemetry configuration details and examples.
+                    - 'link "Release: v1.0.20" [ref=e1147]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.20
+                - listitem [ref=e1148]:
+                    - text: OTel is off by default.
+                    - 'link "Docs: OTel" [ref=e1149]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#opentelemetry-monitoring
+                - listitem [ref=e1150]:
+                    - text: It turns on when
+                    - code [ref=e1151]: COPILOT_OTEL_ENABLED=true
+                    - text: ','
+                    - code [ref=e1152]: OTEL_EXPORTER_OTLP_ENDPOINT
+                    - text: is set, or
+                    - code [ref=e1153]: COPILOT_OTEL_FILE_EXPORTER_PATH
+                    - text: is set.
+                    - 'link "Docs: OTel" [ref=e1154]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#opentelemetry-monitoring
+                - listitem [ref=e1155]:
+                    - code [ref=e1156]: OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=true
+                    - text: captures full prompts, responses, and tool payloads.
+                    - 'link "Docs: OTel content" [ref=e1157]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#content-capture
+                - listitem [ref=e1158]:
+                    - text: Content capture can expose sensitive data and should only be enabled in trusted environments.
+                    - 'link "Docs: OTel content" [ref=e1159]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#content-capture
+                - listitem [ref=e1160]:
+                    - text: Select
+                    - code [ref=e1161]: auto
+                    - text: as your model to let Copilot automatically pick the best available model for each session.
+                    - 'link "Release: v1.0.32" [ref=e1162]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.32
+                - listitem [ref=e1163]:
+                    - text: Warnings appear when approaching 75% and 90% of your weekly usage limit.
+                    - 'link "Release: v1.0.32" [ref=e1164]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.32
+            - heading "Recent Additions Worth Knowing" [level=2] [ref=e1165]
+            - paragraph [ref=e1166]: Recent official releases added or improved several user-facing CLI features.
+            - heading "v1.0.36" [level=3] [ref=e1167]
+            - list [ref=e1168]:
+                - listitem [ref=e1169]:
+                    - text: Double-Esc is required to cancel in-flight work, preventing accidental interruptions.
+                    - 'link "Release: v1.0.36" [ref=e1170]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.36
+                - listitem [ref=e1171]:
+                    - code [ref=e1172]: /keep-alive
+                    - text: now available without experimental mode.
+                    - 'link "Release: v1.0.36" [ref=e1173]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.36
+                - listitem [ref=e1174]:
+                    - code [ref=e1175]: /remote
+                    - text: shows current status and supports
+                    - code [ref=e1176]: /remote on
+                    - text: and
+                    - code [ref=e1177]: /remote off
+                    - text: .
+                    - 'link "Release: v1.0.36" [ref=e1178]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.36
+                - listitem [ref=e1179]:
+                    - text: Disabled skills no longer appear in the slash command list.
+                    - 'link "Release: v1.0.36" [ref=e1180]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.36
+                - listitem [ref=e1181]:
+                    - text: “changes” statusline toggle shows added/removed line counts.
+                    - 'link "Release: v1.0.36" [ref=e1182]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.36
+                - listitem [ref=e1183]:
+                    - text: Custom instruction files in
+                    - code [ref=e1184]: .gitignored
+                    - text: directories (for example,
+                    - code [ref=e1185]: .github/instructions/
+                    - text: ) now load correctly.
+                    - 'link "Release: v1.0.36" [ref=e1186]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.36
+                - listitem [ref=e1187]:
+                    - code [ref=e1188]: Claude Opus 4.6
+                    - text: uses medium reasoning effort by default.
+                    - 'link "Release: v1.0.36" [ref=e1189]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.36
+            - heading "v1.0.35" [level=3] [ref=e1190]
+            - list [ref=e1191]:
+                - listitem [ref=e1192]:
+                    - text: Slash commands support tab-completion for arguments and subcommands.
+                    - 'link "Release: v1.0.35" [ref=e1193]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+                - listitem [ref=e1194]:
+                    - text: Shell escape commands (
+                    - code [ref=e1195]: '!'
+                    - text: ) now use your
+                    - code [ref=e1196]: $SHELL
+                    - text: when set, instead of always invoking
+                    - code [ref=e1197]: /bin/sh
+                    - text: .
+                    - 'link "Release: v1.0.35" [ref=e1198]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+                - listitem [ref=e1199]:
+                    - text: Session selector shows branch names, idle/in-use status, and improved search with cursor support.
+                    - 'link "Release: v1.0.35" [ref=e1200]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+                - listitem [ref=e1201]:
+                    - code [ref=e1202]: /update
+                    - text: and
+                    - code [ref=e1203]: /version
+                    - text: honor your configured update channel.
+                    - 'link "Release: v1.0.35" [ref=e1204]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+                - listitem [ref=e1205]:
+                    - code [ref=e1206]: COPILOT_GH_HOST
+                    - text: environment variable for GitHub hostname; takes precedence over
+                    - code [ref=e1207]: GH_HOST
+                    - text: .
+                    - 'link "Release: v1.0.35" [ref=e1208]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+                - listitem [ref=e1209]:
+                    - code [ref=e1210]: Ctrl+Y
+                    - text: accepts the highlighted option in completion popups (in addition to Tab).
+                    - 'link "Release: v1.0.35" [ref=e1211]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+                - listitem [ref=e1212]:
+                    - code [ref=e1213]: /session delete
+                    - text: ','
+                    - code [ref=e1214]: delete-all
+                    - text: subcommands, and x-to-delete in the session picker.
+                    - 'link "Release: v1.0.35" [ref=e1215]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+                - listitem [ref=e1216]:
+                    - code [ref=e1217]: '--continue'
+                    - text: prefers resuming sessions from the current working directory.
+                    - 'link "Release: v1.0.35" [ref=e1218]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+                - listitem [ref=e1219]:
+                    - code [ref=e1220]: '--name=NAME'
+                    - text: sets a session name;
+                    - code [ref=e1221]: '--resume=NAME'
+                    - text: resumes by name.
+                    - 'link "Release: v1.0.35" [ref=e1222]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+                - listitem [ref=e1223]:
+                    - code [ref=e1224]: ~/.copilot/settings.json
+                    - text: stores user settings separately from internal state.
+                    - 'link "Release: v1.0.35" [ref=e1225]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+                - listitem [ref=e1226]:
+                    - code [ref=e1227]: continueOnAutoMode
+                    - text: config option to auto-switch to the
+                    - code [ref=e1228]: auto
+                    - text: model on rate limit.
+                    - 'link "Release: v1.0.35" [ref=e1229]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+                - listitem [ref=e1230]:
+                    - text: HTTP hook support, allowing hooks to POST JSON payloads to a URL instead of running a command.
+                    - 'link "Release: v1.0.35" [ref=e1231]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+                - listitem [ref=e1232]:
+                    - text: Custom agent name visible in the statusline footer and toggleable via
+                    - code [ref=e1233]: /statusline
+                    - text: .
+                    - 'link "Release: v1.0.35" [ref=e1234]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+                - listitem [ref=e1235]:
+                    - code [ref=e1236]: grep
+                    - text: and
+                    - code [ref=e1237]: glob
+                    - text: tools accept multiple search paths.
+                    - 'link "Release: v1.0.35" [ref=e1238]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+                - listitem [ref=e1239]:
+                    - code [ref=e1240]: Ctrl+A
+                    - text: ','
+                    - code [ref=e1241]: Ctrl+E
+                    - text: ','
+                    - code [ref=e1242]: Home
+                    - text: ','
+                    - code [ref=e1243]: End
+                    - text: navigation shortcuts in input.
+                    - 'link "Release: v1.0.35" [ref=e1244]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+                - listitem [ref=e1245]:
+                    - code [ref=e1246]: '# NUMBER'
+                    - text: includes a GitHub issue or pull request in the context.
+                    - 'link "Release: v1.0.35" [ref=e1247]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.35
+            - heading "v1.0.32" [level=3] [ref=e1248]
+            - list [ref=e1249]:
+                - listitem [ref=e1250]:
+                    - text: Short session ID prefixes (7+ hex characters) work with
+                    - code [ref=e1251]: '--resume'
+                    - text: and
+                    - code [ref=e1252]: /resume
+                    - text: .
+                    - 'link "Release: v1.0.32" [ref=e1253]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.32
+                - listitem [ref=e1254]:
+                    - text: Select
+                    - code [ref=e1255]: auto
+                    - text: as your model to let Copilot pick the best available model for each session.
+                    - 'link "Release: v1.0.32" [ref=e1256]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.32
+                - listitem [ref=e1257]:
+                    - code [ref=e1258]: '--print-debug-info'
+                    - text: flag to display version, terminal capabilities, and environment variables for debugging.
+                    - 'link "Release: v1.0.32" [ref=e1259]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.32
+                - listitem [ref=e1260]:
+                    - code [ref=e1261]: '--connect'
+                    - text: flag to directly connect to a remote session by ID.
+                    - 'link "Release: v1.0.32" [ref=e1262]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.32
+                - listitem [ref=e1263]:
+                    - code [ref=e1264]: '--session-idle-timeout'
+                    - text: flag to configure session idle timeout (disabled by default).
+                    - 'link "Release: v1.0.32" [ref=e1265]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.32
+                - listitem [ref=e1266]:
+                    - text: Attach supported document files to prompts for the agent to read and reason about.
+                    - 'link "Release: v1.0.32" [ref=e1267]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.32
+                - listitem [ref=e1268]:
+                    - text: Warnings when approaching 75% and 90% of your weekly usage limit.
+                    - 'link "Release: v1.0.32" [ref=e1269]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.32
+                - listitem [ref=e1270]:
+                    - code [ref=e1271]: copilot login --host
+                    - text: correctly authenticates with GitHub Enterprise Cloud instances.
+                    - 'link "Release: v1.0.32" [ref=e1272]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.32
+            - heading "v1.0.30" [level=3] [ref=e1273]
+            - list [ref=e1274]:
+                - listitem [ref=e1275]:
+                    - code [ref=e1276]: /statusline
+                    - text: command (with
+                    - code [ref=e1277]: /footer
+                    - text: alias) to customize which items appear in the status bar.
+                    - 'link "Release: v1.0.30" [ref=e1278]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.30
+                - listitem [ref=e1279]:
+                    - code [ref=e1280]: Ctrl+V
+                    - text: and
+                    - code [ref=e1281]: Meta+V
+                    - text: image paste on all platforms.
+                    - 'link "Release: v1.0.30" [ref=e1282]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.30
+            - heading "v1.0.29" [level=3] [ref=e1283]
+            - list [ref=e1284]:
+                - listitem [ref=e1285]:
+                    - code [ref=e1286]: COPILOT_AGENT_SESSION_ID
+                    - text: available as an environment variable on shell commands and MCP servers.
+                    - 'link "Release: v1.0.29" [ref=e1287]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.29
+                - listitem [ref=e1288]:
+                    - code [ref=e1289]: COPILOT_SUBAGENT_MAX_DEPTH
+                    - text: and
+                    - code [ref=e1290]: COPILOT_SUBAGENT_MAX_CONCURRENT
+                    - text: to control subagent depth and concurrency limits.
+                    - 'link "Docs: env vars" [ref=e1291]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#environment-variables
+                - listitem [ref=e1292]:
+                    - text: 'Remote MCP server config:'
+                    - code [ref=e1293]: type
+                    - text: field optional, defaults to
+                    - code [ref=e1294]: http
+                    - text: .
+                    - 'link "Release: v1.0.29" [ref=e1295]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.29
+            - heading "v1.0.28" [level=3] [ref=e1296]
+            - list [ref=e1297]:
+                - listitem [ref=e1298]:
+                    - code [ref=e1299]: /remote
+                    - text: command and
+                    - code [ref=e1300]: '--remote'
+                    - text: /
+                    - code [ref=e1301]: '--no-remote'
+                    - text: flags for remote control of CLI sessions.
+                    - 'link "How-to: remote steering" [ref=e1302]':
+                        - /url: https://docs.github.com/en/copilot/how-tos/copilot-cli/steer-remotely
+                - listitem [ref=e1303]:
+                    - code [ref=e1304]: '--resume'
+                    - text: picker connects to remote control sessions.
+                    - 'link "Release: v1.0.28" [ref=e1305]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.28
+                - listitem [ref=e1306]:
+                    - code [ref=e1307]: COPILOT_DISABLE_TERMINAL_TITLE
+                    - text: to opt out of terminal title updates.
+                    - 'link "Release: v1.0.28" [ref=e1308]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.28
+                - listitem [ref=e1309]:
+                    - text: Custom instructions and skills refresh from disk after
+                    - code [ref=e1310]: /clear
+                    - text: or
+                    - code [ref=e1311]: /new
+                    - text: .
+                    - 'link "Release: v1.0.28" [ref=e1312]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.28
+            - heading "v1.0.27" [level=3] [ref=e1313]
+            - list [ref=e1314]:
+                - listitem [ref=e1315]:
+                    - code [ref=e1316]: /ask
+                    - text: command for quick questions without affecting conversation history.
+                    - 'link "Release: v1.0.27" [ref=e1317]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.27
+                - listitem [ref=e1318]:
+                    - code [ref=e1319]: copilot plugin marketplace update
+                    - text: command to refresh plugin catalogs.
+                    - 'link "Release: v1.0.27" [ref=e1320]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.27
+            - heading "v1.0.26" [level=3] [ref=e1321]
+            - list [ref=e1322]:
+                - listitem [ref=e1323]:
+                    - text: Plugin hooks receive
+                    - code [ref=e1324]: PLUGIN_ROOT
+                    - text: ','
+                    - code [ref=e1325]: COPILOT_PLUGIN_ROOT
+                    - text: ', and'
+                    - code [ref=e1326]: CLAUDE_PLUGIN_ROOT
+                    - text: with the plugin’s installation directory.
+                    - 'link "Release: v1.0.26" [ref=e1327]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.26
+                - listitem [ref=e1328]:
+                    - text: Instruction files with specific
+                    - code [ref=e1329]: applyTo
+                    - text: patterns consolidated into a table to reduce context window usage.
+                    - 'link "Release: v1.0.26" [ref=e1330]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.26
+                - listitem [ref=e1331]:
+                    - text: Installing plugins from repos, URLs, or local paths shows a deprecation warning.
+                    - 'link "Release: v1.0.26" [ref=e1332]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.26
+            - heading "v1.0.25" [level=3] [ref=e1333]
+            - list [ref=e1334]:
+                - listitem [ref=e1335]:
+                    - text: Install MCP servers from the registry with guided configuration.
+                    - 'link "Release: v1.0.25" [ref=e1336]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.25
+                - listitem [ref=e1337]:
+                    - code [ref=e1338]: /env
+                    - text: command to show loaded environment details (instructions, MCP servers, skills, agents, plugins).
+                    - 'link "Release: v1.0.25" [ref=e1339]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.25
+                - listitem [ref=e1340]:
+                    - code [ref=e1341]: /share html
+                    - text: — Restored export to self-contained interactive HTML; shows
+                    - code [ref=e1342]: file://
+                    - text: URL and supports
+                    - code [ref=e1343]: Ctrl+X O
+                    - text: to open.
+                    - 'link "Release: v1.0.25" [ref=e1344]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.25
+                - listitem [ref=e1345]:
+                    - code [ref=e1346]: /add-dir
+                    - text: accepts relative paths (e.g.
+                    - code [ref=e1347]: ./src
+                    - text: ','
+                    - code [ref=e1348]: ../sibling
+                    - text: ).
+                    - 'link "Release: v1.0.25" [ref=e1349]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.25
+                - listitem [ref=e1350]:
+                    - code [ref=e1351]: /logout
+                    - text: warns when signed in via
+                    - code [ref=e1352]: gh
+                    - text: CLI, PAT, API key, or environment variable.
+                    - 'link "Release: v1.0.25" [ref=e1353]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.25
+                - listitem [ref=e1354]:
+                    - text: ACP clients can provide MCP servers (stdio, HTTP, SSE) when starting or loading sessions.
+                    - 'link "Release: v1.0.25" [ref=e1355]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.25
+            - heading "v1.0.24" [level=3] [ref=e1356]
+            - list [ref=e1357]:
+                - listitem [ref=e1358]:
+                    - code [ref=e1359]: preToolUse
+                    - text: hooks respect
+                    - code [ref=e1360]: modifiedArgs
+                    - text: /
+                    - code [ref=e1361]: updatedInput
+                    - text: and
+                    - code [ref=e1362]: additionalContext
+                    - text: fields.
+                    - 'link "Release: v1.0.24" [ref=e1363]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.24
+                - listitem [ref=e1364]:
+                    - text: Custom agent
+                    - code [ref=e1365]: model
+                    - text: field accepts display names and vendor suffixes from VS Code (e.g. “Claude Sonnet 4.5”, “GPT-5.4 (copilot)”).
+                    - 'link "Release: v1.0.24" [ref=e1366]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.24
+            - heading "v1.0.23" [level=3] [ref=e1367]
+            - list [ref=e1368]:
+                - listitem [ref=e1369]:
+                    - code [ref=e1370]: '--mode'
+                    - text: ','
+                    - code [ref=e1371]: '--autopilot'
+                    - text: ', and'
+                    - code [ref=e1372]: '--plan'
+                    - text: flags to start directly in a specific agent mode.
+                    - 'link "Release: v1.0.23" [ref=e1373]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.23
+                - listitem [ref=e1374]:
+                    - code [ref=e1375]: Ctrl+L
+                    - text: clears the terminal screen without clearing the conversation session.
+                    - 'link "Release: v1.0.23" [ref=e1376]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.23
+                - listitem [ref=e1377]:
+                    - code [ref=e1378]: /diff
+                    - text: ','
+                    - code [ref=e1379]: /agent
+                    - text: ','
+                    - code [ref=e1380]: /feedback
+                    - text: ','
+                    - code [ref=e1381]: /ide
+                    - text: ', and'
+                    - code [ref=e1382]: /tuikit
+                    - text: work while the agent is running.
+                    - 'link "Release: v1.0.23" [ref=e1383]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.23
+            - heading "v1.0.22" [level=3] [ref=e1384]
+            - list [ref=e1385]:
+                - listitem [ref=e1386]:
+                    - code [ref=e1387]: .vscode/mcp.json
+                    - text: and
+                    - code [ref=e1388]: .devcontainer/devcontainer.json
+                    - text: removed as MCP server config sources; CLI now only reads
+                    - code [ref=e1389]: .mcp.json
+                    - text: . A migration hint with
+                    - code [ref=e1390]: jq
+                    - text: command appears when
+                    - code [ref=e1391]: .vscode/mcp.json
+                    - text: is detected without
+                    - code [ref=e1392]: .mcp.json
+                    - text: .
+                    - 'link "Release: v1.0.22" [ref=e1393]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.22
+                - listitem [ref=e1394]:
+                    - text: Custom agents can declare a
+                    - code [ref=e1395]: skills
+                    - text: field to eagerly load skill content at startup.
+                    - 'link "Release: v1.0.22" [ref=e1396]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.22
+                - listitem [ref=e1397]:
+                    - text: Plugins remain enabled across sessions and auto-install on startup based on user config.
+                    - 'link "Release: v1.0.22" [ref=e1398]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.22
+                - listitem [ref=e1399]:
+                    - code [ref=e1400]: sessionStart
+                    - text: and
+                    - code [ref=e1401]: sessionEnd
+                    - text: hooks fire once per session in interactive mode instead of once per prompt.
+                    - 'link "Release: v1.0.22" [ref=e1402]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.22
+            - heading "v1.0.21" [level=3] [ref=e1403]
+            - list [ref=e1404]:
+                - listitem [ref=e1405]:
+                    - code [ref=e1406]: copilot mcp
+                    - text: command for managing MCP servers outside the interactive session.
+                    - 'link "Release: v1.0.21" [ref=e1407]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.21
+                - listitem [ref=e1408]:
+                    - text: Hooks configured with PascalCase event names now receive VS Code-compatible snake_case payloads with
+                    - code [ref=e1409]: hook_event_name
+                    - text: ','
+                    - code [ref=e1410]: session_id
+                    - text: ', and ISO 8601 timestamps.'
+                    - 'link "Release: v1.0.21" [ref=e1411]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.21
+            - heading "v1.0.20" [level=3] [ref=e1412]
+            - list [ref=e1413]:
+                - listitem [ref=e1414]:
+                    - code [ref=e1415]: copilot help monitoring
+                    - text: topic with OpenTelemetry configuration details and examples.
+                    - 'link "Release: v1.0.20" [ref=e1416]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.20
+                - listitem [ref=e1417]:
+                    - code [ref=e1418]: /yolo
+                    - text: and
+                    - code [ref=e1419]: '--yolo'
+                    - text: now behave identically, and
+                    - code [ref=e1420]: /yolo
+                    - text: state persists across
+                    - code [ref=e1421]: /restart
+                    - text: .
+                    - 'link "Release: v1.0.20" [ref=e1422]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.20
+            - heading "v1.0.17" [level=3] [ref=e1423]
+            - list [ref=e1424]:
+                - listitem [ref=e1425]:
+                    - text: Built-in skills are now included with the CLI, starting with a guide for customizing Copilot cloud agent’s environment.
+                    - 'link "Release: v1.0.17" [ref=e1426]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.17
+                - listitem [ref=e1427]:
+                    - code [ref=e1428]: /resume
+                    - text: session picker loads significantly faster, especially with large session histories.
+                    - 'link "Release: v1.0.17" [ref=e1429]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.17
+                - listitem [ref=e1430]:
+                    - text: MCP OAuth flows now support HTTPS redirect URIs via self-signed certificate fallback for providers like Slack.
+                    - 'link "Release: v1.0.17" [ref=e1431]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.17
+            - heading "v1.0.16" [level=3] [ref=e1432]
+            - list [ref=e1433]:
+                - listitem [ref=e1434]:
+                    - code [ref=e1435]: permissionRequest
+                    - text: hook allows scripts to programmatically approve or deny tool permission requests.
+                    - 'link "Release: v1.0.16" [ref=e1436]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.16
+                - listitem [ref=e1437]:
+                    - code [ref=e1438]: postToolUse
+                    - text: now runs only after successful tool calls; use
+                    - code [ref=e1439]: postToolUseFailure
+                    - text: for tool errors.
+                    - 'link "Release: v1.0.16" [ref=e1440]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.16
+                - listitem [ref=e1441]:
+                    - text: SQL prompt tags no longer appear when the
+                    - code [ref=e1442]: sql
+                    - text: tool is excluded via
+                    - code [ref=e1443]: '--excluded-tools'
+                    - text: or
+                    - code [ref=e1444]: '--available-tools'
+                    - text: .
+                    - 'link "Release: v1.0.16" [ref=e1445]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.16
+                - listitem [ref=e1446]:
+                    - text: MCP tool calls display tool name and parameter summary in the timeline.
+                    - 'link "Release: v1.0.16" [ref=e1447]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.16
+                - listitem [ref=e1448]:
+                    - text: Deprecated
+                    - code [ref=e1449]: marketplaces
+                    - text: repository setting removed; use
+                    - code [ref=e1450]: extraKnownMarketplaces
+                    - text: instead.
+                    - 'link "Release: v1.0.16" [ref=e1451]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.16
+            - heading "v1.0.15" [level=3] [ref=e1452]
+            - list [ref=e1453]:
+                - listitem [ref=e1454]:
+                    - code [ref=e1455]: /mcp auth
+                    - text: command for re-authenticating MCP OAuth servers with account switching.
+                    - 'link "Release: v1.0.15" [ref=e1456]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.15
+                - listitem [ref=e1457]:
+                    - code [ref=e1458]: postToolUseFailure
+                    - text: hook event for handling tool errors separately from successful tool calls.
+                    - 'link "Release: v1.0.15" [ref=e1459]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.15
+                - listitem [ref=e1460]:
+                    - text: Device code flow (RFC 8628) as a fallback for MCP OAuth in headless and CI environments.
+                    - 'link "Release: v1.0.15" [ref=e1461]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.15
+                - listitem [ref=e1462]:
+                    - text: Home/End and Page Up/Page Down navigation in the diff viewer.
+                    - 'link "Release: v1.0.15" [ref=e1463]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.15
+                - listitem [ref=e1464]:
+                    - text: Config settings now prefer camelCase names (
+                    - code [ref=e1465]: askUser
+                    - text: ','
+                    - code [ref=e1466]: autoUpdate
+                    - text: ','
+                    - code [ref=e1467]: storeTokenPlaintext
+                    - text: ','
+                    - code [ref=e1468]: logLevel
+                    - text: ','
+                    - code [ref=e1469]: skillDirectories
+                    - text: ','
+                    - code [ref=e1470]: disabledSkills
+                    - text: ); snake_case still works.
+                    - 'link "Release: v1.0.15" [ref=e1471]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.15
+                - listitem [ref=e1472]:
+                    - text: Removed support for
+                    - code [ref=e1473]: gpt-5.1-codex
+                    - text: ','
+                    - code [ref=e1474]: gpt-5.1-codex-mini
+                    - text: ', and'
+                    - code [ref=e1475]: gpt-5.1-codex-max
+                    - text: models.
+                    - 'link "Release: v1.0.15" [ref=e1476]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.15
+            - heading "v1.0.14" [level=3] [ref=e1477]
+            - list [ref=e1478]:
+                - listitem [ref=e1479]:
+                    - text: Shift+Enter inserts a newline in terminals with Kitty keyboard protocol support.
+                    - 'link "Release: v1.0.14" [ref=e1480]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.14
+                - listitem [ref=e1481]:
+                    - text: CLI starts faster with parallel terminal detection, auth, and git operations.
+                    - 'link "Release: v1.0.14" [ref=e1482]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.14
+                - listitem [ref=e1483]:
+                    - text: V8 compile cache reduces parse and compile time on repeated invocations.
+                    - 'link "Release: v1.0.14" [ref=e1484]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.14
+                - listitem [ref=e1485]:
+                    - text: Reduced CPU usage during streaming by optimizing spinner rendering and task polling.
+                    - 'link "Release: v1.0.14" [ref=e1486]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.14
+                - listitem [ref=e1487]:
+                    - text: Removed support for
+                    - code [ref=e1488]: gemini-3-pro-preview
+                    - text: model.
+                    - 'link "Release: v1.0.14" [ref=e1489]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.14
+            - heading "v1.0.13" [level=3] [ref=e1490]
+            - list [ref=e1491]:
+                - listitem [ref=e1492]:
+                    - code [ref=e1493]: /rewind
+                    - text: and double-Esc open a timeline picker to roll back to any point in conversation history.
+                    - 'link "Release: v1.0.13" [ref=e1494]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.13
+                - listitem [ref=e1495]:
+                    - text: MCP servers can request LLM inference (sampling) with user approval via a new review prompt.
+                    - 'link "Release: v1.0.13" [ref=e1496]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.13
+            - heading "Earlier releases" [level=3] [ref=e1497]
+            - list [ref=e1498]:
+                - listitem [ref=e1499]:
+                    - code [ref=e1500]: /undo
+                    - text: to undo the last turn and revert file changes.
+                    - 'link "Release: v1.0.10" [ref=e1501]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.10
+                - listitem [ref=e1502]:
+                    - code [ref=e1503]: '--effort'
+                    - text: as a shorthand alias for
+                    - code [ref=e1504]: '--reasoning-effort'
+                    - text: .
+                    - 'link "Release: v1.0.10" [ref=e1505]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.10
+                - listitem [ref=e1506]:
+                    - code [ref=e1507]: /allow-all
+                    - text: (
+                    - code [ref=e1508]: /yolo
+                    - text: )
+                    - code [ref=e1509]: 'on'
+                    - text: ','
+                    - code [ref=e1510]: 'off'
+                    - text: ', and'
+                    - code [ref=e1511]: show
+                    - text: subcommands to control allow-all mode.
+                    - 'link "Release: v1.0.12" [ref=e1512]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.12
+                - listitem [ref=e1513]:
+                    - code [ref=e1514]: Ctrl + Y
+                    - text: in plan mode opens the most recent research report when no plan exists.
+                    - 'link "Release: v1.0.12" [ref=e1515]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.12
+                - listitem [ref=e1516]:
+                    - code [ref=e1517]: /session rename
+                    - text: can auto-generate a session name from conversation history when you omit the name argument.
+                    - 'link "Release: v1.0.12" [ref=e1518]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.12
+                - listitem [ref=e1519]:
+                    - code [ref=e1520]: .claude/settings.json
+                    - text: and
+                    - code [ref=e1521]: .claude/settings.local.json
+                    - text: as additional repo config sources.
+                    - 'link "Release: v1.0.12" [ref=e1522]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.12
+                - listitem [ref=e1523]:
+                    - text: Plugin hooks receive
+                    - code [ref=e1524]: CLAUDE_PROJECT_DIR
+                    - text: and
+                    - code [ref=e1525]: CLAUDE_PLUGIN_DATA
+                    - text: env vars plus
+                    - code [ref=e1526]: '{{project_dir}}'
+                    - text: and
+                    - code [ref=e1527]: '{{plugin_data_dir}}'
+                    - text: template variables.
+                    - 'link "Release: v1.0.12" [ref=e1528]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.12
+                - listitem [ref=e1529]:
+                    - code [ref=e1530]: ~/.agents/skills/
+                    - text: as a personal skill discovery directory.
+                    - 'link "Release: v1.0.11" [ref=e1531]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.11
+                - listitem [ref=e1532]:
+                    - code [ref=e1533]: /clear
+                    - text: and
+                    - code [ref=e1534]: /new
+                    - text: 'are now distinct:'
+                    - code [ref=e1535]: /clear
+                    - text: abandons the current session and keeps configured MCP servers available in the new session,
+                    - code [ref=e1536]: /new
+                    - text: starts fresh (keeping the old session backgrounded). Both accept an optional initial prompt.
+                    - 'link "Release: v1.0.11" [ref=e1537]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.11
+                    - 'link "Release: v1.0.12" [ref=e1538]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.12
+                - listitem [ref=e1539]:
+                    - text: Custom instructions, MCP servers, skills, and agents are discovered at every directory level from the working directory up to the git root (full monorepo support).
+                    - 'link "Release: v1.0.11" [ref=e1540]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.11
+                - listitem [ref=e1541]:
+                    - code [ref=e1542]: /pr
+                    - text: for PR creation, inspection, review feedback, merge-conflict work, and CI follow-up.
+                    - 'link "Release: v1.0.5" [ref=e1543]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.5
+                - listitem [ref=e1544]:
+                    - code [ref=e1545]: /changelog
+                    - text: in the interactive session, with optional summary and version arguments in the current docs.
+                    - 'link "Docs: slash commands" [ref=e1546]':
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
+                    - 'link "Release: v1.0.5" [ref=e1547]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.5
+                - listitem [ref=e1548]:
+                    - code [ref=e1549]: '@'
+                    - text: file mentions for absolute paths, home-directory paths, and parent-relative paths.
+                    - 'link "Release: v1.0.5" [ref=e1550]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.5
+                - listitem [ref=e1551]:
+                    - code [ref=e1552]: '--reasoning-effort'
+                    - text: for setting reasoning depth from the command line.
+                    - 'link "Release: v1.0.4" [ref=e1553]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.4
+                - listitem [ref=e1554]:
+                    - code [ref=e1555]: .devcontainer/devcontainer.json
+                    - text: was previously an MCP configuration source; removed in v1.0.22 in favor of
+                    - code [ref=e1556]: .mcp.json
+                    - text: .
+                    - 'link "Release: v1.0.3" [ref=e1557]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.3
+                    - 'link "Release: v1.0.22" [ref=e1558]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.22
+                - listitem [ref=e1559]:
+                    - text: One-time path approval in permission dialogs.
+                    - 'link "Release: v1.0.4" [ref=e1560]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.4
+                - listitem [ref=e1561]:
+                    - text: OpenTelemetry instrumentation for sessions, model calls, and tool execution.
+                    - 'link "Release: v1.0.4" [ref=e1562]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.4
+            - heading "Sources" [level=2] [ref=e1563]
+            - list [ref=e1564]:
+                - listitem [ref=e1565]:
+                    - link "GitHub Copilot CLI command reference" [ref=e1566]:
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference
+                - listitem [ref=e1567]:
+                    - link "GitHub Copilot CLI configuration directory" [ref=e1568]:
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-config-dir-reference
+                - listitem [ref=e1569]:
+                    - link "Adding custom instructions for GitHub Copilot CLI" [ref=e1570]:
+                        - /url: https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-custom-instructions
+                - listitem [ref=e1571]:
+                    - link "Overview of customizing GitHub Copilot CLI" [ref=e1572]:
+                        - /url: https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/overview
+                - listitem [ref=e1573]:
+                    - link "Running GitHub Copilot CLI programmatically" [ref=e1574]:
+                        - /url: https://docs.github.com/en/copilot/how-tos/copilot-cli/automate-copilot-cli/run-cli-programmatically
+                - listitem [ref=e1575]:
+                    - link "Using hooks with GitHub Copilot CLI" [ref=e1576]:
+                        - /url: https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/use-hooks
+                - listitem [ref=e1577]:
+                    - link "Speeding up task completion with the /fleet command" [ref=e1578]:
+                        - /url: https://docs.github.com/en/copilot/how-tos/copilot-cli/speeding-up-task-completion
+                - listitem [ref=e1579]:
+                    - link "Creating and using custom agents for GitHub Copilot CLI" [ref=e1580]:
+                        - /url: https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/create-custom-agents-for-cli
+                - listitem [ref=e1581]:
+                    - link "Use GitHub Copilot CLI agents" [ref=e1582]:
+                        - /url: https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli-agents
+                - listitem [ref=e1583]:
+                    - link "GitHub Copilot CLI plugin reference" [ref=e1584]:
+                        - /url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-plugin-reference
+                - listitem [ref=e1585]:
+                    - link "A cheat sheet to slash commands in GitHub Copilot CLI" [ref=e1586]:
+                        - /url: https://github.blog/ai-and-ml/github-copilot/a-cheat-sheet-to-slash-commands-in-github-copilot-cli/
+                - listitem [ref=e1587]:
+                    - link "Power agentic workflows in your terminal with GitHub Copilot CLI" [ref=e1588]:
+                        - /url: https://github.blog/ai-and-ml/github-copilot/power-agentic-workflows-in-your-terminal-with-github-copilot-cli/
+                - listitem [ref=e1589]:
+                    - 'link "From idea to pull request: A practical guide to building with GitHub Copilot CLI" [ref=e1590]':
+                        - /url: https://github.blog/ai-and-ml/github-copilot/from-idea-to-pull-request-a-practical-guide-to-building-with-github-copilot-cli/
+                - listitem [ref=e1591]:
+                    - link "Run multiple agents at once with /fleet in Copilot CLI" [ref=e1592]:
+                        - /url: https://github.blog/ai-and-ml/github-copilot/run-multiple-agents-at-once-with-fleet-in-copilot-cli/
+                - listitem [ref=e1593]:
+                    - 'link "GitHub Copilot CLI releases: v1.0.32" [ref=e1594]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.32
+                - listitem [ref=e1595]:
+                    - 'link "GitHub Copilot CLI releases: v1.0.30" [ref=e1596]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.30
+                - listitem [ref=e1597]:
+                    - 'link "GitHub Copilot CLI releases: v1.0.29" [ref=e1598]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.29
+                - listitem [ref=e1599]:
+                    - 'link "GitHub Copilot CLI releases: v1.0.28" [ref=e1600]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.28
+                - listitem [ref=e1601]:
+                    - 'link "GitHub Copilot CLI releases: v1.0.27" [ref=e1602]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.27
+                - listitem [ref=e1603]:
+                    - 'link "GitHub Copilot CLI releases: v1.0.26" [ref=e1604]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.26
+                - listitem [ref=e1605]:
+                    - 'link "GitHub Copilot CLI releases: v1.0.25" [ref=e1606]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.25
+                - listitem [ref=e1607]:
+                    - 'link "GitHub Copilot CLI releases: v1.0.24" [ref=e1608]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.24
+                - listitem [ref=e1609]:
+                    - 'link "GitHub Copilot CLI releases: v1.0.23" [ref=e1610]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.23
+                - listitem [ref=e1611]:
+                    - 'link "GitHub Copilot CLI releases: v1.0.22" [ref=e1612]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.22
+                - listitem [ref=e1613]:
+                    - link "Steering a GitHub Copilot CLI session from another device" [ref=e1614]:
+                        - /url: https://docs.github.com/en/copilot/how-tos/copilot-cli/steer-remotely
+                - listitem [ref=e1615]:
+                    - link "Researching with GitHub Copilot CLI" [ref=e1616]:
+                        - /url: https://docs.github.com/en/copilot/concepts/agents/copilot-cli/research
+                - listitem [ref=e1617]:
+                    - 'link "GitHub Copilot CLI releases: v1.0.21" [ref=e1618]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.21
+                - listitem [ref=e1619]:
+                    - 'link "GitHub Copilot CLI releases: v1.0.20" [ref=e1620]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.20
+                - listitem [ref=e1621]:
+                    - 'link "GitHub Copilot CLI releases: v1.0.17" [ref=e1622]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.17
+                - listitem [ref=e1623]:
+                    - 'link "GitHub Copilot CLI releases: v1.0.16" [ref=e1624]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.16
+                - listitem [ref=e1625]:
+                    - 'link "GitHub Copilot CLI releases: v1.0.15" [ref=e1626]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.15
+                - listitem [ref=e1627]:
+                    - 'link "GitHub Copilot CLI releases: v1.0.14" [ref=e1628]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.14
+                - listitem [ref=e1629]:
+                    - 'link "GitHub Copilot CLI releases: v1.0.13" [ref=e1630]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.13
+                - listitem [ref=e1631]:
+                    - 'link "GitHub Copilot CLI releases: v1.0.11" [ref=e1632]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.11
+                - listitem [ref=e1633]:
+                    - 'link "GitHub Copilot CLI releases: v1.0.10" [ref=e1634]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.10
+                - listitem [ref=e1635]:
+                    - 'link "GitHub Copilot CLI releases: v1.0.5" [ref=e1636]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.5
+                - listitem [ref=e1637]:
+                    - 'link "GitHub Copilot CLI releases: v1.0.4" [ref=e1638]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.4
+                - listitem [ref=e1639]:
+                    - 'link "GitHub Copilot CLI releases: v1.0.3" [ref=e1640]':
+                        - /url: https://github.com/github/copilot-cli/releases/tag/v1.0.3
+    - contentinfo [ref=e1641]:
+        - paragraph [ref=e1642]: Built with Astro and Markdown content.
