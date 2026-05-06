@@ -1,108 +1,161 @@
 ---
+description: 'Create and maintain a repo discovery guide that helps coding agents orient themselves quickly in any repository. The guide is not documentation — it is a trust anchor that prevents redundant exploration and, more importantly, prevents agents from re-discovering non-obvious truths the hard way.'
 applyTo: '**'
 ---
 
-# Repo Discovery Guide (agent-only) — copilot-cli-handbook
+# Repo Discovery Guide — Agent Instructions
 
-This document is an internal discovery + maintenance index for coding agents. It is not user-facing documentation.
+> **⚠️ READ THE EXISTING DISCOVERY GUIDE FIRST.** Before doing any codebase exploration, discovery, or orientation task, check if `<repo-root>/repo-discovery-guide-for-agents.md` exists. If it does, **read it in full before scanning directories, reading config files, or launching exploration agents**. The guide contains cached non-obvious truths that would otherwise cost significant time to rediscover. Re-discovering what the guide already knows is wasted effort — use it as your starting map, then spot-check and update only what may have drifted.
 
-Use this file like a cache for Astro site structure, content conventions, and workflows.
+## What This Is
 
-- Prefer updating it when you discover drift (paths, npm scripts, CI behavior, content rules, base path).
-- Treat the “Last verified” timestamp as the main trust signal; if you only reformat or reorganize text, do not update it.
+A **repo discovery guide** is a single file at `<repo-root>/repo-discovery-guide-for-agents.md` that acts as a trust anchor for coding agents. It is not user-facing documentation. It is not a README. It is a **cached map of non-obvious truths** that would cost significant time to rediscover in every new chat session.
 
-## Table of Contents
+The guide exists because:
 
-- Maintenance snapshot
-- High-signal docs (read-first index)
-- Project structure map
-- Runtime / dev entry points
-- Content & workflow anchors
-- CI reality (verified)
-- When to update this file
+1. **Agents start every session with total amnesia.** Without it, every session re-explores the same directories, re-reads the same config files, and re-discovers the same gotchas.
+2. **A stale guide is worse than no guide.** An agent that trusts wrong information will "fix" things that aren't broken and miss things that are. The maintenance discipline is the feature — the content is just the payload.
 
-## Maintenance snapshot
+## Creation
 
-- Last verified: 2026-03-16
-- Verification scope (high level): Astro pages/content collection, base-path handling, Playwright e2e config, npm scripts, content rules from business-requirements.instructions.md, CI workflows, and handbook routing after Release Tracker removal.
+When working in a repository that does not yet have a `repo-discovery-guide-for-agents.md`, create one. Do not ask the user for permission — this is a standard practice, like a `.gitignore`.
 
-Keep this section short: the goal is to preserve the last verified date and why it can be trusted, not to fully inventory every subsystem.
+Place it at the repository root: `<repo-root>/repo-discovery-guide-for-agents.md`
 
-## 1. High-signal docs (read-first index)
+Use the template below. Fill in every section that has content. Remove sections that have nothing to say — an empty section is worse than a missing section because it implies the section was considered and found empty, when really it might just be that no one looked yet.
 
-Mandatory startup reads (per copilot-instructions.md):
+## Required Sections
 
-- README.md
-- .github/copilot-instructions.md (startup rules, linting note, page pattern, base-path rule)
-- .github/instructions/business-requirements.instructions.md
-- .github/instructions/repository-memory.instructions.md
+### Maintenance mandate
 
-Additional high-signal files:
+This must be the **first section after the title and description**, before any project-specific content. It establishes the contract that makes the rest of the document trustworthy.
 
-- astro.config.mjs (site + base path)
-- src/content.config.ts (handbook collection schema)
-- playwright.config.ts (e2e baseURL + webServer)
-- src/pages/index.astro (thin MD renderer)
-- src/layouts/BaseLayout.astro (BASE_URL nav + theme)
-- .github/workflows/{deploy.yml,preview-deploy.yml,regression.yml}
+The mandate has three rules:
 
-## 2. Project structure map
+1. **Before every commit**, ask: did I change anything this guide documents? If yes, update the guide in the same commit. No exceptions.
+2. **At session start**, spot-check 2-3 key facts against the actual codebase (paths, versions, script names). If anything drifted, update immediately.
+3. **Quarterly minimum**, re-verify if the repo hasn't been touched. Stale guidance is worse than no guidance.
 
-Static Astro site (no backend/runtime services beyond dev server; Release Tracker removed):
+The mandate also includes a **Last verified** timestamp. If the timestamp is older than 90 days, the entire document should be treated as suspect.
 
-```mermaid
-graph TB
-    Content["src/content/handbook/*.md<br/>(index.md → /)"] --> Pages["src/pages/*.astro<br/>(thin getEntry/render)"]
-    Pages --> Layout["src/layouts/BaseLayout.astro<br/>(BASE_URL nav)"]
-    Layout --> Styles["src/styles/global.css"]
-    Workflows[".github/workflows/*.yml"] --> Content
+### Project overview
+
+One paragraph. The "if you only read one thing" summary. What this project is, what it does, what tech stack it uses, and the single most important architectural fact an agent needs to know.
+
+Do not write a full README here. The agent can read the README. Write the thing the README doesn't say — the architectural gut-punch that would otherwise take 30 minutes of file-reading to discover.
+
+### Structure map
+
+An annotated directory tree showing only the directories and files that matter for daily work. Not every file — just the ones an agent would need to find to do typical tasks.
+
+Rules:
+
+- **Do** annotate directories with their purpose when it isn't obvious from the name.
+- **Do** note empty or unused directories — these are decoys that waste time.
+- **Do** note which directories are generated vs. source-controlled.
+- **Do not** list every file. The agent can run `ls`.
+- **Do not** duplicate what's in package.json, Cargo.toml, or equivalent. The agent can read those.
+
+### Entry points
+
+Not every script — just the ones that matter, with gotchas noted inline. The format is: here's how to build, run, test, deploy. For each, note what won't be obvious from reading the script name alone.
+
+Examples of non-obvious gotchas worth noting:
+
+- "Docker is the only supported local runtime — do not use `npm run dev` as a long-lived server."
+- "Always use `scripts/rebuild-and-deploy.sh` — do not substitute individual docker commands."
+- "The dev container uses a different Node version than production."
+
+If the project has a standard setup (npm install, npm test, npm run build), say that briefly. Don't list every npm script — the agent can read package.json.
+
+### Conventions
+
+The non-obvious rules that aren't enforced by tooling. This is where you write down the things a fresh agent would get wrong, not because they're bugs, but because they're decisions.
+
+Examples:
+
+- "Category labels in frontmatter are title-cased (`"Books"`) while filesystem directories are snake_case (`books/`)."
+- "Hero images must always use 4:1 aspect ratio (1024x256), never 3:1."
+- "Hard line wrapping is strictly prohibited in existing markdown content."
+- "The `src/assets/` directory exists but is not used by the current pipeline — do not add assets there."
+
+### Known gotchas
+
+Things that look wrong but aren't, and things that look right but aren't. Collect these into a single scannable list. This is the most valuable section because it prevents agents from "fixing" things that aren't broken.
+
+Each gotcha should be one or two sentences: what the intuition says, and what the reality is.
+
+Examples:
+
+- "Print left/right margins are intentionally swapped on `:left` vs `:right` pages — do not 'fix' this."
+- "The docker-compose dev container uses `node:24.14.0-alpine` while the Dockerfile and .nvmrc use `24.15.0`. This mismatch is known and not yet reconciled."
+- "`scripts/local-deploy/` exists but is empty — it's a legacy placeholder, not a missing feature."
+
+### What to verify
+
+A reusable checklist of **categories** to re-verify, not a one-time list of what was checked. An agent in any repo should be able to walk through these categories and know what to spot-check:
+
+1. **Versions** — Node, Python, runtime, Docker base images. Check `.nvmrc`, `package.json` engines, `Dockerfile`, `docker-compose.yml`.
+2. **Paths** — Do the directories in the guide still exist? Any new ones? Any removed?
+3. **Scripts** — Do the documented commands still work? Any new ones? Any renamed?
+4. **Config values** — Ports, environment variables, feature flags, anything that affects runtime behavior.
+5. **Known exceptions** — Are the gotchas still true? Any new ones?
+6. **Content structure** — If the project has content (articles, docs, data), is the structure still accurate? Any new categories or changed paths?
+7. **Dead ends** — Are the noted decoys still decoys? Any new empty or unused directories?
+
+### Maintenance snapshot
+
+A brief record of when the guide was last verified and what was checked. The format:
+
+```text
+- Last verified: YYYY-MM-DD
+- Changes since last verify: [brief list, or "none"]
 ```
 
-Key navigation anchors:
+Do not write a paragraph summarizing everything that was verified. Write what **changed** since last verify. If nothing changed, just update the date.
 
-- Content rules: `.github/instructions/business-requirements.instructions.md`
-- Page pattern: `.github/copilot-instructions.md`
-- Base path: `astro.config.mjs` + `import.meta.env.BASE_URL`
-- Tests: `playwright-regression/site-regression.spec.ts` + `playwright.config.ts`
-- Lint: `package.json` scripts + `.markdownlint.json` + `.husky/pre-commit`
+## Section Ordering
 
-No Python/Rust/DB/Neon/Bitcoin components. Pure static site + MD-driven content.
+The sections must appear in this order, because it reflects their importance:
 
-## 3. Runtime / dev entry points
+1. Title and description
+2. Maintenance mandate (the contract)
+3. Project overview (the summary)
+4. Known gotchas (the most expensive mistakes to re-discover)
+5. Conventions (the rules you'd violate without knowing)
+6. Structure map (where things are)
+7. Entry points (how to build, run, test, deploy)
+8. What to verify (the re-verification checklist)
+9. Maintenance snapshot (when it was last checked)
 
-Always start with:
+Gotchas and conventions come before structure and entry points because they prevent mistakes. Structure and entry points are reference material — the agent looks them up when needed. Gotchas and conventions must be read proactively to prevent damage.
 
-```bash
-npm install
-```
+## What NOT to Include
 
-- `npm run dev` — local dev server at `http://localhost:4321/copilot-cli-handbook`
-- `npm run build` — production build to `dist/`
-- `npm run preview` — preview built site
-- `npm run lint` — prettier --check + markdownlint-cli2 on MD files
-- `npm run test:e2e` — builds + starts preview server then runs Playwright (see playwright.config.ts for baseURL)
-- `npm run test:e2e:ui` — interactive mode
+- **Every file in the tree** — the agent can run `ls`. Include only what isn't discoverable by scanning.
+- **Full dependency lists or version tables** — pin these in package.json/Cargo.toml/etc., not in prose. The guide notes version mismatches and gotchas, not every version number.
+- **README content** — the agent can read the README. The guide adds what the README doesn't say.
+- **Content counts that change frequently** — "23 articles" will be wrong within a week. Instead write "enumerate categories with `ls` or `glob` at task time."
+- **Things obvious from reading the code** — if a single file read reveals the truth, don't document it here. This guide is for truths that require connecting dots across multiple files.
 
-**Playwright nuance**: webServer in playwright.config.ts runs `npm run build && npm run preview` with baseURL `http://localhost:4321/copilot-cli-handbook`. CI caches browsers via actions/cache.
+## Updating the Guide
 
-No persistent services, PID files, or complex profiles. Pure static.
+The update discipline is the feature. Without it, the guide decays into misinformation.
 
-## 4. Content & workflow anchors
+Rules:
 
-- **Content rules** (strict, from business-requirements.instructions.md): user-actionable only ("Can a user read this and go try it right now?"), omit internal, backend, or passive changes.
-- Lock files: never edit `*.lock.yml` directly (sync from .md source).
-- Contribution flow: README.md points contributors to issues and pull requests; run `npm run lint` locally before opening a PR.
+1. **Every commit that changes anything the guide documents must also update the guide.** Not in a separate commit. Not "I'll do it later." In the same commit.
+2. **When adding a new file, path, or convention to the project, add it to the guide immediately.**
+3. **When removing or renaming something, remove or update it in the guide immediately.**
+4. **When you discover a gotcha that cost you time, add it to the Known gotchas section before doing anything else.**
+5. **If you only reformat or reorganize the guide without changing any factual content, update the Last verified date but do not change the Changes since last verify line.**
 
-## 5. CI reality (verified)
+The timestamp is the trust signal. If it's stale, the whole document is suspect. An agent that notices a stale guide should re-verify before trusting it, and should update it after verifying.
 
-- Workflows use the Node version pinned in `.nvmrc` (currently Node 24 LTS).
-- `regression.yml`: runs on PR/push to main; executes `npm run test:e2e`.
-- `deploy.yml`: builds + deploys to GitHub Pages on main (sets ASTRO_BASE).
-- `preview-deploy.yml`: PR previews + comments.
-- No automatic lint in CI (run `npm run lint` locally before commit).
-- Husky + lint-staged enforces formatting on commit for `*.md`, `*.astro`, etc.
-- gh CLI available for creating PRs from workflows.
+## Relationship to Project-Specific Instructions
 
-## When to update this file
+This guide is separate from any `.github/instructions/` or `AGENTS.md` files. Those files tell the agent **how to work** (style guidelines, commit conventions, deployment procedures). This guide tells the agent **what exists** and **what isn't obvious**.
 
-Update on drift in file paths, npm scripts, content rules, base-path usage, test config, or workflow behavior. Re-verify against the current instruction files and actual CI files.
+If a project has both, the agent should read both. The discovery guide is the map; the project instructions are the rules of the road. Neither substitutes for the other.
+
+When this guide references project instructions, it should link to them by path, not duplicate their content.
