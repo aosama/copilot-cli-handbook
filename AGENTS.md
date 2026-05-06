@@ -3,7 +3,6 @@
 ## On Session Start
 
 - Read `README.md`.
-- Always follow all instructions under `.github/instructions` according to their `applyTo` wildcard.
 
 ## Linting
 
@@ -22,4 +21,4 @@ The site is served under `/copilot-cli-handbook`. Always use `import.meta.env.BA
 
 ### Lock files
 
-`*.lock.yml` files in `.github/workflows/` are generated artifacts (linguist-generated, merge=ours). Do not edit them directly unless making an urgent fix; sync with the source `.md` file to avoid drift.
+`*.lock.yml` files in `.github/workflows/` are generated artifacts (linguist-generated, merge=ours). Do not edit them directly; sync with the source `.md` file to avoid drift.
