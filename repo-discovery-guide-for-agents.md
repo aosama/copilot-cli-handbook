@@ -47,7 +47,7 @@ A single-page static site built with Astro 6, served under `/copilot-cli-handboo
 ```text
 .
 ├── src/
-│   ├── content/handbook/index.md   ← The entire handbook (710 lines, all content)
+│   ├── content/handbook/index.md   ← The entire handbook (777 lines, all content)
 │   ├── content.config.ts            ← Zod schema: title, description, lastUpdated
 │   ├── layouts/BaseLayout.astro     ← Shared layout: nav, theme toggle, BASE_URL
 │   ├── pages/index.astro            ← Thin renderer: getEntry + render + <Content />
@@ -109,5 +109,5 @@ A reusable checklist of categories to spot-check when verifying the guide:
 
 ## Maintenance snapshot
 
-- Last verified: 2026-04-28
-- Changes since last verify: Initial creation from template; supersedes stale `.github/instructions/repo-discovery-guide.instructions.md` (last verified 2026-03-16)
+- Last verified: 2026-05-06
+- Changes since last verify: Updated handbook with v1.0.39–v1.0.41 content; index.md grew from 710 to 777 lines
