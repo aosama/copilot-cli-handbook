@@ -1,7 +1,7 @@
 ---
 title: 'Copilot CLI Handbook'
 description: 'Custom instructions, commands, permissions, agents, hooks, configuration, and MCP for GitHub Copilot CLI'
-lastUpdated: 'May 6, 2026 at 12:00 PM EDT'
+lastUpdated: 'May 7, 2026 at 3:00 PM EDT'
 ---
 
 ## Instruction Files
@@ -76,12 +76,12 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `/reset-allowed-tools` — Clear previously granted tool approvals. [Release: v1.0.3][release-1-0-3] [Blog: slash commands][blog-slash-commands]
 - `/mcp [show|add|edit|delete|disable|enable|auth|reload] [SERVER-NAME]` — Manage MCP servers; `/mcp auth` re-authenticates OAuth servers with account switching. MCP servers can also be installed from the registry with guided configuration. [Docs: slash commands][slash-commands] [Release: v1.0.15][release-1-0-15] [Release: v1.0.25][release-1-0-25] [Blog: slash commands][blog-slash-commands]
 - `/lsp [show|test|reload|help] [SERVER-NAME]` — Manage language server configuration. [Docs: slash commands][slash-commands]
-- `/statusline` — Customize which items appear in the status bar (directory, branch, effort, context window, quota, custom agent name, changes). The "changes" toggle shows added/removed line counts. Alias: `/footer`. [Release: v1.0.30][release-1-0-30] [Release: v1.0.35][release-1-0-35] [Release: v1.0.36][release-1-0-36]
+- `/statusline` — Customize which items appear in the status bar (directory, branch, effort, context window, quota, custom agent name, changes, active account). The "changes" toggle shows added/removed line counts. Alias: `/footer`. [Release: v1.0.30][release-1-0-30] [Release: v1.0.35][release-1-0-35] [Release: v1.0.36][release-1-0-36] [Release: v1.0.43][release-1-0-43]
 - `/ide` — Connect to an IDE workspace. Also works while the agent is running. [Docs: slash commands][slash-commands] [Release: v1.0.23][release-1-0-23]
 - `/terminal-setup` — Configure multiline terminal input support. [Docs: slash commands][slash-commands]
 - `/login`, `/logout` — Sign in or out. `/logout` warns when signed in via `gh` CLI, PAT, API key, or environment variable (only manages OAuth sessions). [Docs: slash commands][slash-commands] [Release: v1.0.25][release-1-0-25]
 - `/user [show|list|switch]` — Manage the current GitHub account. [Docs: slash commands][slash-commands] [Blog: slash commands][blog-slash-commands]
-- `/update`, `/upgrade`, `/version` — Check for updates and show version information, honoring your configured update channel. [Docs: slash commands][slash-commands] [Release: v1.0.35][release-1-0-35]
+- `/update`, `/upgrade`, `/version` — Check for updates and show version information, honoring your configured update channel. Shows download progress during the update process. [Docs: slash commands][slash-commands] [Release: v1.0.35][release-1-0-35] [Release: v1.0.43][release-1-0-43]
 - `/downgrade <VERSION>` — Download and restart into a specific CLI version. Available for team accounts. [Docs: slash commands][slash-commands]
 - `/help`, `/feedback`, `/usage`, `/theme [default|dim|high-contrast|colorblind]`, `/experimental` — Session help, reporting, usage, UI, and feature toggles. `/feedback` and `/experimental` also work while the agent is running. [Docs: slash commands][slash-commands] [Blog: slash commands][blog-slash-commands] [Release: v1.0.23][release-1-0-23]
 
@@ -136,6 +136,7 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `--share=PATH`, `--share-gist` — Export a programmatic session after it finishes. [Docs: CLI options][cli-options]
 - `-s, --silent` — Suppress usage statistics and print only the answer. [Docs: CLI options][cli-options] [How-to: programmatic use][programmatic-howto]
 - `--no-ask-user` — Disable the ask-user tool for fully autonomous runs. [Docs: CLI options][cli-options] [How-to: programmatic use][programmatic-howto]
+- `-C=PATH`, `--cwd=PATH` — Change working directory before starting, similar to `git -C`. [Release: v1.0.42][release-1-0-42]
 - `--attachment` — Attach files (images or native documents) to the initial prompt in non-interactive (`-p`) mode. [Docs: CLI options][cli-options] [Release: v1.0.41][release-1-0-41]
 
 ### Permissions and safety
@@ -451,6 +452,21 @@ Copilot CLI can export traces and metrics with OpenTelemetry. [Docs: OTel][otel]
 
 Recent official releases added or improved several user-facing CLI features.
 
+### v1.0.43
+
+- Username toggle in the `/statusline` picker to display the active account in the footer. [Release: v1.0.43][release-1-0-43]
+- Auto mode uses server-side model routing for improved real-time model selection. [Release: v1.0.43][release-1-0-43]
+- Show download progress when running the update command. [Release: v1.0.43][release-1-0-43]
+- MCP server child processes (e.g. started via npx or uvx) are fully terminated when a session ends. [Release: v1.0.43][release-1-0-43]
+
+### v1.0.42
+
+- `-C` / `--cwd` flag to change working directory before starting, similar to `git -C`. [Release: v1.0.42][release-1-0-42]
+- Rubber-duck agent for GPT sessions, powered by Claude (available in `/experimental`). [Release: v1.0.42][release-1-0-42]
+- Remote session export now supports non-GitHub repositories and repo-less directories. [Release: v1.0.42][release-1-0-42]
+- `/mcp show` hint in MCP server failure warnings when the server name contains whitespace. [Release: v1.0.42][release-1-0-42]
+- MCP server failure warnings include stderr output to help diagnose connection errors. [Release: v1.0.42][release-1-0-42]
+
 ### v1.0.41
 
 - CLI starts faster by rendering the UI immediately while authentication resolves in the background. [Release: v1.0.41][release-1-0-41]
@@ -667,6 +683,8 @@ Recent official releases added or improved several user-facing CLI features.
 - [Power agentic workflows in your terminal with GitHub Copilot CLI](https://github.blog/ai-and-ml/github-copilot/power-agentic-workflows-in-your-terminal-with-github-copilot-cli/)
 - [From idea to pull request: A practical guide to building with GitHub Copilot CLI](https://github.blog/ai-and-ml/github-copilot/from-idea-to-pull-request-a-practical-guide-to-building-with-github-copilot-cli/)
 - [Run multiple agents at once with /fleet in Copilot CLI](https://github.blog/ai-and-ml/github-copilot/run-multiple-agents-at-once-with-fleet-in-copilot-cli/)
+- [GitHub Copilot CLI releases: v1.0.43](https://github.com/github/copilot-cli/releases/tag/v1.0.43)
+- [GitHub Copilot CLI releases: v1.0.42](https://github.com/github/copilot-cli/releases/tag/v1.0.42)
 - [GitHub Copilot CLI releases: v1.0.41](https://github.com/github/copilot-cli/releases/tag/v1.0.41)
 - [GitHub Copilot CLI releases: v1.0.40](https://github.com/github/copilot-cli/releases/tag/v1.0.40)
 - [GitHub Copilot CLI releases: v1.0.39](https://github.com/github/copilot-cli/releases/tag/v1.0.39)
@@ -746,6 +764,8 @@ Recent official releases added or improved several user-facing CLI features.
 [otel-content]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#content-capture
 [research-docs]: https://docs.github.com/en/copilot/concepts/agents/copilot-cli/research
 [remote-steering]: https://docs.github.com/en/copilot/how-tos/copilot-cli/steer-remotely
+[release-1-0-43]: https://github.com/github/copilot-cli/releases/tag/v1.0.43
+[release-1-0-42]: https://github.com/github/copilot-cli/releases/tag/v1.0.42
 [release-1-0-41]: https://github.com/github/copilot-cli/releases/tag/v1.0.41
 [release-1-0-40]: https://github.com/github/copilot-cli/releases/tag/v1.0.40
 [release-1-0-39]: https://github.com/github/copilot-cli/releases/tag/v1.0.39
