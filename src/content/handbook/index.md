@@ -1,7 +1,7 @@
 ---
 title: 'Copilot CLI Handbook'
 description: 'Custom instructions, commands, permissions, agents, hooks, configuration, and MCP for GitHub Copilot CLI'
-lastUpdated: 'June 2, 2026 at 11:17 PM EDT'
+lastUpdated: 'June 3, 2026 at 11:06 PM EDT'
 ---
 
 ## Instruction Files
@@ -512,6 +512,8 @@ Recent official releases added or improved several user-facing CLI features.
 - In Azure DevOps-only repositories, the built-in GitHub MCP server now exposes only the `web_search` tool instead of being fully disabled. [Release: v1.0.57][release-1-0-57]
 - `copilot plugin marketplace list` honors repo-level `extraKnownMarketplaces` settings. [Release: v1.0.57][release-1-0-57]
 - `/lsp show`, `/lsp test`, `/lsp reload` correctly discover project LSP config when launched from a subdirectory. [Release: v1.0.57][release-1-0-57]
+- Click a diff line with the mouse to select it in diff mode. [Release: v1.0.57][release-1-0-57]
+- `grep` tool correctly handles `tsx` and `jsx` as file type filters. [Release: v1.0.57][release-1-0-57]
 
 ### v1.0.56
 
