@@ -19,10 +19,11 @@ Handbook content should stay grounded in official GitHub sources:
 - [GitHub Copilot CLI releases](https://github.com/github/copilot-cli/releases)
 - [GitHub Copilot how-tos](https://docs.github.com/en/copilot/how-tos)
 - [GitHub Copilot CLI command reference](https://docs.github.com/en/copilot/reference/cli-command-reference)
+- [GitHub Copilot Blog](https://github.blog/ai-and-ml/github-copilot/)
 
 ## Local Development
 
-Requires the current Node LTS release. This repo is pinned to `24.14.0` in `.nvmrc`.
+Requires the current Node LTS release. This repo is pinned to `24.16.0` in `.nvmrc`.
 
 ```bash
 npm install          # install dependencies
@@ -66,23 +67,11 @@ Formatting is enforced with Prettier, Husky, and lint-staged.
 
 Astro pages stay thin on purpose; long-form content lives in Markdown under `src/content/handbook/`.
 
-## Automated handbook updates
+## Updating the Handbook
 
-The handbook is kept current by a GitHub Agentic Workflow that runs on a daily schedule and can also be triggered manually.
+The handbook content is updated by a local coding agent (like Copilot CLI) on demand, following the procedure documented in `.github/instructions/business-requirements.instructions.md`. The agent reads official GitHub sources, compares them against the current handbook, and commits updates directly to `main` when changes are found.
 
-| File                                         | Purpose                                            |
-| -------------------------------------------- | -------------------------------------------------- |
-| `.github/workflows/update-handbook.md`       | Workflow source — edit this to change instructions |
-| `.github/workflows/update-handbook.lock.yml` | Compiled lock file — do not edit directly          |
-
-The workflow reads only official GitHub sources (Copilot CLI releases, GitHub Docs, GitHub Blog), edits only `src/content/handbook/index.md`, and opens a pull request that is ready for review when relevant changes are found. It creates no PR if the page is already current.
-
-To recompile after editing the source file:
-
-```bash
-gh extension install github/gh-aw  # one-time install
-gh aw compile update-handbook
-```
+To trigger an update, ask your agent to "update the handbook" or point it at specific new releases or docs.
 
 ## Contributing
 

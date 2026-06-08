@@ -18,7 +18,3 @@ Every route in `src/pages/*.astro` must be a thin renderer that loads a markdown
 ### Base-path-aware links
 
 The site is served under `/copilot-cli-handbook`. Always use `import.meta.env.BASE_URL` in `.astro` files (see `BaseLayout.astro` for the trailing-slash pattern).
-
-### Lock files
-
-`*.lock.yml` files in `.github/workflows/` are generated artifacts (linguist-generated, merge=ours). Do not edit them directly; sync with the source `.md` file to avoid drift.

@@ -8,7 +8,7 @@ A cached map of non-obvious truths for coding agents. Read this first before exp
 2. **At session start**, spot-check 2-3 key facts against the actual codebase. If anything drifted, update immediately.
 3. **Quarterly minimum**, re-verify if the repo hasn't been touched. Stale guidance is worse than no guidance.
 
-Last verified: 2026-05-31
+Last verified: 2026-06-08
 
 ## Project overview
 
@@ -16,14 +16,14 @@ A single-page static site built with Astro 6, served under `/copilot-cli-handboo
 
 ## Known gotchas
 
-- **`update-handbook.md` is NOT standard Actions YAML.** It uses Copilot's own workflow format.
-- **No `.lock.yml` files exist yet** in `.github/workflows/`, despite `.gitattributes` declaring them `linguist-generated`.
+- **Handbook updates are local-agent-driven.** No scheduled GitHub workflow; see `.github/instructions/business-requirements.instructions.md` for the procedure.
 - **Handbook body text is intentionally monospace.** Not a bug.
 - **Reference links in `index.md` are two-layer.** Human-readable `## Sources` plus `[label]: URL` definitions. Miss a definition and it silently renders as plain text.
 - **Missing release versions in references are intentional.** Only releases with user-facing CLI changes are cited.
 - **Playwright expects exactly one 404** at `/copilot-cli-handbook/handbook` (regression guard for a removed route).
 - **Copilot CLI loads `.claude/*` config** alongside `.github/copilot/*`. Real compatibility feature, not an error.
 - **`.version-item` has a hardcoded green border** (`#2ab060`). `.info-box` uses `var(--accent)` but `.version-item` does not.
+- **Lock files and `*.lock.yml` gitattributes removed.** No agentic workflow compiles lock files anymore.
 - **`markdownlint.json` disables only MD013.** All other rules run at defaults.
 - **Playwright `webServer` runs build+preview**, not the dev server. Test failures can differ from dev behavior.
 - **`.playwright-mcp/` is auto-generated** (do not edit). **`opencode.json` loads `.github/instructions/*.md`** as agent instructions.
@@ -38,7 +38,7 @@ A single-page static site built with Astro 6, served under `/copilot-cli-handboo
 - **Content is user-actionable only.** "Can a user read this and go try it right now?"
 - **Terminology must match official GitHub sources.** No invented categories.
 - **`lastUpdated` frontmatter** uses "Month DD, YYYY at H:MM AM/PM TZ".
-- **Lock files are linguist-generated.** Edit the `.md` source only.
+- **Handbook updates are local-agent-driven.** No scheduled workflow; the procedure is in `.github/instructions/business-requirements.instructions.md`.
 - **No automatic lint in CI.** Run `npm run lint` before PRs.
 - **Prefer explicit `glob()` loaders** in `content.config.ts` per Content Layer API.
 - **External link checks tolerate 401/403** since GitHub Docs often block headless requests.
@@ -55,16 +55,15 @@ src/
 playwright-regression/
   site-regression.spec.ts      ← BFS crawl + link check + 404 guard
 .github/
-  copilot-instructions.md      ← Agent startup rules (symlinked as AGENTS.md)
-  instructions/                ← 2 path-specific instruction files
-  workflows/                    ← deploy, preview, regression, update-handbook
+  instructions/                ← Path-specific instruction files (astro, business-requirements)
+  workflows/                    ← deploy, preview-deploy, regression
 .playwright-mcp/                ← Auto-generated MCP snapshots (do not edit)
 astro.config.mjs               ← site + base path
 playwright.config.ts            ← baseURL + webServer (build+preview)
 opencode.json                  ← Loads .github/instructions/*.md
+AGENTS.md                       ← Copilot startup rules (root-level instructions)
 .nvmrc                          ← Node version
 .markdownlint.json              ← Only MD013 disabled
-.gitattributes                 ← *.lock.yml linguist-generated + merge=ours
 .husky/pre-commit               ← lint-staged
 tsconfig.json                   ← extends astro/tsconfigs/strict
 ```
@@ -90,10 +89,10 @@ tsconfig.json                   ← extends astro/tsconfigs/strict
 3. **Scripts** — Do all `npm run` commands still work?
 4. **Config values** — `astro.config.mjs` base/site, `playwright.config.ts` baseURL
 5. **Content structure** — Does `index.md` still use the two-layer source system?
-6. **Workflows** — CI triggers still accurate? Any `.lock.yml` files appeared?
+6. **Workflows** — CI triggers still accurate?
 7. **CSS** — Hardcoded colors still present? New variables?
 8. **Known gotchas** — All still true? New ones?
 
 ## Maintenance snapshot
 
-- Last verified: 2026-05-31. All dev deps pinned exact; lint-staged held at v16 (v17 blocked by phantom node requirement).
+- Last verified: 2026-06-08. Agentic workflow removed; handbook updates are local-agent-driven. All dev deps pinned exact; lint-staged held at v16. AGENTS.md is root-level.
