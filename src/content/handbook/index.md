@@ -52,7 +52,7 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `/keep-alive [on|busy|NUMBERm|NUMBERh]`, `/caffeinate [on|busy|NUMBERm|NUMBERh]` — Prevent the machine from sleeping while the session is active, while the agent is busy, or for a defined length of time. Now available without experimental mode. [Docs: slash commands][slash-commands] [Release: v1.0.36][release-1-0-36]
 - `/copy` — Copy the last response to the clipboard. [Docs: slash commands][slash-commands]
 - `/search [QUERY]`, `/find [QUERY]` — Search the conversation timeline. Only available in experimental mode. [Docs: slash commands][slash-commands]
-- `/tuikit [colors|icons|select|tabbar]` — Preview TUIkit design-system components and color tokens. [Docs: slash commands][slash-commands]
+- `/clikit [COMPONENT]` — Preview CLI business components (for example, quota info). [Docs: slash commands][slash-commands]
 - `/collect-debug-logs [file|gist] [PATH]` — Collect debug logs to an archive file or GitHub gist. [Docs: slash commands][slash-commands]
 - `/diagnose [PROMPT]` — Analyze the current session log and optionally prompt the agent with a question about diagnostics. [Docs: slash commands][slash-commands]
 - `/permissions [show|reset]` — View or clear in-memory tool and path approvals for the current session. [Docs: slash commands][slash-commands]
@@ -755,7 +755,7 @@ Recent official releases added or improved several user-facing CLI features.
 
 - `--mode`, `--autopilot`, and `--plan` flags to start directly in a specific agent mode. [Release: v1.0.23][release-1-0-23]
 - `Ctrl+L` clears the terminal screen without clearing the conversation session. [Release: v1.0.23][release-1-0-23]
-- `/diff`, `/agent`, `/feedback`, `/ide`, and `/tuikit` work while the agent is running. [Release: v1.0.23][release-1-0-23]
+- `/diff`, `/agent`, `/feedback`, `/ide`, and `/clikit` work while the agent is running. [Release: v1.0.23][release-1-0-23]
 
 ### v1.0.22
 
