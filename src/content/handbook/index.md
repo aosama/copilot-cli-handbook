@@ -1,7 +1,7 @@
 ---
 title: 'Copilot CLI Handbook'
 description: 'Custom instructions, commands, permissions, agents, hooks, configuration, and MCP for GitHub Copilot CLI'
-lastUpdated: 'June 3, 2026 at 11:06 PM EDT'
+lastUpdated: 'June 8, 2026 at 8:25 AM EDT'
 ---
 
 ## Instruction Files
@@ -15,11 +15,13 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `.github/instructions/**/*.instructions.md` for path-specific instructions. [How-to: custom instructions][custom-instructions]
 - `$HOME/.copilot/copilot-instructions.md` for local personal instructions. [How-to: custom instructions][custom-instructions]
 - `COPILOT_CUSTOM_INSTRUCTIONS_DIRS` to add extra directories where Copilot CLI looks for `AGENTS.md` and `.github/instructions/**/*.instructions.md`. [How-to: custom instructions][custom-instructions]
+- `CLAUDE.md` and `GEMINI.md` at the repository root as alternative agent instruction file locations. [Docs: CLI commands][cli-commands]
 - Custom instruction files in `.gitignored` directories (for example, `.github/instructions/`) now load correctly. [Release: v1.0.36][release-1-0-36]
+- Path-specific instruction files support an `excludeAgent` frontmatter keyword to exclude instructions from `code-review` or `cloud-agent`. [How-to: custom instructions][custom-instructions]
 
 ### Useful commands and flags
 
-- `/init` — Initialize Copilot custom instructions and agentic features for the repository. [Docs: slash commands][slash-commands]
+- `/init` — Initialize Copilot custom instructions and agentic features for the repository. `/init suppress` permanently hides the startup message for the current repository. [Docs: slash commands][slash-commands]
 - `copilot init` — Initialize Copilot custom instructions for the current repository. [Docs: CLI commands][cli-commands]
 - `--no-custom-instructions` — Start without loading `AGENTS.md` and related instruction files. [Docs: CLI options][cli-options]
 
@@ -44,13 +46,13 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `/cwd`, `/cd [PATH]` — Show or change the working directory. [Docs: slash commands][slash-commands] [Blog: slash commands][blog-slash-commands]
 - `/add-dir PATH` — Add a directory to the allowed file-access list. Accepts relative paths (e.g. `./src`, `../sibling`). [Docs: slash commands][slash-commands] [Blog: slash commands][blog-slash-commands] [Release: v1.0.25][release-1-0-25]
 - `/list-dirs` — Show directories that already have file access. [Docs: slash commands][slash-commands] [Blog: slash commands][blog-slash-commands]
-- `/ask` — Ask a quick question without affecting conversation history. `/ask` responses now render markdown, including tables and formatted links. [Release: v1.0.27][release-1-0-27] [Release: v1.0.37][release-1-0-37]
+- `/ask QUESTION` — Ask a quick question without affecting conversation history. Only available in experimental mode. `/ask` responses now render markdown, including tables and formatted links. [Release: v1.0.27][release-1-0-27] [Release: v1.0.37][release-1-0-37]
 - `/env` — Show loaded environment details: instructions, MCP servers, skills, agents, plugins, LSPs, and extensions. [Release: v1.0.25][release-1-0-25]
 - `/remote [on|off]` — Enable remote access to this session from GitHub.com and GitHub Mobile, or show current status. [How-to: remote steering][remote-steering] [Release: v1.0.25][release-1-0-25] [Release: v1.0.36][release-1-0-36]
 - `/keep-alive [on|busy|NUMBERm|NUMBERh]`, `/caffeinate [on|busy|NUMBERm|NUMBERh]` — Prevent the machine from sleeping while the session is active, while the agent is busy, or for a defined length of time. Now available without experimental mode. [Docs: slash commands][slash-commands] [Release: v1.0.36][release-1-0-36]
 - `/copy` — Copy the last response to the clipboard. [Docs: slash commands][slash-commands]
-- `/search [QUERY]`, `/find [QUERY]` — Search the conversation timeline (experimental). [Docs: slash commands][slash-commands]
-- `/clikit [COMPONENT]` — Preview CLI business components (for example, quota info). [Docs: slash commands][slash-commands]
+- `/search [QUERY]`, `/find [QUERY]` — Search the conversation timeline. Only available in experimental mode. [Docs: slash commands][slash-commands]
+- `/tuikit [colors|icons|select|tabbar]` — Preview TUIkit design-system components and color tokens. [Docs: slash commands][slash-commands]
 - `/collect-debug-logs [file|gist] [PATH]` — Collect debug logs to an archive file or GitHub gist. [Docs: slash commands][slash-commands]
 - `/diagnose [PROMPT]` — Analyze the current session log and optionally prompt the agent with a question about diagnostics. [Docs: slash commands][slash-commands]
 - `/permissions [show|reset]` — View or clear in-memory tool and path approvals for the current session. [Docs: slash commands][slash-commands]
@@ -107,12 +109,14 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `# NUMBER` — Include a GitHub issue or pull request in the context. [Release: v1.0.35][release-1-0-35]
 - `! COMMAND` — Run a shell command directly. Uses your `$SHELL` when set, instead of always invoking `/bin/sh`. [Docs: shortcuts][shortcuts] [Release: v1.0.35][release-1-0-35]
 - `?` — Open quick help (on an empty prompt). [Docs: shortcuts][shortcuts]
+- `Ctrl + X` then `E` — Edit the prompt in an external editor. [Docs: shortcuts][shortcuts]
 - `Ctrl + X` then `/` — Run a slash command after you already started typing. [Docs: shortcuts][shortcuts]
 - `Ctrl + X` then `B` — Move the current running task or shell command to the background. [Release: v1.0.39][release-1-0-39]
 - `Ctrl + X` then `O` — Open the most recent link from the timeline. [Docs: shortcuts][shortcuts]
 - `Shift + Tab` — Cycle between standard, plan, and autopilot mode. [Docs: shortcuts][shortcuts]
 - `Ctrl + Enter` or `Ctrl + Q` — Queue a message to send while the agent is busy. [Docs: shortcuts][shortcuts]
 - `Ctrl + R` — Reverse search through command history. [Docs: shortcuts][shortcuts]
+- `Ctrl + F` — Open timeline search. [Docs: timeline shortcuts][timeline-shortcuts]
 - `Ctrl + O`, `Ctrl + E`, `Ctrl + T` — Expand recent timeline items, expand all, or toggle reasoning display. `Ctrl + O` expands all items (same as `Ctrl + E`). [Docs: timeline shortcuts][timeline-shortcuts] [Release: v1.0.26][release-1-0-26]
 - `Ctrl + G` — Edit the prompt in an external editor. [Docs: navigation shortcuts][navigation-shortcuts]
 - `Ctrl + Y` — Accept the highlighted option in completion popups (in addition to Tab). [Release: v1.0.35][release-1-0-35]
@@ -121,21 +125,30 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `Ctrl + Z` — Suspend the process to the background (Unix). [Docs: shortcuts][shortcuts]
 - `Ctrl + V`, `Meta + V` — Paste image from clipboard on all platforms. [Release: v1.0.30][release-1-0-30]
 - `Alt + D` — Delete the word in front of the cursor. [Release: v1.0.25][release-1-0-25]
-- `Ctrl + A`, `Ctrl + E`, `Home`, `End` — Navigate to the start or end of a line or word in input. [Release: v1.0.35][release-1-0-35]
+- `Ctrl + A`, `Ctrl + E`, `Home`, `End` — Navigate to the start or end of a line. [Release: v1.0.35][release-1-0-35]
+- `Ctrl + B`, `Ctrl + F` — Move the cursor backward or forward one character. [Docs: navigation shortcuts][navigation-shortcuts]
+- `Ctrl + H` — Delete the previous character. [Docs: navigation shortcuts][navigation-shortcuts]
+- `Ctrl + K` — Delete from cursor to end of line. [Docs: navigation shortcuts][navigation-shortcuts]
+- `Ctrl + U` — Delete from cursor to beginning of line. [Docs: navigation shortcuts][navigation-shortcuts]
+- `Ctrl + W` — Delete the previous word. [Docs: navigation shortcuts][navigation-shortcuts]
+- `Ctrl + Home`, `Ctrl + End` — Jump to start or end of text. [Docs: navigation shortcuts][navigation-shortcuts]
+- `Alt + ←`, `Alt + →` — Move cursor by word. [Docs: navigation shortcuts][navigation-shortcuts]
 - `s` — In the session picker, cycle sort order (relevance, last used, created, or name). [Release: v1.0.37][release-1-0-37]
+- `Tab` — In the session picker, switch between local and remote tabs. [Docs: session picker][session-picker]
+- `d` — In the session picker, delete the selected session. [Docs: session picker][session-picker]
 
 ## Command-Line Commands and Flags
 
 ### Core commands
 
 - `copilot` — Launch the interactive interface. [Docs: CLI commands][cli-commands]
-- `copilot completion SHELL` — Generate a static shell completion script for `bash`, `zsh`, or `fish` (tab completion for subcommands, flags, and known values). [Docs: CLI commands][cli-commands] [Release: v1.0.37][release-1-0-37]
+- `copilot completion SHELL` — Generate a static shell completion script for `bash`, `zsh`, or `fish` (tab completion for subcommands, flags, and known values). Shell completions are also auto-installed on first run and updated after `copilot update`. [Docs: CLI commands][cli-commands] [Release: v1.0.37][release-1-0-37] [Release: v1.0.41][release-1-0-41]
 - `copilot help [topic]` — Show help for config, commands, environment, logging, monitoring, permissions, or providers. [Docs: CLI commands][cli-commands] [Release: v1.0.20][release-1-0-20]
 - `copilot init` — Initialize custom instructions for the current repository. [Docs: CLI commands][cli-commands]
 - `copilot update` — Download and install the latest version. [Docs: CLI commands][cli-commands]
 - `copilot version` — Show version information and check for updates. [Docs: CLI commands][cli-commands]
-- `copilot login`, `copilot logout` — Authenticate or remove credentials. `copilot login` accepts `--host HOST` for GitHub Enterprise. [Docs: CLI commands][cli-commands] [Release: v1.0.32][release-1-0-32]
-- `copilot mcp` — Manage MCP servers outside the interactive session. [Release: v1.0.21][release-1-0-21]
+- `copilot login`, `copilot logout` — Authenticate or remove credentials. `copilot login` accepts `--host HOST` for GitHub Enterprise. Supported token types: fine-grained PATs v2 (with "Copilot Requests" permission), OAuth tokens from Copilot CLI and `gh`, and OAuth tokens from the GitHub CLI app. Classic PATs (`ghp_`) are not supported. [Docs: CLI commands][cli-commands] [Release: v1.0.32][release-1-0-32]
+- `copilot mcp` — Manage MCP servers outside the interactive session. Subcommands: `list`, `get`, `add`, `remove`. [Release: v1.0.21][release-1-0-21] [Docs: MCP config][mcp]
 - `copilot plugin` — Manage plugins and plugin marketplaces outside the interactive session. [Docs: CLI commands][cli-commands]
 
 ### Automation and session control
@@ -180,9 +193,9 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `--screen-reader` — Enable screen-reader optimizations. [Docs: CLI options][cli-options]
 - `--no-color` — Disable all color output. [Docs: CLI options][cli-options]
 - `--stream=on|off` — Turn streaming output on or off. [Docs: CLI options][cli-options]
-- `--secret-env-vars=VAR` — Redact extra environment variables in output. [Docs: CLI options][cli-options]
+- `--secret-env-vars=VAR` — Redact environment variables from shell and MCP server environments. [Docs: CLI options][cli-options]
 - `--config-dir=PATH` — Override the config directory. Deprecated in favor of `COPILOT_HOME`. [Docs: CLI options][cli-options] [Release: v1.0.40][release-1-0-40]
-- `--bash-env`, `--no-bash-env` — Control `BASH_ENV` sourcing. [Docs: CLI options][cli-options]
+- `--bash-env`, `--no-bash-env` — Enable or disable `BASH_ENV` support for bash shells. [Docs: CLI options][cli-options]
 - `--experimental`, `--no-experimental` — Toggle experimental features. [Docs: CLI options][cli-options]
 - `--log-dir=DIRECTORY`, `--log-level=LEVEL` — Control CLI logging. [Docs: CLI options][cli-options]
 - `--no-auto-update` — Disable automatic updates. [Docs: CLI options][cli-options]
@@ -267,7 +280,7 @@ Settings cascade from broader scopes to narrower scopes. Command-line flags and 
 - `custom_agents.default_local_only` — Only use local custom agents. [Docs: user settings][user-settings]
 - `continueOnAutoMode` — Automatically switch to the `auto` model when rate-limited. [Release: v1.0.35][release-1-0-35]
 - `enabledFeatureFlags` — Enable or disable individual feature flags by name. [Docs: user settings][user-settings]
-- `permissions.disableBypassPermissionsMode` — Prevent enabling allow-all/yolo mode. [Release: v1.0.55][release-1-0-55]
+- `permissions.disableBypassPermissionsMode` — Prevent enabling allow-all/yolo mode. When set to `"disable"`, all allow-all flags are suppressed at startup. [Release: v1.0.55][release-1-0-55]
 - `builtInAgents.rubberDuck` — Enable or disable the rubber duck agent. [Release: v1.0.56][release-1-0-56]
 - `terminalProgress` — Enable or disable OSC 9;4 terminal progress indicators. [Release: v1.0.51][release-1-0-51]
 - `showTipsOnStartup` — Control whether startup tips are shown. [Release: v1.0.56][release-1-0-56]
@@ -339,7 +352,7 @@ CLI only reads `.mcp.json` for project-level MCP config. If a `.vscode/mcp.json`
 
 ### Built-in MCP servers
 
-- `github-mcp-server` — GitHub API actions such as issues, pull requests, commits, code search, and GitHub Actions. [Docs: built-in MCP][mcp-builtin]
+- `github-mcp-server` — GitHub API integration: issues, pull requests, labels, commits, code search, and GitHub Actions. Tools include `get_file_contents`, `search_code`, `list_issues`, `issue_read`, `search_issues`, `get_pull_request`, `list_pull_requests`, `get_pull_request_files`, `list_commits`, `get_commit`, `list_workflow_runs`, `get_workflow_run_logs`, `get_label`, `list_label`, `label_write`. [Docs: built-in MCP][mcp-builtin]
 - `playwright` — Browser automation. [Docs: built-in MCP][mcp-builtin]
 - `fetch` — HTTP requests. [Docs: built-in MCP][mcp-builtin]
 - `time` — Time utilities. [Docs: built-in MCP][mcp-builtin]
@@ -378,6 +391,10 @@ MCP servers can be installed from the registry with guided configuration directl
 
 All MCP tool calls still require explicit permission, including read-only calls against external services. [Docs: MCP trust][mcp-trust]
 
+MCP server names can contain any printable characters, including spaces and Unicode. Control characters and `}` are not allowed. Tool names are sanitized (invalid characters become `-`, Unicode is Punycode-encoded, 64-character limit). [Docs: MCP config][mcp]
+
+GitHub Enterprise organizations can enforce an MCP server allowlist. When active, the CLI evaluates each non-default server fingerprint against the enterprise policy before connecting. [Docs: MCP config][mcp]
+
 ## Skills and Custom Agents
 
 ### Skills
@@ -404,6 +421,8 @@ Useful frontmatter fields:
 - `allowed-tools` [Docs: skill frontmatter][skill-frontmatter]
 - `user-invocable` [Docs: skill frontmatter][skill-frontmatter]
 - `disable-model-invocation` [Docs: skill frontmatter][skill-frontmatter]
+
+Commands are an alternative skill format stored as individual `.md` files in `.claude/commands/`. The command name is derived from the filename. Command files use a simplified format (no `name` field required) and support `description`, `allowed-tools`, and `disable-model-invocation`. Commands have lower priority than skills with the same name. [Docs: skills][skills]
 
 Skill instructions persist correctly across conversation turns. [Release: v1.0.25][release-1-0-25]
 
@@ -436,6 +455,7 @@ Custom agent locations:
 
 Useful frontmatter fields:
 
+- `name` — Display name. Defaults to the filename. [Docs: agent frontmatter][agent-frontmatter]
 - `description` [Docs: agent frontmatter][agent-frontmatter]
 - `infer` [Docs: agent frontmatter][agent-frontmatter]
 - `model` — Accepts display names and vendor suffixes from VS Code (e.g. "Claude Sonnet 4.5", "GPT-5.4 (copilot)"). [Docs: agent frontmatter][agent-frontmatter] [Release: v1.0.24][release-1-0-24]
@@ -455,7 +475,7 @@ Useful environment variables include:
 - `COPILOT_EDITOR` — External editor command. [Docs: env vars][env-vars]
 - `COPILOT_CUSTOM_INSTRUCTIONS_DIRS` — Extra instruction directories. [Docs: env vars][env-vars]
 - `COPILOT_SKILLS_DIRS` — Extra skill directories. [Docs: env vars][env-vars]
-- `COPILOT_GITHUB_TOKEN`, `GH_TOKEN`, `GITHUB_TOKEN` — Authentication tokens. [Docs: env vars][env-vars]
+- `COPILOT_GITHUB_TOKEN`, `GH_TOKEN`, `GITHUB_TOKEN` — Authentication tokens. `COPILOT_GITHUB_TOKEN` takes precedence over `GH_TOKEN` and `GITHUB_TOKEN`. [Docs: env vars][env-vars]
 - `COPILOT_GH_HOST` — GitHub hostname. Takes precedence over `GH_HOST`. [Release: v1.0.35][release-1-0-35]
 - `GH_HOST` — Alternate GitHub host. [Release: v1.0.3][release-1-0-3]
 - `COPILOT_DISABLE_TERMINAL_TITLE` — Opt out of terminal title updates. [Release: v1.0.28][release-1-0-28]
@@ -485,6 +505,12 @@ Copilot CLI can export traces and metrics with OpenTelemetry. [Docs: OTel][otel]
 - It turns on when `COPILOT_OTEL_ENABLED=true`, `OTEL_EXPORTER_OTLP_ENDPOINT` is set, or `COPILOT_OTEL_FILE_EXPORTER_PATH` is set. [Docs: OTel][otel]
 - `OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=true` captures full prompts, responses, and tool payloads. [Docs: OTel content][otel-content]
 - Content capture can expose sensitive data and should only be enabled in trusted environments. [Docs: OTel content][otel-content]
+- `COPILOT_OTEL_EXPORTER_TYPE` — Exporter type: `otlp-http` (default) or `file`. Auto-selects `file` when `COPILOT_OTEL_FILE_EXPORTER_PATH` is set. [Docs: OTel][otel]
+- `OTEL_SERVICE_NAME` — Service name in resource attributes (default: `github-copilot`). [Docs: OTel][otel]
+- `OTEL_RESOURCE_ATTRIBUTES` — Extra resource attributes as comma-separated `key=value` pairs. [Docs: OTel][otel]
+- `COPILOT_OTEL_SOURCE_NAME` — Instrumentation scope name (default: `github.copilot`). [Docs: OTel][otel]
+- `OTEL_EXPORTER_OTLP_HEADERS` — Auth headers for the OTLP exporter. [Docs: OTel][otel]
+- `OTEL_LOG_LEVEL` — OTel diagnostic log level: `NONE`, `ERROR`, `WARN`, `INFO`, `DEBUG`, `VERBOSE`, `ALL`. [Docs: OTel][otel]
 - Select `auto` as your model to let Copilot automatically pick the best available model for each session. [Release: v1.0.32][release-1-0-32]
 - Warnings appear when approaching 75% and 90% of your weekly usage limit. [Release: v1.0.32][release-1-0-32]
 
@@ -866,6 +892,7 @@ Recent official releases added or improved several user-facing CLI features.
 [shortcuts]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#global-shortcuts-in-the-interactive-interface
 [timeline-shortcuts]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#timeline-shortcuts-in-the-interactive-interface
 [navigation-shortcuts]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#navigation-shortcuts-in-the-interactive-interface
+[session-picker]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#session-picker-shortcuts
 [cli-commands]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-commands
 [slash-commands]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
 [cli-options]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-options
