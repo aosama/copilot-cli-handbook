@@ -54,7 +54,6 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `/search [QUERY]`, `/find [QUERY]` — Search the conversation timeline. Only available in experimental mode. [Docs: slash commands][slash-commands]
 - `/clikit [COMPONENT]` — Preview CLI business components (for example, quota info). [Docs: slash commands][slash-commands]
 - `/collect-debug-logs [file|gist] [PATH]` — Collect debug logs to an archive file or GitHub gist. [Docs: slash commands][slash-commands]
-- `/diagnose [PROMPT]` — Analyze the current session log and optionally prompt the agent with a question about diagnostics. [Docs: slash commands][slash-commands]
 - `/permissions [show|reset]` — View or clear in-memory tool and path approvals for the current session. [Docs: slash commands][slash-commands]
 - `/sandbox [enable|disable]` — Configure shell command sandboxing. [Docs: slash commands][slash-commands]
 - `/on-air`, `/streamer-mode` — Toggle streamer mode (hides preview model names and quota details). [Docs: slash commands][slash-commands]
