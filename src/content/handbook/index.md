@@ -1,7 +1,7 @@
 ---
 title: 'Copilot CLI Handbook'
 description: 'Custom instructions, commands, permissions, agents, hooks, configuration, and MCP for GitHub Copilot CLI'
-lastUpdated: 'June 8, 2026 at 8:25 AM EDT'
+lastUpdated: 'June 15, 2026 at 7:30 PM EDT'
 ---
 
 ## Instruction Files
@@ -17,6 +17,7 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `COPILOT_CUSTOM_INSTRUCTIONS_DIRS` to add extra directories where Copilot CLI looks for `AGENTS.md` and `.github/instructions/**/*.instructions.md`. [How-to: custom instructions][custom-instructions]
 - `CLAUDE.md` and `GEMINI.md` at the repository root as alternative agent instruction file locations. [Docs: CLI commands][cli-commands]
 - Custom instruction files in `.gitignored` directories (for example, `.github/instructions/`) now load correctly. [Release: v1.0.36][release-1-0-36]
+- `$HOME/.copilot/instructions/**/*.instructions.md` for user-level path-specific instructions. `/help` lists this alongside other user-level instruction locations. [Release: v1.0.61][release-1-0-61]
 - Path-specific instruction files support an `excludeAgent` frontmatter keyword to exclude instructions from `code-review` or `cloud-agent`. [How-to: custom instructions][custom-instructions]
 
 ### Useful commands and flags
@@ -32,22 +33,22 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 ### Session and navigation
 
 - `/clear [PROMPT]`, `/new [PROMPT]`, `/reset [PROMPT]` — Start a new conversation. `/clear` keeps configured MCP servers in the new session; `/new` backgrounds the old session. Both accept an optional initial prompt. [Docs: slash commands][slash-commands] [Release: v1.0.11][release-1-0-11] [Release: v1.0.12][release-1-0-12] [Blog: slash commands][blog-slash-commands]
-- `/resume [SESSION-ID|NAME]` — Resume a previous session. Accepts short session ID prefixes (7+ hex characters) or session names. The session selector shows branch names, idle/in-use status, and supports cursor-based search. [Docs: slash commands][slash-commands] [Release: v1.0.32][release-1-0-32] [Release: v1.0.35][release-1-0-35]
+- `/resume [SESSION-ID|NAME]`, `/continue [SESSION-ID]` — Resume a previous session. Accepts short session ID prefixes (7+ hex characters) or session names. The session selector shows branch names, idle/in-use status, and supports cursor-based search. [Docs: slash commands][slash-commands] [Release: v1.0.32][release-1-0-32] [Release: v1.0.35][release-1-0-35]
 - `/undo`, `/rewind` — Undo the last turn and revert file changes, or open a timeline picker to roll back to any point in conversation history (also double-Esc). Double-Esc is required to cancel in-flight work, preventing accidental interruptions. [Docs: slash commands][slash-commands] [Release: v1.0.10][release-1-0-10] [Release: v1.0.13][release-1-0-13] [Release: v1.0.36][release-1-0-36]
-- `/session [info|checkpoints [n]|files|plan|rename [NAME]|cleanup|prune|delete [ID]|delete-all]`, `/sessions [info|checkpoints [n]|files|plan|rename [NAME]|cleanup|prune|delete [ID]|delete-all]` — Show session information and manage sessions. The session picker supports x-to-delete and `s` to cycle sort order. [Docs: slash commands][slash-commands] [Release: v1.0.35][release-1-0-35] [Release: v1.0.37][release-1-0-37]
+- `/session [info|checkpoints [n]|files|plan|rename [NAME]|cleanup|prune|delete [ID]|delete-all]`, `/sessions [info|checkpoints [n]|files|plan|rename [NAME]|cleanup|prune|delete [ID]|delete-all]` — Show session information and manage sessions. The `info` subcommand shows the session link (when remote exporting/steering) and Mission Control sharing status. `/sessions` navigates to the Sessions tab instead of an overlay. The session picker supports x-to-delete and `s` to cycle sort order. [Docs: slash commands][slash-commands] [Release: v1.0.35][release-1-0-35] [Release: v1.0.37][release-1-0-37] [Release: v1.0.60][release-1-0-60] [Release: v1.0.61][release-1-0-61]
 - `/rename [NAME]` — Rename the current session (auto-generates a name if omitted). [Docs: slash commands][slash-commands]
 - `/compact [FOCUS]` — Summarize history to reduce context usage. Accepts optional focus instructions to shape the compaction summary. [Docs: slash commands][slash-commands] [Release: v1.0.52][release-1-0-52]
-- `/every`, `/after` — Schedule prompts to run on an interval or after a delay (experimental). [Release: v1.0.58][release-1-0-58]
+- `/every [INTERVAL PROMPT]`, `/after [DELAY PROMPT]` — Schedule prompts, skills, or slash commands on an interval or after a delay (experimental). Accepts natural language, cron expressions, calendar times, or relative durations. Supports scheduling slash commands (e.g. `/every 1d /chronicle standup`). Open the schedule manager with no arguments. [Docs: slash commands][slash-commands] [Release: v1.0.58][release-1-0-58] [Release: v1.0.61][release-1-0-61] [Release: v1.0.62][release-1-0-62]
 - `/chronicle <standup|tips|improve|reindex|cost-tips|search>` — Session history tools and insights. [Docs: slash commands][slash-commands] [Release: v1.0.40][release-1-0-40] [Release: v1.0.49][release-1-0-49] [Release: v1.0.51][release-1-0-51]
 - `/autopilot` — Toggle between interactive and autopilot modes. Alias: `/goal`. [Release: v1.0.55][release-1-0-55]
 - `/fork [NAME]` — Fork the current session into a new independent session. Accepts an optional name. [Release: v1.0.45][release-1-0-45]
 - `/session id` — Display the current session ID and copy it to the clipboard. [Release: v1.0.49][release-1-0-49]
-- `/context` — Show context window usage. [Docs: slash commands][slash-commands]
+- `/context` — Show context window usage, including Custom Instructions separated from the system prompt and per-server MCP tool token costs. [Docs: slash commands][slash-commands] [Release: v1.0.60][release-1-0-60]
 - `/cwd`, `/cd [PATH]` — Show or change the working directory. [Docs: slash commands][slash-commands] [Blog: slash commands][blog-slash-commands]
 - `/add-dir PATH` — Add a directory to the allowed file-access list. Accepts relative paths (e.g. `./src`, `../sibling`). [Docs: slash commands][slash-commands] [Blog: slash commands][blog-slash-commands] [Release: v1.0.25][release-1-0-25]
 - `/list-dirs` — Show directories that already have file access. [Docs: slash commands][slash-commands] [Blog: slash commands][blog-slash-commands]
 - `/ask QUESTION` — Ask a quick question without affecting conversation history. Only available in experimental mode. `/ask` responses now render markdown, including tables and formatted links. [Release: v1.0.27][release-1-0-27] [Release: v1.0.37][release-1-0-37]
-- `/env` — Show loaded environment details: instructions, MCP servers, skills, agents, plugins, LSPs, and extensions. [Release: v1.0.25][release-1-0-25]
+- `/env` — Show loaded environment details: instructions, MCP servers, skills, agents, plugins, LSPs, extensions (status and source), hooks (hide internal hooks, show full file paths for hook sources and counts). [Release: v1.0.25][release-1-0-25] [Release: v1.0.55][release-1-0-55] [Release: v1.0.60][release-1-0-60] [Release: v1.0.61][release-1-0-61]
 - `/remote [on|off]` — Enable remote access to this session from GitHub.com and GitHub Mobile, or show current status. [How-to: remote steering][remote-steering] [Release: v1.0.25][release-1-0-25] [Release: v1.0.36][release-1-0-36]
 - `/keep-alive [on|busy|NUMBERm|NUMBERh]`, `/caffeinate [on|busy|NUMBERm|NUMBERh]` — Prevent the machine from sleeping while the session is active, while the agent is busy, or for a defined length of time. Now available without experimental mode. [Docs: slash commands][slash-commands] [Release: v1.0.36][release-1-0-36]
 - `/copy` — Copy the last response to the clipboard. [Docs: slash commands][slash-commands]
@@ -59,12 +60,17 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `/on-air`, `/streamer-mode` — Toggle streamer mode (hides preview model names and quota details). [Docs: slash commands][slash-commands]
 - `/restart` — Restart the CLI, preserving the current session. [Docs: slash commands][slash-commands]
 - `/exit [print]`, `/quit [print]` — Exit the CLI. `/exit print` prints the session to the terminal before exiting. [Docs: slash commands][slash-commands] [Release: v1.0.49][release-1-0-49]
+- `/settings [show|[KEY VALUE]|reset KEY]` — Open the interactive settings dialog, set a setting with inline KEY and VALUE, or reset to default. [Docs: slash commands][slash-commands] [Release: v1.0.61][release-1-0-61]
+- `/app` — Open the GitHub app or a browser fallback. [Release: v1.0.62][release-1-0-62]
+- `/subagents` (also `/agents`) — Configure subagent model, reasoning effort, and context tier via a picker. [Release: v1.0.62][release-1-0-62]
+- `/worktree [branch]`, `/move [branch]` — Create a new Git worktree and switch to it, moving uncommitted changes. Auto-generates name from conversation if omitted. Experimental only. [Docs: slash commands][slash-commands] [Release: v1.0.61][release-1-0-61]
+- `/tuikit [colors|icons|select|tabbar]` — Preview TUIkit design-system components and color tokens. [Docs: slash commands][slash-commands]
 
 - `/voice` — Dictate prompts using local speech-to-text models. [Release: v1.0.59][release-1-0-59]
 
 ### Planning, review, and collaboration
 
-- `/diff` — Review changes in the current directory. Defaults to branch diff when the working tree is clean. Also works while the agent is running. [Docs: slash commands][slash-commands] [Release: v1.0.23][release-1-0-23] [Release: v1.0.57][release-1-0-57]
+- `/diff` — Review changes in the current directory. Defaults to branch diff when the working tree is clean. Also works while the agent is running. Includes vim-style navigation (`g`, `G`, `Ctrl+D`, `Ctrl+U`), file tree sidebar, inline comment editor (`c` to comment, `s` for summary), content search (`/`) with match highlighting and `n`/`N` navigation, branch toggle (`b`), and refresh (`r`) for remote sessions. [Docs: slash commands][slash-commands] [Docs: diff mode][diff-mode] [Release: v1.0.23][release-1-0-23] [Release: v1.0.57][release-1-0-57] [Release: v1.0.60][release-1-0-60] [Release: v1.0.62][release-1-0-62]
 - `/review [PROMPT]` — Run the code review agent against your changes. [Docs: slash commands][slash-commands]
 - `/security-review` — Review code changes for security vulnerabilities. [Release: v1.0.51][release-1-0-51]
 - `/plan [PROMPT]` — Draft an implementation plan before editing. [Docs: slash commands][slash-commands]
@@ -106,7 +112,7 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 
 - `@ FILENAME` — Include file contents in the prompt context. Also supports attaching document files for the agent to read and reason about. [Docs: shortcuts][shortcuts] [Release: v1.0.32][release-1-0-32]
 - `# NUMBER` — Include a GitHub issue or pull request in the context. [Release: v1.0.35][release-1-0-35]
-- `! COMMAND` — Run a shell command directly. Uses your `$SHELL` when set, instead of always invoking `/bin/sh`. [Docs: shortcuts][shortcuts] [Release: v1.0.35][release-1-0-35]
+- `! COMMAND` — Run a shell command directly. Uses your `$SHELL` when set, instead of always invoking `/bin/sh`. Enter `!` alone on an empty prompt to enter shell mode; press `Esc` or `Ctrl + C` on an empty prompt to exit shell mode. [Docs: shortcuts][shortcuts] [Release: v1.0.35][release-1-0-35] [Release: v1.0.61][release-1-0-61]
 - `?` — Open quick help (on an empty prompt). [Docs: shortcuts][shortcuts]
 - `Ctrl + X` then `E` — Edit the prompt in an external editor. [Docs: shortcuts][shortcuts]
 - `Ctrl + X` then `/` — Run a slash command after you already started typing. [Docs: shortcuts][shortcuts]
@@ -118,11 +124,13 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `Ctrl + F` — Open timeline search. [Docs: timeline shortcuts][timeline-shortcuts]
 - `Ctrl + O`, `Ctrl + E`, `Ctrl + T` — Expand recent timeline items, expand all, or toggle reasoning display. `Ctrl + O` expands all items (same as `Ctrl + E`). [Docs: timeline shortcuts][timeline-shortcuts] [Release: v1.0.26][release-1-0-26]
 - `Ctrl + G` — Edit the prompt in an external editor. [Docs: navigation shortcuts][navigation-shortcuts]
+- `Ctrl + S` — Stash and pop the current prompt. The slash-command picker is still available by typing `/`. [Release: v1.0.60][release-1-0-60]
 - `Ctrl + Y` — Accept the highlighted option in completion popups (in addition to Tab). [Release: v1.0.35][release-1-0-35]
 - `Ctrl + Y` — In plan mode, open the most recent research report when no plan exists yet. [Release: v1.0.12][release-1-0-12]
 - `Ctrl + L`, `Ctrl + C`, `Ctrl + D` — Clear the screen, cancel the current operation, or shut down. [Docs: shortcuts][shortcuts]
 - `Ctrl + Z` — Suspend the process to the background (Unix). [Docs: shortcuts][shortcuts]
 - `Ctrl + V`, `Meta + V` — Paste image from clipboard on all platforms. [Release: v1.0.30][release-1-0-30]
+- `Cmd + Backspace` — Delete the line before the cursor on macOS. [Release: v1.0.60][release-1-0-60]
 - `Alt + D` — Delete the word in front of the cursor. [Release: v1.0.25][release-1-0-25]
 - `Ctrl + A`, `Ctrl + E`, `Home`, `End` — Navigate to the start or end of a line. [Release: v1.0.35][release-1-0-35]
 - `Ctrl + B`, `Ctrl + F` — Move the cursor backward or forward one character. [Docs: navigation shortcuts][navigation-shortcuts]
@@ -135,6 +143,10 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `s` — In the session picker, cycle sort order (relevance, last used, created, or name). [Release: v1.0.37][release-1-0-37]
 - `Tab` — In the session picker, switch between local and remote tabs. [Docs: session picker][session-picker]
 - `d` — In the session picker, delete the selected session. [Docs: session picker][session-picker]
+- `/` — In the diff view, search content with match highlighting and `n`/`N` navigation. [Docs: diff mode][diff-mode] [Release: v1.0.62][release-1-0-62]
+- `c` — In the diff view, add or edit an inline comment. [Docs: diff mode][diff-mode] [Release: v1.0.62][release-1-0-62]
+- `g`, `G`, `Ctrl + D`, `Ctrl + U` — In the diff view, vim-style navigation (first line, last line, half-page scroll). [Docs: diff mode][diff-mode] [Release: v1.0.60][release-1-0-60]
+- `W` — In the expanded issue or PR details view, create a git worktree. [Release: v1.0.62][release-1-0-62]
 
 ## Command-Line Commands and Flags
 
@@ -142,7 +154,7 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 
 - `copilot` — Launch the interactive interface. [Docs: CLI commands][cli-commands]
 - `copilot completion SHELL` — Generate a static shell completion script for `bash`, `zsh`, or `fish` (tab completion for subcommands, flags, and known values). Shell completions are also auto-installed on first run and updated after `copilot update`. [Docs: CLI commands][cli-commands] [Release: v1.0.37][release-1-0-37] [Release: v1.0.41][release-1-0-41]
-- `copilot help [topic]` — Show help for config, commands, environment, logging, monitoring, permissions, or providers. [Docs: CLI commands][cli-commands] [Release: v1.0.20][release-1-0-20]
+- `copilot help [topic]` — Show help for billing, config, commands, environment, logging, monitoring, permissions, or providers. [Docs: CLI commands][cli-commands] [Release: v1.0.20][release-1-0-20] [Release: v1.0.60][release-1-0-60]
 - `copilot init` — Initialize custom instructions for the current repository. [Docs: CLI commands][cli-commands]
 - `copilot update` — Download and install the latest version. [Docs: CLI commands][cli-commands]
 - `copilot version` — Show version information and check for updates. [Docs: CLI commands][cli-commands]
@@ -157,13 +169,13 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `-i, --interactive=PROMPT` — Start an interactive session and run an initial prompt. [Docs: CLI options][cli-options]
 - `--continue` — Resume the most recent session, preferring sessions from the current working directory. [Docs: CLI options][cli-options] [Release: v1.0.35][release-1-0-35]
 - `--name=NAME` — Set a session name on startup. [Release: v1.0.35][release-1-0-35]
-- `--resume=SESSION-ID|NAME` — Resume a specific session by ID or name. Accepts short session ID prefixes (7+ hex characters). [Docs: CLI options][cli-options] [Release: v1.0.32][release-1-0-32] [Release: v1.0.35][release-1-0-35]
+- `-r`, `--resume=SESSION-ID|NAME` — Resume a specific session by ID or name. Accepts short session ID prefixes (7+ hex characters). [Docs: CLI options][cli-options] [Release: v1.0.32][release-1-0-32] [Release: v1.0.35][release-1-0-35] [Release: v1.0.60][release-1-0-60]
 - `--mode=MODE` — Set the initial agent mode (`interactive`, `plan`, or `autopilot`). Cannot be combined with `--autopilot` or `--plan`. [Docs: CLI options][cli-options] [Release: v1.0.23][release-1-0-23]
 - `--agent=AGENT` — Pick a custom agent up front. [Docs: CLI options][cli-options]
 - `--autopilot` — Let Copilot continue autonomously in prompt mode. [Docs: CLI options][cli-options]
 - `--plan` — Start in plan mode. Shorthand for `--mode plan`. Cannot be combined with `--mode` or `--autopilot`. [Docs: CLI options][cli-options] [Release: v1.0.23][release-1-0-23]
 - `--max-autopilot-continues=COUNT` — Cap autonomous follow-up turns. [Docs: CLI options][cli-options]
-- `--reasoning-effort=LEVEL`, `--effort=LEVEL` — Set reasoning depth (`low`, `medium`, `high`). [Docs: CLI options][cli-options]
+- `--reasoning-effort=LEVEL`, `--effort=LEVEL` — Set reasoning depth (`low`, `medium`, `high`, `xhigh`, `max`). `max` is the highest-depth tier for Anthropic models. [Docs: CLI options][cli-options] [Release: v1.0.60][release-1-0-60]
 - `--enable-reasoning-summaries` — Request reasoning summaries for OpenAI models that support it. [Docs: CLI options][cli-options]
 - `--output-format=text|json` — Return plain text or JSONL output. [Docs: CLI options][cli-options]
 - `--share=PATH`, `--share-gist` — Export a programmatic session after it finishes. [Docs: CLI options][cli-options]
@@ -198,11 +210,11 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `--experimental`, `--no-experimental` — Toggle experimental features. [Docs: CLI options][cli-options]
 - `--log-dir=DIRECTORY`, `--log-level=LEVEL` — Control CLI logging. [Docs: CLI options][cli-options]
 - `--no-auto-update` — Disable automatic updates. [Docs: CLI options][cli-options]
-- `--remote`, `--no-remote` — Enable or disable remote access to this session from GitHub.com and GitHub Mobile. [How-to: remote steering][remote-steering] [Release: v1.0.25][release-1-0-25]
+- `--remote`, `--no-remote` — Enable or disable remote access to this session from GitHub.com and GitHub Mobile. Use `--remote` with `--resume <TASK-ID>` to resume a remote task locally, even outside a Git repository. [How-to: remote steering][remote-steering] [Release: v1.0.25][release-1-0-25]
 - `--connect[=SESSION-ID]` — Directly connect to a remote session, optionally specifying a session ID or task ID. [Release: v1.0.32][release-1-0-32]
 - `--print-debug-info` — Display version, terminal capabilities, and environment variables for debugging. [Release: v1.0.32][release-1-0-32]
 - `--session-idle-timeout` — Configure session idle timeout; disabled by default. [Release: v1.0.32][release-1-0-32]
-- `--mouse[=VALUE]`, `--no-mouse` — Enable or disable mouse support in alt screen mode. [Docs: CLI options][cli-options]
+- `--mouse[=VALUE]`, `--no-mouse` — Enable or disable mouse support in alt screen mode. VALUE can be `on` (default) or `off`. When enabled, captures mouse events (scroll, clicks). Persisted to your config file. [Docs: CLI options][cli-options]
 - `--plugin-dir=DIRECTORY` — Load a plugin from a local directory (can be used multiple times). [Docs: CLI options][cli-options]
 
 ### MCP and tooling flags
@@ -224,7 +236,7 @@ When Copilot CLI asks for permission, these one-key responses are available. [Do
 - `#` — Deny similar requests for the rest of the session. [Docs: permission approvals][permission-approvals]
 - `?` — Show more detail about the request. [Docs: permission approvals][permission-approvals]
 
-Tool rules use the `Kind(argument)` pattern. Deny rules always override allow rules. Available kinds include `shell`, `read`, `write`, `url`, `memory`, and `SERVER-NAME`. [Docs: tool rules][tool-rules]
+Tool rules use the `Kind(argument)` pattern. Deny rules always override allow rules. Available kinds include `shell`, `read`, `write`, `url`, `memory`, and `SERVER-NAME`. Shell commands that set dynamic-loader or git-config environment variables (e.g. `LD_PRELOAD`, `GIT_EXTERNAL_DIFF`) prompt for approval before running. [Docs: tool rules][tool-rules] [Release: v1.0.60][release-1-0-60]
 
 ```bash
 # Allow all git commands except git push
@@ -254,7 +266,7 @@ Settings cascade from broader scopes to narrower scopes. Command-line flags and 
 
 - `model` — Default model selection. Use `auto` to let Copilot pick the best available model. [Docs: user settings][user-settings] [Release: v1.0.32][release-1-0-32]
 - `theme` — `auto`, `dark`, or `light`. [Docs: user settings][user-settings]
-- `effortLevel` — `low`, `medium`, `high`, or `xhigh`. [Docs: user settings][user-settings]
+- `effortLevel` — `low`, `medium`, `high`, `xhigh`, or `max`. `max` is the highest-depth tier for Anthropic models. [Docs: user settings][user-settings] [Release: v1.0.60][release-1-0-60]
 - `experimental` — Enable experimental features by default. [Docs: user settings][user-settings]
 - `trusted_folders` — Pre-granted file access. [Docs: user settings][user-settings]
 - `allowed_urls`, `denied_urls` — URL allowlists and blocklists. [Docs: user settings][user-settings]
@@ -283,6 +295,10 @@ Settings cascade from broader scopes to narrower scopes. Command-line flags and 
 - `builtInAgents.rubberDuck` — Enable or disable the rubber duck agent. [Release: v1.0.56][release-1-0-56]
 - `terminalProgress` — Enable or disable OSC 9;4 terminal progress indicators. [Release: v1.0.51][release-1-0-51]
 - `showTipsOnStartup` — Control whether startup tips are shown. [Release: v1.0.56][release-1-0-56]
+- `remoteSessions` — Enable remote control by default for all interactive sessions. [How-to: remote steering][remote-steering]
+- `tabs` — Configure home tab bar visibility, order, and hidden tabs. [Release: v1.0.61][release-1-0-61]
+- `beepOnSchedule` — Disable completion beeps for scheduled `/every` and `/after` runs. [Release: v1.0.61][release-1-0-61]
+- `builtInAgents.rubberDuckAutoInvoke` — Control automatic rubber duck agent invocation (disabled by default). [Release: v1.0.60][release-1-0-60]
 
 ### Repository-level settings
 
@@ -344,7 +360,7 @@ Copilot CLI can load MCP servers from several places. [Docs: MCP config][mcp]
 ### Configuration sources
 
 - `~/.copilot/mcp-config.json` [Docs: MCP config][mcp]
-- `.github/mcp.json` [Docs: MCP trust][mcp-trust]
+- `.github/mcp.json` — Repository MCP configuration. Auto-loaded as a workspace config source. [Docs: MCP trust][mcp-trust] [Release: v1.0.61][release-1-0-61]
 - `.mcp.json` [Docs: MCP trust][mcp-trust]
 
 CLI only reads `.mcp.json` for project-level MCP config. If a `.vscode/mcp.json` is detected without a `.mcp.json`, a migration hint appears with a `jq` command to convert. [Release: v1.0.22][release-1-0-22]
@@ -370,6 +386,8 @@ CLI only reads `.mcp.json` for project-level MCP config. If a `.vscode/mcp.json`
 - `oidc: true` injects a `GITHUB_COPILOT_OIDC_MCP_TOKEN` env var (local) or `Bearer` Authorization header (remote). [Docs: MCP remote config][mcp-remote]
 - `filterMapping` controls output filtering: `hidden_characters` (default), `markdown`, or `none`. [Docs: MCP filter][mcp-filter]
 - `auth.redirectPort` — Pin the OAuth callback to a fixed port for MCP servers. [Release: v1.0.49][release-1-0-49]
+- MCP tools added or removed by a server mid-turn are available immediately in the same turn. [Release: v1.0.60][release-1-0-60]
+- MCP server config form uses a picker-based flow for easier setup. [Release: v1.0.62][release-1-0-62]
 
 ### MCP Tasks (experimental)
 
@@ -379,7 +397,7 @@ MCP tools with `taskSupport: "required"` run as non-blocking background agents, 
 
 MCP servers can be installed from the registry with guided configuration directly in the CLI. [Release: v1.0.25][release-1-0-25]
 
-- `/mcp search` — Search and install MCP servers from the registry (experimental). [Release: v1.0.49][release-1-0-49]
+- `/mcp search` — Search and install MCP servers from the registry (experimental). Works with external registries. [Release: v1.0.49][release-1-0-49] [Release: v1.0.61][release-1-0-61]
 
 ### Trust model
 
@@ -463,6 +481,12 @@ Useful frontmatter fields:
 - `skills` — Eagerly load skill content into agent context at startup. [Docs: agent frontmatter][agent-frontmatter] [Release: v1.0.22][release-1-0-22]
 - `deferred-tool-loading` — Enable tool-search discovery for agents with large tool lists. [Docs: agent frontmatter][agent-frontmatter] [Release: v1.0.52][release-1-0-52]
 
+Custom agents in nested `.github/agents` and `.claude/agents` directories are discovered when the session starts from a subdirectory of the repository root. [Release: v1.0.62][release-1-0-62]
+
+Plugins can ship extensions, installable via the plugin marketplace. Session-scoped extensions and canvases are also available. [Release: v1.0.62][release-1-0-62]
+
+Use `/settings` to browse and edit all user settings in an interactive dialog. [Docs: slash commands][slash-commands] [Release: v1.0.61][release-1-0-61]
+
 ## Environment Variables
 
 Useful environment variables include:
@@ -494,6 +518,7 @@ Useful environment variables include:
 - `USE_BUILTIN_RIPGREP` — Switch between bundled and system ripgrep. [Docs: env vars][env-vars]
 - `PLAIN_DIFF` — Disable rich diff rendering. [Docs: env vars][env-vars]
 - `COPILOT_ENABLE_HTTP2` — Set to `1` to opt into HTTP/2 networking transport (default is HTTP/1.1). [Release: v1.0.57][release-1-0-57]
+- `COPILOT_COMPUTER_USE_LINUX` — Set to opt into the `computer-use` MCP server on supported Linux distributions. Not available on Alpine Linux (musl libc). [Release: v1.0.60][release-1-0-60]
 
 ## Observability
 
@@ -516,6 +541,55 @@ Copilot CLI can export traces and metrics with OpenTelemetry. [Docs: OTel][otel]
 ## Recent Additions Worth Knowing
 
 Recent official releases added or improved several user-facing CLI features.
+
+### v1.0.62
+
+- Ask and elicitation dialogs now scroll with the timeline instead of taking over the screen. [Release: v1.0.62][release-1-0-62]
+- `/app` slash command to open the GitHub app or a browser fallback. [Release: v1.0.62][release-1-0-62]
+- `/subagents` (also `/agents`) picker to configure subagent model, reasoning effort, and context tier. [Release: v1.0.62][release-1-0-62]
+- `/diff` adds file tree sidebar, inline comment editor (`c` to comment, `s` for summary), and content search with match highlighting and `n`/`N` navigation. [Release: v1.0.62][release-1-0-62]
+- Shell commands now run via lightweight process spawning; interactive input via `write_bash` is no longer supported. [Release: v1.0.62][release-1-0-62]
+- YOLO (allow-all) indicator in the statusline footer and allow-all state in `statusLine.command`. [Release: v1.0.62][release-1-0-62]
+- MCP server config form uses a picker-based flow for easier setup. [Release: v1.0.62][release-1-0-62]
+- Plugins can ship extensions, installable via the plugin marketplace. [Release: v1.0.62][release-1-0-62]
+- Session-scoped extensions and canvases. [Release: v1.0.62][release-1-0-62]
+- Press `W` to create a worktree from the expanded issue or pull request details view. [Release: v1.0.62][release-1-0-62]
+- `/every` and `/after` can schedule slash commands (e.g. `/every 1d /chronicle standup`). [Release: v1.0.62][release-1-0-62]
+- Custom agents in nested `.github/agents` and `.claude/agents` directories are discovered when the session starts from a subdirectory. [Release: v1.0.62][release-1-0-62]
+- Press `/` in the Issues or Pull Requests tab to search GitHub with server-side filtering. [Release: v1.0.62][release-1-0-62]
+- GitHub themes meet WCAG AA accessibility standards for color contrast. [Release: v1.0.62][release-1-0-62]
+
+### v1.0.61
+
+- `/settings` interactive dialog to browse and edit all user settings in one place. Supports inline `KEY VALUE` and `reset KEY`. [Docs: slash commands][slash-commands] [Release: v1.0.61][release-1-0-61]
+- Auto-load MCP servers from `.github/mcp.json` workspace config file. [Release: v1.0.61][release-1-0-61]
+- Claude Fable 5 model support. [Release: v1.0.61][release-1-0-61]
+- `/every` and `/after` support natural language scheduling using cron expressions, calendar times, or relative durations. [Release: v1.0.61][release-1-0-61]
+- `tabs` setting to configure home tab bar visibility, order, and hidden tabs. [Release: v1.0.61][release-1-0-61]
+- `/worktree` (alias `/move`) creates a new git worktree and switches into it, moving uncommitted changes. Auto-generates name from conversation. Experimental only. [Docs: slash commands][slash-commands] [Release: v1.0.61][release-1-0-61]
+- Grep searches in large monorepos use an indexed search engine for significantly faster results. [Release: v1.0.61][release-1-0-61]
+- mTLS and private-CA support for OTLP telemetry export over HTTPS. [Release: v1.0.61][release-1-0-61]
+- `beepOnSchedule` setting to disable completion beeps for scheduled runs. [Release: v1.0.61][release-1-0-61]
+- GitHub theme adapts to light terminals with a Primer light color palette. [Release: v1.0.61][release-1-0-61]
+- Shell mode: enter with `!` alone on an empty prompt, exit with Esc or Ctrl+C on empty prompt. [Docs: shortcuts][shortcuts] [Release: v1.0.61][release-1-0-61]
+
+### v1.0.60
+
+- `--effort max` / `--reasoning-effort max` for the highest-depth Anthropic reasoning tier. [Docs: CLI options][cli-options] [Release: v1.0.60][release-1-0-60]
+- `builtInAgents.rubberDuckAutoInvoke` setting to control automatic rubber duck agent invocation (disabled by default). [Release: v1.0.60][release-1-0-60]
+- `Ctrl+S` stashes and pops the current prompt; slash-command picker still available by typing `/`. [Release: v1.0.60][release-1-0-60]
+- `-r` shorthand for `--resume`. [Docs: CLI options][cli-options] [Release: v1.0.60][release-1-0-60]
+- Vim-style navigation keys (`g`, `G`, `Ctrl+D`, `Ctrl+U`) in the `/diff` view. [Release: v1.0.60][release-1-0-60]
+- `/context` separates Custom Instructions from the system prompt and cross-references MCP tool token costs. [Docs: slash commands][slash-commands] [Release: v1.0.60][release-1-0-60]
+- `copilot help billing` — Billing help topic with AI credit usage overview. [Docs: CLI commands][cli-commands] [Release: v1.0.60][release-1-0-60]
+- `COPILOT_COMPUTER_USE_LINUX` env var to opt into the computer-use MCP server on supported Linux. [Release: v1.0.60][release-1-0-60]
+- Rewind picker shows working-tree diff stats (`+added −removed`) at each checkpoint. [Release: v1.0.60][release-1-0-60]
+- MCP tools added or removed by a server mid-turn are available immediately in the same turn. [Release: v1.0.60][release-1-0-60]
+- `permissions.disableBypassPermissionsMode` now also enforces `--allow-all-tools`, `--allow-all-paths`, and `--allow-all-urls`. [Release: v1.0.60][release-1-0-60]
+- `/usage` shows cache write tokens alongside cache read tokens. [Release: v1.0.60][release-1-0-60]
+- Typing `help` at an empty prompt opens the quick-help overlay. [Release: v1.0.60][release-1-0-60]
+- Bare `#number` issue and PR references auto-link to the current git repository. [Release: v1.0.60][release-1-0-60]
+- Prompt for approval before running commands that set dynamic-loader or git-config env vars (e.g. `LD_PRELOAD`, `GIT_EXTERNAL_DIFF`). [Release: v1.0.60][release-1-0-60]
 
 ### v1.0.59
 
@@ -846,6 +920,9 @@ Recent official releases added or improved several user-facing CLI features.
 - [From idea to pull request: A practical guide to building with GitHub Copilot CLI](https://github.blog/ai-and-ml/github-copilot/from-idea-to-pull-request-a-practical-guide-to-building-with-github-copilot-cli/)
 - [Run multiple agents at once with /fleet in Copilot CLI](https://github.blog/ai-and-ml/github-copilot/run-multiple-agents-at-once-with-fleet-in-copilot-cli/)
 - [GitHub Copilot CLI releases: v1.0.43](https://github.com/github/copilot-cli/releases/tag/v1.0.43)
+- [GitHub Copilot CLI releases: v1.0.62](https://github.com/github/copilot-cli/releases/tag/v1.0.62)
+- [GitHub Copilot CLI releases: v1.0.61](https://github.com/github/copilot-cli/releases/tag/v1.0.61)
+- [GitHub Copilot CLI releases: v1.0.60](https://github.com/github/copilot-cli/releases/tag/v1.0.60)
 - [GitHub Copilot CLI releases: v1.0.42](https://github.com/github/copilot-cli/releases/tag/v1.0.42)
 - [GitHub Copilot CLI releases: v1.0.41](https://github.com/github/copilot-cli/releases/tag/v1.0.41)
 - [GitHub Copilot CLI releases: v1.0.40](https://github.com/github/copilot-cli/releases/tag/v1.0.40)
@@ -891,6 +968,7 @@ Recent official releases added or improved several user-facing CLI features.
 [shortcuts]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#global-shortcuts-in-the-interactive-interface
 [timeline-shortcuts]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#timeline-shortcuts-in-the-interactive-interface
 [navigation-shortcuts]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#navigation-shortcuts-in-the-interactive-interface
+[diff-mode]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#diff-mode-shortcuts
 [session-picker]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#session-picker-shortcuts
 [cli-commands]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#command-line-commands
 [slash-commands]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#slash-commands-in-the-interactive-interface
@@ -932,6 +1010,9 @@ Recent official releases added or improved several user-facing CLI features.
 [release-1-0-57]: https://github.com/github/copilot-cli/releases/tag/v1.0.57
 [release-1-0-58]: https://github.com/github/copilot-cli/releases/tag/v1.0.58
 [release-1-0-59]: https://github.com/github/copilot-cli/releases/tag/v1.0.59
+[release-1-0-60]: https://github.com/github/copilot-cli/releases/tag/v1.0.60
+[release-1-0-61]: https://github.com/github/copilot-cli/releases/tag/v1.0.61
+[release-1-0-62]: https://github.com/github/copilot-cli/releases/tag/v1.0.62
 [release-1-0-55]: https://github.com/github/copilot-cli/releases/tag/v1.0.55
 [release-1-0-52]: https://github.com/github/copilot-cli/releases/tag/v1.0.52
 [release-1-0-51]: https://github.com/github/copilot-cli/releases/tag/v1.0.51

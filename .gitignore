@@ -144,6 +144,7 @@ vite.config.ts.timestamp-*
 # Playwright
 test-results/
 playwright-report/
+.playwright-mcp/
 
 # gh aw compile cache
 .github/aw/
