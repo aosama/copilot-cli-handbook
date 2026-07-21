@@ -1,7 +1,7 @@
 ---
 title: 'Copilot CLI Handbook'
 description: 'Custom instructions, commands, permissions, agents, hooks, configuration, and MCP for GitHub Copilot CLI'
-lastUpdated: 'June 15, 2026 at 7:30 PM EDT'
+lastUpdated: 'July 21, 2026 at 10:00 AM EDT'
 ---
 
 ## Instruction Files
@@ -39,7 +39,7 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `/rename [NAME]` — Rename the current session (auto-generates a name if omitted). [Docs: slash commands][slash-commands]
 - `/compact [FOCUS]` — Summarize history to reduce context usage. Accepts optional focus instructions to shape the compaction summary. [Docs: slash commands][slash-commands] [Release: v1.0.52][release-1-0-52]
 - `/every [INTERVAL PROMPT]`, `/after [DELAY PROMPT]` — Schedule prompts, skills, or slash commands on an interval or after a delay (experimental). Accepts natural language, cron expressions, calendar times, or relative durations. Supports scheduling slash commands (e.g. `/every 1d /chronicle standup`). Open the schedule manager with no arguments. [Docs: slash commands][slash-commands] [Release: v1.0.58][release-1-0-58] [Release: v1.0.61][release-1-0-61] [Release: v1.0.62][release-1-0-62]
-- `/chronicle <standup|tips|improve|reindex|cost-tips|search>` — Session history tools and insights. [Docs: slash commands][slash-commands] [Release: v1.0.40][release-1-0-40] [Release: v1.0.49][release-1-0-49] [Release: v1.0.51][release-1-0-51]
+- `/chronicle <standup|tips|improve|reindex|cost-tips|search|skills create|skills review|skills status>` — Session history tools and insights. The `skills` subcommands draft, review, and track the status of repository skill proposals generated from observed usage. [Docs: slash commands][slash-commands] [Release: v1.0.40][release-1-0-40] [Release: v1.0.49][release-1-0-49] [Release: v1.0.51][release-1-0-51] [Release: v1.0.71][release-1-0-71]
 - `/autopilot` — Toggle between interactive and autopilot modes. Alias: `/goal`. [Release: v1.0.55][release-1-0-55]
 - `/fork [NAME]` — Fork the current session into a new independent session. Accepts an optional name. [Release: v1.0.45][release-1-0-45]
 - `/session id` — Display the current session ID and copy it to the clipboard. [Release: v1.0.49][release-1-0-49]
@@ -56,17 +56,18 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `/clikit [COMPONENT]` — Preview CLI business components (for example, quota info). [Docs: slash commands][slash-commands]
 - `/collect-debug-logs [file|gist] [PATH]` — Collect debug logs to an archive file or GitHub gist. [Docs: slash commands][slash-commands]
 - `/permissions [show|reset]` — View or clear in-memory tool and path approvals for the current session. [Docs: slash commands][slash-commands]
-- `/sandbox [enable|disable]` — Configure shell command sandboxing. [Docs: slash commands][slash-commands]
+- `/sandbox [enable|disable]` — Configure OS-level sandboxing that restricts filesystem and network access for shell commands, MCP/LSP servers, and built-in file/URL access. macOS keychain access defaults off for tighter isolation; re-enable in `/sandbox` if needed. Deleting an MCP server with `/mcp delete` stops its running background process. Toggling `/sandbox` restarts only local MCP servers. Opt-in git and gh authentication inside the OS sandbox. Command approvals no longer carry over to another repository after you switch with `/cd`. [Docs: slash commands][slash-commands] [Release: v1.0.63][release-1-0-63] [Release: v1.0.72][release-1-0-72]
 - `/on-air`, `/streamer-mode` — Toggle streamer mode (hides preview model names and quota details). [Docs: slash commands][slash-commands]
 - `/restart` — Restart the CLI, preserving the current session. [Docs: slash commands][slash-commands]
 - `/exit [print]`, `/quit [print]` — Exit the CLI. `/exit print` prints the session to the terminal before exiting. [Docs: slash commands][slash-commands] [Release: v1.0.49][release-1-0-49]
-- `/settings [show|[KEY VALUE]|reset KEY]` — Open the interactive settings dialog, set a setting with inline KEY and VALUE, or reset to default. [Docs: slash commands][slash-commands] [Release: v1.0.61][release-1-0-61]
+- `/settings [--repo|--local] [show|[KEY VALUE]|reset KEY]` — Open the interactive settings dialog, set a setting with inline KEY and VALUE, or reset to default. Use `--repo` or `--local` to target repository or local settings scopes. [Docs: slash commands][slash-commands] [Release: v1.0.61][release-1-0-61] [Release: v1.0.71][release-1-0-71]
 - `/app` — Open the GitHub app or a browser fallback. [Release: v1.0.62][release-1-0-62]
 - `/subagents` (also `/agents`) — Configure subagent model, reasoning effort, and context tier via a picker. [Release: v1.0.62][release-1-0-62]
-- `/worktree [branch]`, `/move [branch]` — Create a new Git worktree and switch to it, moving uncommitted changes. Auto-generates name from conversation if omitted. Experimental only. [Docs: slash commands][slash-commands] [Release: v1.0.61][release-1-0-61]
+- `/worktree [branch|task]` — Create a new Git worktree and switch to it, leaving uncommitted changes behind. Auto-generates name from conversation if omitted. Experimental only. [Docs: slash commands][slash-commands] [Release: v1.0.61][release-1-0-61] [Release: v1.0.71][release-1-0-71]
+- `/move [branch|task]` — Move uncommitted changes into a new Git worktree and switch to it. Auto-generates name from conversation. Experimental only. [Docs: slash commands][slash-commands] [Release: v1.0.71][release-1-0-71]
 - `/tuikit [colors|icons|select|tabbar]` — Preview TUIkit design-system components and color tokens. [Docs: slash commands][slash-commands]
 
-- `/voice` — Dictate prompts using local speech-to-text models. [Release: v1.0.59][release-1-0-59]
+- `/voice [on|off|models|devices]` — Toggle voice mode, browse available voice models, or choose the input device (microphone). [Release: v1.0.59][release-1-0-59] [Release: v1.0.71][release-1-0-71]
 
 ### Planning, review, and collaboration
 
@@ -78,7 +79,7 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `/share [file|gist|html] [session|research] [PATH]`, `/export [file|gist|html] [session|research] [PATH]` — Export the current session or research report to Markdown, a secret gist, or a self-contained interactive HTML file. [Docs: slash commands][slash-commands] [Release: v1.0.15][release-1-0-15] [Release: v1.0.25][release-1-0-25]
 - `/research TOPIC` — Run a deep research investigation using GitHub search and web sources. [Docs: research][research-docs]
 - `/changelog [SUMMARIZE] [VERSION|last N|since VERSION]`, `/release-notes [SUMMARIZE] [VERSION|last N|since VERSION]` — Display the CLI changelog with an optional AI-generated summary. [Docs: slash commands][slash-commands] [Release: v1.0.5][release-1-0-5]
-- `/pr [view|create|fix|auto]` — Operate on pull requests for the current branch. [Docs: slash commands][slash-commands] [Release: v1.0.5][release-1-0-5]
+- `/pr [view|create|fix|auto|automerge]` — Operate on pull requests for the current branch; `automerge` (alias `agentmerge`) drives the pull request to green and merges. [Docs: slash commands][slash-commands] [Release: v1.0.5][release-1-0-5]
 - `/rubber-duck` — Invoke the rubber duck agent for an independent critique of proposals, designs, implementations, or tests (experimental). [Release: v1.0.49][release-1-0-49]
 
 ### Agents, models, skills, and plugins
@@ -86,11 +87,11 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `/agent` — Choose from available agents. Also works while the agent is running. [Docs: slash commands][slash-commands] [How-to: custom agents][custom-agents-howto] [Release: v1.0.23][release-1-0-23]
 - `/fleet [PROMPT]` — Run parts of a task in parallel with subagents. [Docs: slash commands][slash-commands] [How-to: /fleet][fleet-howto]
 - `/tasks` — Inspect background tasks and subagent work created in the current session. [How-to: /fleet][fleet-howto]
-- `/model`, `/models [MODEL]` — View or change the active model. Use `auto` to let Copilot pick the best available model for each session. [Docs: slash commands][slash-commands] [Blog: slash commands][blog-slash-commands] [Release: v1.0.32][release-1-0-32]
+- `/model`, `/models [MODEL]` — View or change the active model. Use `auto` to let Copilot pick the best available model for each session. Use `--session` (`-s`) to change the model, reasoning effort, or context window for just the current session, leaving global settings unchanged. [Docs: slash commands][slash-commands] [Blog: slash commands][blog-slash-commands] [Release: v1.0.32][release-1-0-32] [Release: v1.0.72][release-1-0-72]
 - `/memory on|off|show` — Enable, disable, or view memory status (persistent). [Release: v1.0.49][release-1-0-49]
 - `/skills [list|info|add|remove|reload] [ARGS...]` — Manage skills. [Docs: slash commands][slash-commands]
 - `/instructions` — View and toggle custom instruction files. [Docs: slash commands][slash-commands]
-- `/plugin [marketplace|install|uninstall|update|list] [ARGS...]` — Manage plugins and plugin marketplaces. [Docs: slash commands][slash-commands]
+- `/plugin [marketplace|install|uninstall|update|list] [ARGS...]` — Manage plugins and plugin marketplaces. Marketplace commands: `add SOURCE`, `remove NAME`, `list`, `browse NAME`, `update`. Also supports `help`, `enable`, `disable`, `remove` with `--plugin`/`--mcp`/`--skill` flags, and `install --skill` for skills. [Docs: slash commands][slash-commands] [Release: v1.0.71][release-1-0-71] [Release: v1.0.72][release-1-0-72]
 
 ### Tools, account, and setup
 
@@ -106,6 +107,10 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `/update`, `/upgrade`, `/version` — Check for updates and show version information, honoring your configured update channel. Shows download progress during the update process. Add optional `prerelease` argument to fetch the latest prerelease build. [Docs: slash commands][slash-commands] [Release: v1.0.35][release-1-0-35] [Release: v1.0.43][release-1-0-43] [Release: v1.0.44][release-1-0-44]
 - `/downgrade <VERSION>` — Download and restart into a specific CLI version. Available for team accounts. [Docs: slash commands][slash-commands]
 - `/extensions [manage|mode]` — Manage CLI extensions. [Docs: slash commands][slash-commands]
+- `/limits` — Open the interactive response limits dialog. [Docs: slash commands][slash-commands]
+- `/limits set max-ai-credits VALUE` — Set a soft maximum for AI Credits allowed per response. Response limits are soft limits that reset for each user message. [Docs: slash commands][slash-commands]
+- `/limits unset [max-ai-credits|all]` — Remove a specific response limit, or all response limits. [Docs: slash commands][slash-commands]
+- `/refine [TEXT]` — Rewrite a roughly composed prompt into a clear one for review. Run with no arguments (via `Ctrl + X` then `/refine`) to clean up the current input box. Can be particularly useful for prompts entered by speaking. [Docs: slash commands][slash-commands]
 - `/help`, `/feedback`, `/usage`, `/theme [default|dim|high-contrast|colorblind]`, `/experimental` — Session help, reporting, usage, UI, and feature toggles. `/theme` includes a GitHub theme option (experimental). `/feedback` and `/experimental` also work while the agent is running. [Docs: slash commands][slash-commands] [Blog: slash commands][blog-slash-commands] [Release: v1.0.23][release-1-0-23] [Release: v1.0.58][release-1-0-58]
 
 ### Keyboard shortcuts
@@ -184,6 +189,7 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `-C=PATH`, `--cwd=PATH` — Change working directory before starting, similar to `git -C`. [Release: v1.0.42][release-1-0-42]
 - `--session-id=ID` — Resume known sessions/tasks or start new sessions with a specific UUID. [Release: v1.0.51][release-1-0-51]
 - `--attachment` — Attach files (images or native documents) to the initial prompt in non-interactive (`-p`) mode. [Docs: CLI options][cli-options] [Release: v1.0.41][release-1-0-41]
+- `--context` — Set context window size; now honored in fresh interactive sessions. [Release: v1.0.71][release-1-0-71]
 
 ### Permissions and safety
 
@@ -194,7 +200,7 @@ Copilot CLI can load repository, path-specific, agent, and local instructions fr
 - `--available-tools=TOOL`, `--excluded-tools=TOOL` — Reduce the tool surface available to the model. [Docs: CLI options][cli-options]
 - `--disallow-temp-dir` — Block automatic access to the system temp directory. [Docs: CLI options][cli-options]
 - `--disable-parallel-tools-execution` — Execute tools sequentially even when the model makes parallel calls. [Docs: CLI options][cli-options]
-- `--sandbox=enable|disable` — Configure shell command sandboxing. [Docs: CLI options][cli-options]
+- `--sandbox=enable|disable` — Configure OS-level sandboxing that restricts filesystem and network access for shell commands, MCP/LSP servers, and built-in file/URL access. [Docs: CLI options][cli-options] [Release: v1.0.63][release-1-0-63] [Release: v1.0.72][release-1-0-72]
 
 ### UI, output, and logging
 
@@ -299,6 +305,13 @@ Settings cascade from broader scopes to narrower scopes. Command-line flags and 
 - `tabs` — Configure home tab bar visibility, order, and hidden tabs. [Release: v1.0.61][release-1-0-61]
 - `beepOnSchedule` — Disable completion beeps for scheduled `/every` and `/after` runs. [Release: v1.0.61][release-1-0-61]
 - `builtInAgents.rubberDuckAutoInvoke` — Control automatic rubber duck agent invocation (disabled by default). [Release: v1.0.60][release-1-0-60]
+- `renderHexColors` — Show hex color codes written as inline code (e.g. `#FF0000`) as color swatches (on by default). [Release: v1.0.72][release-1-0-72]
+- `shellShortcut` — Enable `$` at the prompt to open an interactive shell in the current session directory (off by default). [Release: v1.0.72][release-1-0-72]
+- `pinned` — Pinned prompts setting in `/settings` to control prompt pinning. [Release: v1.0.71][release-1-0-71]
+- `subagents.maxDepth` — Override the default maximum sub-agent nesting depth (default `4`, range 1–128 for usage-based billing). [Release: v1.0.71][release-1-0-71]
+- `subagents.maxConcurrency` — Override the maximum concurrent subagents. [Release: v1.0.71][release-1-0-71]
+- `githubMcpToolsets` — Persist GitHub MCP toolset config. [Release: v1.0.71][release-1-0-71]
+- `githubMcpTools` — Persist GitHub MCP tool config. [Release: v1.0.71][release-1-0-71]
 
 ### Repository-level settings
 
@@ -388,6 +401,7 @@ CLI only reads `.mcp.json` for project-level MCP config. If a `.vscode/mcp.json`
 - `auth.redirectPort` — Pin the OAuth callback to a fixed port for MCP servers. [Release: v1.0.49][release-1-0-49]
 - MCP tools added or removed by a server mid-turn are available immediately in the same turn. [Release: v1.0.60][release-1-0-60]
 - MCP server config form uses a picker-based flow for easier setup. [Release: v1.0.62][release-1-0-62]
+- `deferTools` option in MCP server config keeps a server's tools always available, even when tool search is enabled. [Release: v1.0.63][release-1-0-63]
 
 ### MCP Tasks (experimental)
 
@@ -519,6 +533,7 @@ Useful environment variables include:
 - `PLAIN_DIFF` — Disable rich diff rendering. [Docs: env vars][env-vars]
 - `COPILOT_ENABLE_HTTP2` — Set to `1` to opt into HTTP/2 networking transport (default is HTTP/1.1). [Release: v1.0.57][release-1-0-57]
 - `COPILOT_COMPUTER_USE_LINUX` — Set to opt into the `computer-use` MCP server on supported Linux distributions. Not available on Alpine Linux (musl libc). [Release: v1.0.60][release-1-0-60]
+- `COPILOT_TASK_WAIT_TIMEOUT_SECONDS` — Timeout for waiting on background shell or agent processes in prompt mode. [Release: v1.0.71][release-1-0-71]
 
 ## Observability
 
@@ -541,6 +556,108 @@ Copilot CLI can export traces and metrics with OpenTelemetry. [Docs: OTel][otel]
 ## Recent Additions Worth Knowing
 
 Recent official releases added or improved several user-facing CLI features.
+
+### v1.0.73
+
+- Anthropic subagents continue working when additional directories are configured. [Release: v1.0.73][release-1-0-73]
+- Resolve relative links in custom agent instructions from the agent file location. [Release: v1.0.73][release-1-0-73]
+
+### v1.0.72
+
+- An `agentStop` hook that always blocks no longer loops indefinitely: the CLI now ends the turn after 8 consecutive blocks, and `agentStop` hooks receive a `stop_hook_active` flag so they can detect a forced continuation and self-limit. [Release: v1.0.72][release-1-0-72]
+- Opt-in git and gh authentication inside the OS sandbox. [Release: v1.0.72][release-1-0-72]
+- Sandbox macOS keychain access now defaults off for tighter isolation; re-enable it in `/sandbox` if a command needs it. [Release: v1.0.72][release-1-0-72]
+- Lifecycle and subagent hook commands run in the current session directory after `/cd`. [Release: v1.0.72][release-1-0-72]
+- Deleting an MCP server with `/mcp delete` stops its running background process. [Release: v1.0.72][release-1-0-72]
+- Toggling `/sandbox` restarts only local MCP servers and leaves remote servers connected. [Release: v1.0.72][release-1-0-72]
+- Command approvals no longer carry over to another repository after you switch with `/cd`. [Release: v1.0.72][release-1-0-72]
+- The GitHub tab's "Open in web" action now reliably launches your browser on Windows. [Release: v1.0.72][release-1-0-72]
+- Preserve pasted prompt content when changing models through `Ctrl+X /model`. [Release: v1.0.72][release-1-0-72]
+- `/worktree` and `/move` no longer fail to create a worktree for an auto-generated branch name when many similarly-named branches or a leftover worktree directory already exist. [Release: v1.0.72][release-1-0-72]
+- `Update`, `uninstall`, `enable`, `disable`, and `remove` verbs added to `/plugins`, targeting plugins, MCP servers, or skills via `--plugin`/`--mcp`/`--skill` flags or a positional kind. `Install` supports skills with `/plugins install --skill`. [Release: v1.0.72][release-1-0-72]
+- `/plugins help` command for full help plus skill, MCP, and marketplace management for full `/plugin` parity. [Release: v1.0.72][release-1-0-72]
+- `--plugin`, `--mcp`, and `--skill` flags for plugin mutations. [Release: v1.0.72][release-1-0-72]
+- Skill removal support via `copilot plugins remove --skill`. [Release: v1.0.72][release-1-0-72]
+- Session exports keep angle brackets intact in inline code and top-level fenced code blocks. [Release: v1.0.72][release-1-0-72]
+- Type `$` at the prompt to open an interactive shell in the current session directory (enable with `/settings shellShortcut on`; off by default). [Release: v1.0.72][release-1-0-72]
+- `copilot skill list` strips terminal control characters from skill names and descriptions. [Release: v1.0.72][release-1-0-72]
+- Install skills from the CLI with `copilot plugins install --skill <file, URL, or directory>` (add `--scope project` to install into the repository). [Release: v1.0.72][release-1-0-72]
+- Show default values in `/settings` and let booleans cycle back to default. [Release: v1.0.72][release-1-0-72]
+- Require SSO for remote control when managed settings demand it. [Release: v1.0.72][release-1-0-72]
+- Mask secret values in `/settings show` output. [Release: v1.0.72][release-1-0-72]
+- Show hex color codes written as inline code as color swatches, and add a `renderHexColors` setting (on by default) to toggle hex-color swatches. [Release: v1.0.72][release-1-0-72]
+- `/model --session` (`-s`) changes the model, reasoning effort, or context window for just the current session, leaving global settings unchanged. [Release: v1.0.72][release-1-0-72]
+- Detect VS Code, Cursor, and Windsurf through parent processes in `/terminal-setup`. [Release: v1.0.72][release-1-0-72]
+- The Sessions sidebar is now navigable with the keyboard and mouse (arrows open and focus it, Enter or click switches; press `n` to spawn or `x` twice to close from the keyboard). [Release: v1.0.72][release-1-0-72]
+- Keep `/add-dir` directories visible in the agent context across turns. [Release: v1.0.72][release-1-0-72]
+- Multi-turn subagents are always enabled, so you can send follow-up messages to running agents. [Release: v1.0.72][release-1-0-72]
+- Enable tool search for Claude Haiku 4.5+. [Release: v1.0.72][release-1-0-72]
+- Deliver scheduled prompts as steering messages when the agent is busy. [Release: v1.0.72][release-1-0-72]
+
+### v1.0.71
+
+- `copilot -p --autopilot` no longer hangs when a background shell or agent outlives the turn; it now honors the `COPILOT_TASK_WAIT_TIMEOUT_SECONDS` timeout. [Release: v1.0.71][release-1-0-71]
+- Reopening the `/subagents` model picker keeps each agent's reasoning effort and context tier. [Release: v1.0.71][release-1-0-71]
+- Refresh memory context after 30 minutes in long-lived sessions. [Release: v1.0.71][release-1-0-71]
+- Keep MCP tool lists up to date when servers change. [Release: v1.0.71][release-1-0-71]
+- Add a configurable maximum for Ctrl+R command history. [Release: v1.0.71][release-1-0-71]
+- On startup, an invalid `settings.json` now shows a warning identifying the offending value instead of silently ignoring your settings. [Release: v1.0.71][release-1-0-71]
+- Limit which built-in agents are available to tasks and subagents. [Release: v1.0.71][release-1-0-71]
+- Keep all MCP Server Type options visible on short terminals. [Release: v1.0.71][release-1-0-71]
+- Mark disabled skills in `copilot skill list` and its JSON output. [Release: v1.0.71][release-1-0-71]
+- Improve `/chronicle cost-tips` recommendations with richer cost profiles. [Release: v1.0.71][release-1-0-71]
+- Highlight standalone hex colors inline in Markdown. [Release: v1.0.71][release-1-0-71]
+- Split `/worktree` and `/move`: `/worktree` now creates a new worktree and leaves your uncommitted changes behind, while the new `/move` carries them into the new worktree. [Release: v1.0.71][release-1-0-71]
+- Switching to autopilot mid-turn now auto-answers questions asked during that same turn. [Release: v1.0.71][release-1-0-71]
+- Custom agents that request a shell tool by alias now also receive the matching read, list, and stop shell tools. [Release: v1.0.71][release-1-0-71]
+- Show repo-enabled plugins in `/plugin list` and skill pickers. [Release: v1.0.71][release-1-0-71]
+- Shell completions suggest positional-argument choices. [Release: v1.0.71][release-1-0-71]
+- Show the `/app` launch message and download link immediately on Linux. [Release: v1.0.71][release-1-0-71]
+- Validate `--max-autopilot-continues` rejects NaN, negative, and fractional values. [Release: v1.0.71][release-1-0-71]
+- Honor `NO_COLOR` in the CLI even when chalk cached a color level. [Release: v1.0.71][release-1-0-71]
+- Apply updated session options (shell flags, streaming, custom agent defaults) immediately after `/settings` changes. [Release: v1.0.71][release-1-0-71]
+- Announce the focused `/model` row for screen readers. [Release: v1.0.71][release-1-0-71]
+- Use `ctrl+x → x` to close a session and `ctrl+x → h` to hide the split sidebar. [Release: v1.0.71][release-1-0-71]
+- Plugin marketplace: `add`, `remove`, `list`, `browse`, and `update` commands for managing plugin marketplaces. [Release: v1.0.71][release-1-0-71]
+- Persist GitHub MCP toolset/tool config via `settings.json` (`githubMcpToolsets`, `githubMcpTools`, etc.). [Release: v1.0.71][release-1-0-71]
+- `/voice devices` to choose and persist the microphone for voice mode. [Release: v1.0.71][release-1-0-71]
+- Plan mode hard-blocks built-in tool calls that would modify the workspace (editing files or running mutating shell commands); MCP and external tools are still allowed. [Release: v1.0.71][release-1-0-71]
+- Add canvas support in the CLI for extension-driven interactions. [Release: v1.0.71][release-1-0-71]
+- Lower the default maximum sub-agent nesting depth from 6 to 4 to curb runaway recursive sub-agent delegation. [Release: v1.0.71][release-1-0-71]
+- Slash commands and their autocomplete now match regardless of case. [Release: v1.0.71][release-1-0-71]
+- `/chronicle cost-tips` now includes local and cloud cost profiles. [Release: v1.0.71][release-1-0-71]
+- `/model` picker shows the Auto model description as markdown with a clickable Learn More link. [Release: v1.0.71][release-1-0-71]
+- Persist sidebar sessions across restarts. [Release: v1.0.71][release-1-0-71]
+- `/settings` dashboard now includes Repo and Repo (local) scope tabs, and a pinned prompts setting. [Release: v1.0.71][release-1-0-71]
+- Show the startup banner only on the first launch when set to `once`. [Release: v1.0.71][release-1-0-71]
+- Allow `copilot update` and `/update` to accept `stable` as a channel. [Release: v1.0.71][release-1-0-71]
+- Denying `write(path)` now blocks only the specified path. [Release: v1.0.71][release-1-0-71]
+- Using `--add-github-mcp-tool "*"` now enables all GitHub MCP tools. [Release: v1.0.71][release-1-0-71]
+- New sessions start in the default directory instead of the active session's cwd. [Release: v1.0.71][release-1-0-71]
+- Show the Auto discount in the redesigned inline model picker. [Release: v1.0.71][release-1-0-71]
+- Press `?` twice to dismiss quick help and start a prompt with a literal `?`. [Release: v1.0.71][release-1-0-71]
+- `--context` is now honored in fresh interactive sessions. [Release: v1.0.71][release-1-0-71]
+- Show selected custom agents once in `/agent` and keep their source label when the file name differs from the display name. [Release: v1.0.71][release-1-0-71]
+- `--plugin-dir` warnings are now surfaced in the terminal. [Release: v1.0.71][release-1-0-71]
+- Reject `--continue` when used with `--resume`. [Release: v1.0.71][release-1-0-71]
+- Server mode reconnects OAuth MCP servers from cached tokens. [Release: v1.0.71][release-1-0-71]
+- Always offer a custom answer in `ask_user` choice prompts. [Release: v1.0.71][release-1-0-71]
+- Bare `copilot mcp` and `copilot skill` now print help and exit 0, matching `copilot plugin`. Use `copilot mcp <subcommand> --help` (or `copilot skill <subcommand> --help`) for subcommand help. [Release: v1.0.71][release-1-0-71]
+- Surface the real load error for malformed custom agents. [Release: v1.0.71][release-1-0-71]
+
+### v1.0.63
+
+- Blocked image attachments now explain what to do — enable vision via the "Editor preview features" policy, switch to a vision-capable model, or try a different image — instead of showing a confusing error. [Release: v1.0.63][release-1-0-63]
+- Auth validation errors (e.g., VPN or IP allowlist failures) are now shown in the sign-in banner with guidance to check network access. [Release: v1.0.63][release-1-0-63]
+- Show fork-based pull requests in `/pr` and the branch PR badge. [Release: v1.0.63][release-1-0-63]
+- Resume remote sessions when the local and remote repository names differ only by case. [Release: v1.0.63][release-1-0-63]
+- Include recent local sessions in `/chronicle standup`. [Release: v1.0.63][release-1-0-63]
+- Press `w` in `/diff` to hide whitespace-only changes. [Release: v1.0.63][release-1-0-63]
+- Pressing Enter opens the highlighted issue details. [Release: v1.0.63][release-1-0-63]
+- Add `deferTools` option to MCP server config to keep a server's tools always available, even when tool search is enabled. [Release: v1.0.63][release-1-0-63]
+- Agent mode is tracked per session, so it no longer carries over when you create, clear, or switch sessions. [Release: v1.0.63][release-1-0-63]
+- PostToolUse hook matchers (e.g. `Edit|Write`) are now honored instead of silently dropped, so formatters and linters run only after the tools they target. [Release: v1.0.63][release-1-0-63]
+- Experimental: `/rewind` no longer requires git and restores only the files Copilot changed (leaving your own edits intact), with a conversation-only or conversation + files choice. [Release: v1.0.63][release-1-0-63]
 
 ### v1.0.62
 
@@ -566,7 +683,7 @@ Recent official releases added or improved several user-facing CLI features.
 - Claude Fable 5 model support. [Release: v1.0.61][release-1-0-61]
 - `/every` and `/after` support natural language scheduling using cron expressions, calendar times, or relative durations. [Release: v1.0.61][release-1-0-61]
 - `tabs` setting to configure home tab bar visibility, order, and hidden tabs. [Release: v1.0.61][release-1-0-61]
-- `/worktree` (alias `/move`) creates a new git worktree and switches into it, moving uncommitted changes. Auto-generates name from conversation. Experimental only. [Docs: slash commands][slash-commands] [Release: v1.0.61][release-1-0-61]
+- `/worktree` creates a new Git worktree and switches into it, leaving uncommitted changes behind. `/move` carries uncommitted changes into a new worktree. Both auto-generate name from conversation. Experimental only. [Docs: slash commands][slash-commands] [Release: v1.0.61][release-1-0-61] [Release: v1.0.71][release-1-0-71]
 - Grep searches in large monorepos use an indexed search engine for significantly faster results. [Release: v1.0.61][release-1-0-61]
 - mTLS and private-CA support for OTLP telemetry export over HTTPS. [Release: v1.0.61][release-1-0-61]
 - `beepOnSchedule` setting to disable completion beeps for scheduled runs. [Release: v1.0.61][release-1-0-61]
@@ -920,6 +1037,10 @@ Recent official releases added or improved several user-facing CLI features.
 - [From idea to pull request: A practical guide to building with GitHub Copilot CLI](https://github.blog/ai-and-ml/github-copilot/from-idea-to-pull-request-a-practical-guide-to-building-with-github-copilot-cli/)
 - [Run multiple agents at once with /fleet in Copilot CLI](https://github.blog/ai-and-ml/github-copilot/run-multiple-agents-at-once-with-fleet-in-copilot-cli/)
 - [GitHub Copilot CLI releases: v1.0.43](https://github.com/github/copilot-cli/releases/tag/v1.0.43)
+- [GitHub Copilot CLI releases: v1.0.73](https://github.com/github/copilot-cli/releases/tag/v1.0.73)
+- [GitHub Copilot CLI releases: v1.0.72](https://github.com/github/copilot-cli/releases/tag/v1.0.72)
+- [GitHub Copilot CLI releases: v1.0.71](https://github.com/github/copilot-cli/releases/tag/v1.0.71)
+- [GitHub Copilot CLI releases: v1.0.63](https://github.com/github/copilot-cli/releases/tag/v1.0.63)
 - [GitHub Copilot CLI releases: v1.0.62](https://github.com/github/copilot-cli/releases/tag/v1.0.62)
 - [GitHub Copilot CLI releases: v1.0.61](https://github.com/github/copilot-cli/releases/tag/v1.0.61)
 - [GitHub Copilot CLI releases: v1.0.60](https://github.com/github/copilot-cli/releases/tag/v1.0.60)
@@ -1012,6 +1133,10 @@ Recent official releases added or improved several user-facing CLI features.
 [release-1-0-59]: https://github.com/github/copilot-cli/releases/tag/v1.0.59
 [release-1-0-60]: https://github.com/github/copilot-cli/releases/tag/v1.0.60
 [release-1-0-61]: https://github.com/github/copilot-cli/releases/tag/v1.0.61
+[release-1-0-73]: https://github.com/github/copilot-cli/releases/tag/v1.0.73
+[release-1-0-72]: https://github.com/github/copilot-cli/releases/tag/v1.0.72
+[release-1-0-71]: https://github.com/github/copilot-cli/releases/tag/v1.0.71
+[release-1-0-63]: https://github.com/github/copilot-cli/releases/tag/v1.0.63
 [release-1-0-62]: https://github.com/github/copilot-cli/releases/tag/v1.0.62
 [release-1-0-55]: https://github.com/github/copilot-cli/releases/tag/v1.0.55
 [release-1-0-52]: https://github.com/github/copilot-cli/releases/tag/v1.0.52
